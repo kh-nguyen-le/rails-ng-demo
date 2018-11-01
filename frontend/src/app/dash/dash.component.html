@@ -1,3 +1,29 @@
-<p>
-  dash works!
-</p>
+<mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-tile
+    *ngFor="let widget of widgets">
+    <ngx-charts-bar-vertical
+    *ngIf="widget.config.widgetType === 'bar-vertical'"
+      [results]="widget.results"
+      [gradient]="widget.config.gradient"
+      [xAxis]="widget.config.showXAxis"
+      [yAxis]="widget.config.showYAxis"
+      [legend]="widget.config.showLegend"
+      [showXAxisLabel]="widget.config.showXAxisLabel"
+      [showYAxisLabel]="widget.config.showYAxisLabel"
+      [xAxisLabel]="widget.config.xAxisLabel"
+      [yAxisLabel]="widget.config.yAxisLabel">
+    </ngx-charts-bar-vertical>
+    <ngx-charts-line-chart
+    *ngIf="widget.config.widgetType === 'line'"
+      [results]="widget.results"
+      [gradient]="widget.config.gradient"
+      [xAxis]="widget.config.showXAxis"
+      [yAxis]="widget.config.showYAxis"
+      [legend]="widget.config.showLegend"
+      [showXAxisLabel]="widget.config.showXAxisLabel"
+      [showYAxisLabel]="widget.config.showYAxisLabel"
+      [xAxisLabel]="widget.config.xAxisLabel"
+      [yAxisLabel]="widget.config.yAxisLabel">
+    </ngx-charts-line-chart>
+  </mat-grid-tile>
+</mat-grid-list>
