@@ -76,3 +76,44 @@ Widget.create!([
     ]
 }
 ])
+
+Layout.create!([
+  {
+    name: 'Placeholder Layout',
+    background: 'white'
+  }
+])
+
+Grid.create!([
+  {
+    name: 'Placeholder Grid',
+    title: 'Placeholder Data',
+    col: 2,
+    size: '1:1'
+  }
+])
+
+LayoutGrid.create!([
+  {
+    position: 1,
+    layout_id: 1,
+    grid_id: 1
+  }
+])
+
+GridWidget.create!([
+  {
+    position: 1,
+    length: 1,
+    width: 1,
+    grid_id: 1,
+    widget_id: 1
+  },
+  {
+    position: 2,
+    length: 1,
+    width: 1,
+    grid_id: 1,
+    widget_id: 2
+  }
+])

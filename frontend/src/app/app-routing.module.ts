@@ -7,7 +7,7 @@ import { EditorGridComponent } from './editor-grid/editor-grid.component';
 import { EditorLayoutComponent } from './editor-layout/editor-layout.component';
 
 const appRoutes: Routes = [
-  { path: 'dash', component: DashComponent },
+  { path: 'dash/:id', component: DashComponent },
   { path: 'widgets', component: EditorWidgetComponent },
   { path: 'grids', component: EditorGridComponent },
   { path: 'layouts', component: EditorLayoutComponent}

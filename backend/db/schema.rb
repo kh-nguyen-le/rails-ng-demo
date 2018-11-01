@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2018_06_25_164728) do
     t.string "name"
     t.string "title"
     t.integer "col"
-    t.integer "size"
+    t.string "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -10,7 +10,7 @@ class LayoutsController < ApplicationController
 
   # GET /layouts/1
   def show
-    render json: @layout
+    render json: @layout.to_json(include: [:grids, :layout_grids])
   end
 
   # POST /layouts

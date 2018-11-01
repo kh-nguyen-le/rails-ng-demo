@@ -10,7 +10,7 @@ class GridsController < ApplicationController
 
   # GET /grids/1
   def show
-    render json: @grid
+    render json: @grid.to_json(include: [:layouts, :layout_grids, :grid_widgets, :widgets])
   end
 
   # POST /grids

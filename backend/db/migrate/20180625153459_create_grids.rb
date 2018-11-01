@@ -4,7 +4,7 @@ class CreateGrids < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :title
       t.integer :col
-      t.integer :size
+      t.string :size
 
       t.timestamps
     end

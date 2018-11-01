@@ -1,3 +1,9 @@
-<p>
-  grid works!
-</p>
+<h2>{{grid.title}}</h2>
+<mat-grid-list [cols]="grid.col" [rowHeight]="grid.size">
+  <mat-grid-tile
+    *ngFor="let widget of widgets">
+    <app-widget
+      [widget]="widget"
+    ></app-widget>
+  </mat-grid-tile>
+</mat-grid-list>
