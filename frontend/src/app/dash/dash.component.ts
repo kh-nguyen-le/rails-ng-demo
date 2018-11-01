@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Http } from '@angular/http';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-dash',
@@ -8,9 +9,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   styleUrls: ['./dash.component.css']
 })
 export class DashComponent implements OnInit {
-
   widgets;
-  constructor (private http: Http) {
+  constructor (private http: Http, private app: AppComponent) {
 
   }
   ngOnInit(): void {
@@ -18,6 +18,7 @@ export class DashComponent implements OnInit {
     //Add 'implements OnInit' to the class.
     this.http.get('http://localhost:3000/widgets.json')
       .subscribe(res => this.widgets = res.json());
+    this.app.title = "Dashboard";
   }
 
 }
