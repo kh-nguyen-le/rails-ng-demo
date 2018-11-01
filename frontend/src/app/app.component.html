@@ -2,23 +2,22 @@
 <mat-toolbar color="primary">
     <span>{{ title }}</span>
     <span class="spacer"></span>
-    <button mat-icon-button>
+    <button mat-icon-button routerLink="dash">
         <mat-icon>dashboard</mat-icon>
     </button>
     <button mat-icon-button [matMenuTriggerFor]="editor">
         <mat-icon>create</mat-icon>
     </button>
     <mat-menu #editor="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="widgets">
             <span>Widgets</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="grids">
             <span>Grids</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="layouts">
             <span>Layouts</span>
         </button>
     </mat-menu>
 </mat-toolbar>
-<app-dash>
-</app-dash>
+<router-outlet></router-outlet>

@@ -13,6 +13,7 @@ import { EditorLayoutComponent } from './editor-layout/editor-layout.component';
 import { EditorGridComponent } from './editor-grid/editor-grid.component';
 import { EditorWidgetComponent } from './editor-widget/editor-widget.component';
 import {MatMenuModule, MatToolbarModule, MatIconModule} from '@angular/material/';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatMenuModule, MatToolbarModule, MatIconModule} from '@angular/material/
     NgxChartsModule,
     MatMenuModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
