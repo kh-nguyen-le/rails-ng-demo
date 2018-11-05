@@ -89,7 +89,19 @@ Grid.create!([
     name: 'Placeholder Grid',
     title: 'Placeholder Data',
     col: 2,
-    size: '1:1'
+    size: '2:1'
+  },
+  {
+    name: 'Singleton Grid',
+    title: 'Placeholder Line Chart',
+    col: 1,
+    size: '2:1'
+  },
+  {
+    name: 'Singleton Grid 2',
+    title: 'Placeholder Bar Chart',
+    col: 1,
+    size: '2:1'
   }
 ])
 
@@ -98,6 +110,16 @@ LayoutGrid.create!([
     position: 1,
     layout_id: 1,
     grid_id: 1
+  },
+  {
+    position: 2,
+    layout_id: 1,
+    grid_id: 2
+  },
+  {
+    position: 3,
+    layout_id: 1,
+    grid_id: 3
   }
 ])
 
@@ -114,6 +136,20 @@ GridWidget.create!([
     length: 1,
     width: 1,
     grid_id: 1,
+    widget_id: 2
+  },
+  {
+    position: 1,
+    length: 1,
+    width: 1,
+    grid_id: 2,
+    widget_id: 1
+  },
+  {
+    position: 1,
+    length: 1,
+    width: 1,
+    grid_id: 3,
     widget_id: 2
   }
 ])

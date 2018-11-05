@@ -14,6 +14,7 @@ import { EditorGridComponent } from './editor-grid/editor-grid.component';
 import { EditorWidgetComponent } from './editor-widget/editor-widget.component';
 import {MatMenuModule, MatToolbarModule, MatIconModule} from '@angular/material/';
 import { AppRoutingModule } from './app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AppRoutingModule } from './app-routing.module';
     MatMenuModule,
     MatToolbarModule,
     MatIconModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,10 @@
-<div *ngFor="let grid of grids">
-  <app-grid 
-    [grid]="grid"
-  ></app-grid>
-</div>
+<ngb-tabset justify="fill">
+  <ngb-tab *ngFor="let grid of grids">
+    <ng-template ngbTabTitle>{{grid.title}}</ng-template>
+    <ng-template ngbTabContent>
+      <app-grid 
+        [grid]="grid"
+      ></app-grid>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
