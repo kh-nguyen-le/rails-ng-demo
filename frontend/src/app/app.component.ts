@@ -11,13 +11,18 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent {
   public title = 'Login';
   layouts;
+
   constructor (
     private http: HttpClient) {
 
   }
 
-  ngOnInit(): void {
+  getLayouts() {
     this.http.get('http://localhost:3000/layouts.json')
       .subscribe(res => this.layouts = res);
+  }
+
+  ngOnInit(): void {
+    
   }
 }

@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { DashComponent } from './dash/dash.component';
 import { GridComponent } from './grid/grid.component';
@@ -12,9 +11,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditorLayoutComponent } from './editor-layout/editor-layout.component';
 import { EditorGridComponent } from './editor-grid/editor-grid.component';
 import { EditorWidgetComponent } from './editor-widget/editor-widget.component';
-import {MatMenuModule, MatToolbarModule, MatIconModule} from '@angular/material/';
+import { MatGridListModule, MatMenuModule, MatToolbarModule, MatButtonModule,
+  MatIconModule, MatListModule, MatFormFieldModule, MatInputModule } from '@angular/material/';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NewLayoutComponent } from './new-layout/new-layout.component';
+import { NewGridComponent } from './new-grid/new-grid.component';
+import { NewWidgetComponent } from './new-widget/new-widget.component';
+import { EditLayoutComponent } from './edit-layout/edit-layout.component';
+import { EditGridComponent } from './edit-grid/edit-grid.component';
+import { EditWidgetComponent } from './edit-widget/edit-widget.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +31,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     WidgetComponent,
     EditorLayoutComponent,
     EditorGridComponent,
-    EditorWidgetComponent
+    EditorWidgetComponent,
+    NewLayoutComponent,
+    NewGridComponent,
+    NewWidgetComponent,
+    EditLayoutComponent,
+    EditGridComponent,
+    EditWidgetComponent
   ],
   imports: [
     BrowserModule,
@@ -34,8 +47,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgxChartsModule,
     MatMenuModule,
     MatToolbarModule,
+    MatButtonModule,
     MatIconModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     NgbModule
   ],
   providers: [],
