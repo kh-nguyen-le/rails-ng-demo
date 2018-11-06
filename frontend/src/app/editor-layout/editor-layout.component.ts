@@ -11,7 +11,7 @@ export class EditorLayoutComponent implements OnInit {
 
   deleteLayout(id: Number) {
     this.http.delete(`http://localhost:3000/layouts/${id}`)
-      .subscribe();
+      .subscribe( () => this.app.getLayouts());
   }
 
   constructor(private app: AppComponent,
