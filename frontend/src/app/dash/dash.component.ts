@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './dash.component.html',
   styleUrls: ['./dash.component.css']
 })
-export class DashComponent implements OnInit {
+export class DashComponent implements OnInit, OnDestroy {
   layout;
   grids;
   private sub: any;
@@ -35,5 +35,7 @@ export class DashComponent implements OnInit {
       this.getData(id);
     })
   }
-  
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }
