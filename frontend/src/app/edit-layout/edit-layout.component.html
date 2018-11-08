@@ -26,10 +26,12 @@
   </button>
   <mat-list-item *ngFor="let grid of layout.grids">
     <a matLine [routerLink]="[ '/grids', grid.id ]">{{grid.name}}</a>
-    <button mat-icon-button (click)="shiftGridUp(grid.id)">
+    <button mat-icon-button (click)="shiftGridUp(grid.id)"
+    [disabled]="grid === layout.grids[0]">
         <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
-    <button mat-icon-button (click)="shiftGridDown(grid.id)">
+    <button mat-icon-button (click)="shiftGridDown(grid.id)"
+    [disabled]="grid === layout.grids[layout.grids.length - 1]">
           <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
     <button mat-icon-button (click)="removeGrid(grid.id)">

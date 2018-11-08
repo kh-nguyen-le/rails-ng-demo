@@ -61,6 +61,43 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.router.navigate(['/layouts', this.id]);
   }
 
+  async shiftGridUp(id: Number) {
+    let pos;
+    for (let lg of this.layout.layout_grids) {
+      if (lg.grid_id == id) {
+        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
+        pos = lg.position;
+      }
+    }
+    for (let lg of this.layout.layout_grids) {
+      if (lg.position == pos - 1) {
+        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe(() =>
+        {
+          this.router.navigate(['/layouts', this.id]);
+        });
+      }
+    }
+  }
+
+  async shiftGridDown(id: Number) {
+    let pos;
+    for (let lg of this.layout.layout_grids) {
+      if (lg.grid_id == id) {
+        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
+        pos = lg.position;
+      }
+    }
+    for (let lg of this.layout.layout_grids) {
+      if (lg.position == pos + 1) {
+        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe(() =>
+        {
+          this.router.navigate(['/layouts', this.id]);
+        });
+      }
+    }
+    
+  }
+
   onSubmit(){
     this.http.put(`http://localhost:3000/layouts/${this.id}`, this.form.value)
       .subscribe(res => { 
