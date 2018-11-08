@@ -10,6 +10,18 @@
     [xAxisLabel]="widget.config.xAxisLabel"
     [yAxisLabel]="widget.config.yAxisLabel">
   </ngx-charts-bar-vertical>
+  <ngx-charts-bar-vertical-2d
+  *ngIf="widget && widget.config.widgetType === 'bar-vertical-2d'"
+    [results]="widget.results"
+    [gradient]="widget.config.gradient"
+    [xAxis]="widget.config.showXAxis"
+    [yAxis]="widget.config.showYAxis"
+    [legend]="widget.config.showLegend"
+    [showXAxisLabel]="widget.config.showXAxisLabel"
+    [showYAxisLabel]="widget.config.showYAxisLabel"
+    [xAxisLabel]="widget.config.xAxisLabel"
+    [yAxisLabel]="widget.config.yAxisLabel">
+  </ngx-charts-bar-vertical-2d>
   <ngx-charts-line-chart
   *ngIf="widget && widget.config.widgetType === 'line'"
     [results]="widget.results"
@@ -24,3 +36,35 @@
     [autoScale]="widget.config.autoScale"
     >
 </ngx-charts-line-chart>
+<ngx-charts-pie-chart
+  *ngIf="widget && widget.config.widgetType === 'pie-chart'"
+    [results]="widget.results"
+    [gradient]="widget.config.gradient"
+    [legend]="widget.config.showLegend"
+    >
+</ngx-charts-pie-chart>
+<ngx-charts-pie-grid
+  *ngIf="widget && widget.config.widgetType === 'pie-grid'"
+    [results]="widget.results"
+    >
+</ngx-charts-pie-grid>
+<ngx-charts-gauge
+  *ngIf="widget && widget.config.widgetType === 'gauge'"
+    [results]="widget.results"
+    [legend]="widget.config.showLegend"
+    >
+</ngx-charts-gauge>
+<ngx-charts-area-chart
+  *ngIf="widget && widget.config.widgetType === 'area'"
+    [results]="widget.results"
+    [gradient]="widget.config.gradient"
+    [xAxis]="widget.config.showXAxis"
+    [yAxis]="widget.config.showYAxis"
+    [legend]="widget.config.showLegend"
+    [showXAxisLabel]="widget.config.showXAxisLabel"
+    [showYAxisLabel]="widget.config.showYAxisLabel"
+    [xAxisLabel]="widget.config.xAxisLabel"
+    [yAxisLabel]="widget.config.yAxisLabel"
+    [autoScale]="widget.config.autoScale"
+    >
+</ngx-charts-area-chart>

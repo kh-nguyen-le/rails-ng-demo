@@ -10,8 +10,13 @@
         [floatLabel]="auto">
         <mat-label>Widget Type</mat-label>
           <mat-select formControlName="widgetType" required>
-            <mat-option value="bar-vertical">Bar Chart</mat-option>
-            <mat-option value="line">Line Chart</mat-option>
+              <mat-option value="bar-vertical">Bar Chart</mat-option>
+              <mat-option value="bar-vertical-2d">2D Bar Chart</mat-option>
+              <mat-option value="line">Line Chart</mat-option>
+              <mat-option value="pie-chart">Pie Chart</mat-option>
+              <mat-option value="pie-grid">Pie Grid</mat-option>
+              <mat-option value="gauge">Gauge</mat-option>
+              <mat-option value="area">Area Chart</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-checkbox formControlName="autoScale">AutoScaling</mat-checkbox>
