@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<a href="https://rails-ng-demo.herokuapp.com/">demo</a>
 
-Things you may want to cover:
+A content management app for widget creation and display.
 
-* Ruby version
+Widgets are grouped into Grids which are then grouped into Layouts. Each entity can be reused or destroyed independently.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Widget data must be JSON in the form of [{"name", "value"}] or [{"name", "series"["name", "value"]}]
