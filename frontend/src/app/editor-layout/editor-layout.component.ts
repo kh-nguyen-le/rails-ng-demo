@@ -17,7 +17,7 @@ export class EditorLayoutComponent implements OnInit {
       .subscribe( () => this.app.getLayouts());
   }
 
-  constructor(private app: AppComponent,
+  constructor(public app: AppComponent,
     private http: HttpClient,
     ) { }
 
