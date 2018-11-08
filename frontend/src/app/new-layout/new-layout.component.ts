@@ -22,10 +22,6 @@ export class NewLayoutComponent implements OnInit {
     });
    }
 
-   addGrid() {
-     
-   }
-
    onSubmit(){
     this.http.post('http://localhost:3000/layouts', this.form.value)
       .subscribe(res => { this.new_id = res;

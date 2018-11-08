@@ -1,5 +1,5 @@
 class GridWidgetsController < ApplicationController
-    before_action :set_grid, only: [:show, :update, :destroy]
+    before_action :set_grid_widget, only: [:show, :update, :destroy]
 
   # GET /grids
   def index

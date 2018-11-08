@@ -1,3 +1,13 @@
-<p>
-  editor-grid works!
-</p>
+<mat-nav-list>
+  <mat-list-item>
+    <button mat-icon-button routerLink="/grids/new">
+      <mat-icon>fiber_new</mat-icon>
+    </button>
+  </mat-list-item>
+  <mat-list-item *ngFor="let grid of grids">
+    <a matLine [routerLink]="[ '/grids/', grid.id]"> {{ grid.name }} </a>
+    <button mat-icon-button (click)="deleteGrid(grid.id)">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-nav-list>

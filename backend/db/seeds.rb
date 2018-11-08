@@ -107,17 +107,17 @@ Grid.create!([
 
 LayoutGrid.create!([
   {
-    position: 1,
+    position: 0,
     layout_id: 1,
     grid_id: 1
   },
   {
-    position: 2,
+    position: 1,
     layout_id: 1,
     grid_id: 2
   },
   {
-    position: 3,
+    position: 2,
     layout_id: 1,
     grid_id: 3
   }
@@ -125,28 +125,28 @@ LayoutGrid.create!([
 
 GridWidget.create!([
   {
-    position: 1,
+    position: 0,
     length: 1,
     width: 1,
     grid_id: 1,
     widget_id: 1
   },
   {
-    position: 2,
+    position: 1,
     length: 1,
     width: 1,
     grid_id: 1,
     widget_id: 2
   },
   {
-    position: 1,
+    position: 0,
     length: 1,
     width: 1,
     grid_id: 2,
     widget_id: 1
   },
   {
-    position: 1,
+    position: 0,
     length: 1,
     width: 1,
     grid_id: 3,
