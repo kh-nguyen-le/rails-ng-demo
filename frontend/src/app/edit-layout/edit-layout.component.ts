@@ -17,7 +17,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   form: FormGroup;
   id: Number;
   private sub: any;
-  nav;
+  private nav: any;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -38,64 +38,49 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   addGrid() {
     if (!this.new_grid) return;
     this.http.post('http://localhost:3000/layout_grids', {
-      position: this.layout.grids.length + 1,
+      position: this.layout.grids.length,
       layout_id: this.layout.id,
       grid_id: this.new_grid
-    }).subscribe( res => {
+    }).subscribe( () => {
       this.router.navigate(['/layouts', this.id]);
     }
     );
   }
 
-  async removeGrid(id: Number) {
-    let pos = 0;
+  async removeGrid(index: any) {
     for (let lg of this.layout.layout_grids) {
-      if (lg.grid_id == id) {
-        pos = lg.position;
+      if (lg.position == index) {
         await this.http.delete(`http://localhost:3000/layout_grids/${lg.id}`).subscribe();
       }
-      else if (lg.position > pos) {
+      else if (lg.position > index) {
         await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
       }
     }
     this.router.navigate(['/layouts', this.id]);
   }
 
-  async shiftGridUp(id: Number) {
-    let pos;
+  async shiftGridUp(index: any) {
     for (let lg of this.layout.layout_grids) {
-      if (lg.grid_id == id) {
+      if (lg.position == index) {
         await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
-        pos = lg.position;
       }
-    }
-    for (let lg of this.layout.layout_grids) {
-      if (lg.position == pos - 1) {
-        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe(() =>
-        {
-          this.router.navigate(['/layouts', this.id]);
-        });
+      else if (lg.position == index - 1) {
+        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
       }
+      this.router.navigate(['/layouts', this.id]);
     }
   }
 
-  async shiftGridDown(id: Number) {
-    let pos;
+  async shiftGridDown(index: any) {
     for (let lg of this.layout.layout_grids) {
-      if (lg.grid_id == id) {
+      if (lg.position == index) {
         await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
-        pos = lg.position;
+      }
+      else if (lg.position == index + 1) {
+        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
       }
     }
-    for (let lg of this.layout.layout_grids) {
-      if (lg.position == pos + 1) {
-        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe(() =>
-        {
-          this.router.navigate(['/layouts', this.id]);
-        });
-      }
-    }
-    
+    this.router.navigate(['/layouts', this.id]);
   }
 
   onSubmit(){
@@ -125,7 +110,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.init();
+    
   }
 
   ngOnDestroy() {

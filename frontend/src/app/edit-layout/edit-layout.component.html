@@ -24,17 +24,17 @@
   <button mat-icon-button (click)="addGrid()">
     <mat-icon>add_circle</mat-icon>
   </button>
-  <mat-list-item *ngFor="let grid of layout.grids">
+  <mat-list-item *ngFor="let grid of layout.grids; let i = index">
     <a matLine [routerLink]="[ '/grids', grid.id ]">{{grid.name}}</a>
-    <button mat-icon-button (click)="shiftGridUp(grid.id)"
+    <button mat-icon-button (click)="shiftGridUp(i)"
     [disabled]="grid === layout.grids[0]">
         <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
-    <button mat-icon-button (click)="shiftGridDown(grid.id)"
+    <button mat-icon-button (click)="shiftGridDown(i)"
     [disabled]="grid === layout.grids[layout.grids.length - 1]">
           <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
-    <button mat-icon-button (click)="removeGrid(grid.id)">
+    <button mat-icon-button (click)="removeGrid(i)">
         <mat-icon>remove_circle</mat-icon>
     </button>
   </mat-list-item>
