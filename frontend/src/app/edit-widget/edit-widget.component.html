@@ -1,3 +1,45 @@
-<p>
-  edit-widget works!
-</p>
+<form [formGroup]="form" class="form-container" (submit)="onSubmit()">
+    <mat-form-field
+      [floatLabel]="auto">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput>
+    </mat-form-field>
+    <div class="form-container"
+      formGroupName="config">
+        <mat-form-field
+        [floatLabel]="auto">
+        <mat-label>Widget Type</mat-label>
+          <mat-select formControlName="widgetType" required>
+            <mat-option value="bar-vertical">Bar Chart</mat-option>
+            <mat-option value="line">Line Chart</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-checkbox formControlName="autoScale">AutoScaling</mat-checkbox>
+        <mat-checkbox formControlName="gradient">Gradient</mat-checkbox>
+        <mat-checkbox formControlName="showXAxis">Show X-Axis</mat-checkbox>
+        <mat-checkbox formControlName="showYAxis">Show Y-Axis</mat-checkbox>
+        <mat-checkbox formControlName="showXAxisLabel">X-Axis Label</mat-checkbox>
+        <mat-checkbox formControlName="showYAxisLabel">Y-Axis Label</mat-checkbox>
+        <mat-checkbox formControlName="showLegend">Legend</mat-checkbox>
+        <mat-form-field
+          [floatLabel]="auto">
+          <mat-label>X-Axis Label</mat-label>
+          <input formControlName="xAxisLabel" matInput>
+        </mat-form-field>
+        <mat-form-field
+          [floatLabel]="auto">
+          <mat-label>Y-Axis Label</mat-label>
+          <input formControlName="yAxisLabel" matInput>
+        </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" type="submit">Update</button>
+  </form>
+
+<form class="form-container" (submit)="submitData()">
+    <mat-form-field
+    [floatLabel]="auto">
+      <mat-label>Raw Data</mat-label>
+      <textarea [formControl]="results" matInput></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Enter Data</button>
+</form>

@@ -46,6 +46,6 @@ class WidgetsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def widget_params
-      params.require(:widget).permit(:name, :results, :config)
+      params.require(:widget).permit(:name, { results: [:name, :value, series: [:name, :value] ] }, { config: [:widgetType, :gradient, :showXAxis, :showYAxis, :showLegend, :showXAxisLabel, :showYAxisLabel, :xAxisLabel, :yAxisLabel, :autoScale] })
     end
 end

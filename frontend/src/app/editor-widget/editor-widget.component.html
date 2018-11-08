@@ -1,3 +1,13 @@
-<p>
-  editor-widget works!
-</p>
+<mat-nav-list>
+  <mat-list-item>
+    <button mat-icon-button routerLink="/widgets/new">
+      <mat-icon>fiber_new</mat-icon>
+    </button>
+  </mat-list-item>
+  <mat-list-item *ngFor="let widget of widgets">
+    <a matLine [routerLink]="[ '/widgets/', widget.id]"> {{ widget.name }} </a>
+    <button mat-icon-button (click)="deleteWidget(widget.id)">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-nav-list>

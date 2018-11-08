@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-editor-widget',
@@ -8,10 +9,24 @@ import { AppComponent } from '../app.component';
 })
 export class EditorWidgetComponent implements OnInit {
 
-  constructor(private app: AppComponent) { }
+  widgets;
 
+  constructor(private app: AppComponent,
+    private http: HttpClient) { }
+
+
+  deleteWidget(id: Number) {
+    this.http.delete(`http://localhost:3000/widgets/${id}`)
+      .subscribe( () => this.getWidgets());
+    }
+    
+  getWidgets() {
+    this.http.get('http://localhost:3000/widgets')
+      .subscribe(res => this.widgets = res);
+    }
   ngOnInit() {
     this.app.title = "Editor - Widgets";
+    this.getWidgets();
   }
 
 }

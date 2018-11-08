@@ -85,7 +85,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
 
   onSubmit(){
     this.http.put(`http://localhost:3000/layouts/${this.id}`, this.form.value)
-      .subscribe(res => { 
+      .subscribe( () => { 
         this.snackBar.open('Name and Background updated', '', {
           duration: 2000
         });

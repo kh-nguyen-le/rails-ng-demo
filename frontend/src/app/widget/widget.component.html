@@ -1,5 +1,5 @@
 <ngx-charts-bar-vertical
-  *ngIf="widget.config.widgetType === 'bar-vertical'"
+  *ngIf="widget && widget.config.widgetType === 'bar-vertical'"
     [results]="widget.results"
     [gradient]="widget.config.gradient"
     [xAxis]="widget.config.showXAxis"
@@ -11,7 +11,7 @@
     [yAxisLabel]="widget.config.yAxisLabel">
   </ngx-charts-bar-vertical>
   <ngx-charts-line-chart
-  *ngIf="widget.config.widgetType === 'line'"
+  *ngIf="widget && widget.config.widgetType === 'line'"
     [results]="widget.results"
     [gradient]="widget.config.gradient"
     [xAxis]="widget.config.showXAxis"
@@ -20,5 +20,7 @@
     [showXAxisLabel]="widget.config.showXAxisLabel"
     [showYAxisLabel]="widget.config.showYAxisLabel"
     [xAxisLabel]="widget.config.xAxisLabel"
-    [yAxisLabel]="widget.config.yAxisLabel">
+    [yAxisLabel]="widget.config.yAxisLabel"
+    [autoScale]="widget.config.autoScale"
+    >
 </ngx-charts-line-chart>

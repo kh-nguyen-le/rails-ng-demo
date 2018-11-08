@@ -16,7 +16,8 @@ Widget.create!([
     showXAxisLabel: 'true',
     xAxisLabel: 'Country',
     showYAxisLabel: 'true',
-    yAxisLabel: 'Population'
+    yAxisLabel: 'Population',
+    autoScale: 'true'
     },
     results: [
       {

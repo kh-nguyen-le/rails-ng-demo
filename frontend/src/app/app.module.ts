@@ -13,7 +13,7 @@ import { EditorGridComponent } from './editor-grid/editor-grid.component';
 import { EditorWidgetComponent } from './editor-widget/editor-widget.component';
 import { MatGridListModule, MatMenuModule, MatToolbarModule, MatButtonModule,
   MatIconModule, MatListModule, MatFormFieldModule, MatInputModule,
-  MatSnackBarModule, MatSelectModule } from '@angular/material/';
+  MatSnackBarModule, MatSelectModule, MatCheckboxModule } from '@angular/material/';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewLayoutComponent } from './new-layout/new-layout.component';
@@ -55,6 +55,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatInputModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatCheckboxModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
