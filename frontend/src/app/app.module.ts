@@ -12,7 +12,8 @@ import { EditorLayoutComponent } from './editor-layout/editor-layout.component';
 import { EditorGridComponent } from './editor-grid/editor-grid.component';
 import { EditorWidgetComponent } from './editor-widget/editor-widget.component';
 import { MatGridListModule, MatMenuModule, MatToolbarModule, MatButtonModule,
-  MatIconModule, MatListModule, MatFormFieldModule, MatInputModule } from '@angular/material/';
+  MatIconModule, MatListModule, MatFormFieldModule, MatInputModule,
+  MatSnackBarModule, MatSelectModule } from '@angular/material/';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewLayoutComponent } from './new-layout/new-layout.component';
@@ -21,7 +22,7 @@ import { NewWidgetComponent } from './new-widget/new-widget.component';
 import { EditLayoutComponent } from './edit-layout/edit-layout.component';
 import { EditGridComponent } from './edit-grid/edit-grid.component';
 import { EditWidgetComponent } from './edit-widget/edit-widget.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,8 +53,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
+    MatSelectModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     NgbModule
   ],
   providers: [],

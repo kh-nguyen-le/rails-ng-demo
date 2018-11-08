@@ -16,18 +16,18 @@ const appRoutes: Routes = [
   { path: 'dash/:id', component: DashComponent },
   { path: 'widgets', component: EditorWidgetComponent },
   { path: 'widgets/new', component: NewWidgetComponent },
-  { path: 'widgets/:id', component: EditWidgetComponent },
+  { path: 'widgets/:id', component: EditWidgetComponent, runGuardsAndResolvers: 'always' },
   { path: 'grids', component: EditorGridComponent },
   { path: 'grids/new', component: NewGridComponent },
-  { path: 'grids/:id', component: EditGridComponent },
+  { path: 'grids/:id', component: EditGridComponent, runGuardsAndResolvers: 'always' },
   { path: 'layouts', component: EditorLayoutComponent},
   { path: 'layouts/new', component: NewLayoutComponent },
-  { path: 'layouts/:id', component: EditLayoutComponent }
+  { path: 'layouts/:id', component: EditLayoutComponent, runGuardsAndResolvers: 'always' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'}),
     CommonModule
   ],
   exports: [

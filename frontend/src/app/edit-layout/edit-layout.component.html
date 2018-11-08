@@ -1,3 +1,39 @@
-<p>
-  edit-layout works!
-</p>
+<form [formGroup]="form" class="form-container" (submit)="onSubmit()">
+  <mat-form-field
+    [floatLabel]="auto">
+      <mat-label>Name</mat-label>
+      <input formControlName="name" matInput>
+  </mat-form-field>
+  <mat-form-field
+    [floatLabel]="auto">
+      <mat-label>Background Colour</mat-label>
+      <input formControlName="background" matInput>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Update</button>
+</form>
+
+<mat-nav-list *ngIf="layout">
+  <h3 mat-subheader>Grids</h3>
+  <mat-form-field>
+    <mat-select placeholder="Add Grid" [(ngModel)]="new_grid">
+      <mat-option *ngFor="let grid of grids" [value]="grid.id">
+        {{grid.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-icon-button (click)="addGrid()">
+    <mat-icon>add_circle</mat-icon>
+  </button>
+  <mat-list-item *ngFor="let grid of layout.grids">
+    <a matLine [routerLink]="[ '/grids', grid.id ]">{{grid.name}}</a>
+    <button mat-icon-button (click)="shiftGridUp(grid.id)">
+        <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <button mat-icon-button (click)="shiftGridDown(grid.id)">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <button mat-icon-button (click)="removeGrid(grid.id)">
+        <mat-icon>remove_circle</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-nav-list>

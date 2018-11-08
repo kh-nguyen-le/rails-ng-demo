@@ -22,12 +22,15 @@ export class NewLayoutComponent implements OnInit {
     });
    }
 
-   async onSubmit(){
-    await this.http.post('http://localhost:3000/layouts', this.form.value)
+   addGrid() {
+     
+   }
+
+   onSubmit(){
+    this.http.post('http://localhost:3000/layouts', this.form.value)
       .subscribe(res => { this.new_id = res;
         this.router.navigate(['/layouts', this.new_id.id]);}
-        );
-    ;
+      );
    }
 
   ngOnInit() {

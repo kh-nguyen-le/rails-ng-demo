@@ -33,7 +33,7 @@ export class DashComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe(params => {
       let id = +params['id'];
       this.getData(id);
-    })
+    });
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
