@@ -15,7 +15,7 @@ class LayoutGridsController < ApplicationController
 
   # POST /layouts
   def create
-    @layout_grid = Layout.new(layout_params)
+    @layout_grid = LayoutGrid.new(layout_grid_params)
 
     if @layout_grid.save
       render json: @layout_grid, status: :created, location: @layout_grid
@@ -41,11 +41,11 @@ class LayoutGridsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_layout_grid
-      @layout_grid = Layout.find(params[:id])
+      @layout_grid = LayoutGrid.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def layout_grid_params
-      params.require(:layout).permit(:name, :background)
+      params.require(:layout_grid).permit(:position, :layout_id, :grid_id)
     end
 end

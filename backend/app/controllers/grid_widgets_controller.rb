@@ -15,7 +15,7 @@ class GridWidgetsController < ApplicationController
 
   # POST /grids
   def create
-    @grid_widget = Grid.new(grid_params)
+    @grid_widget = GridWidget.new(grid_widget_params)
 
     if @grid_widget.save
       render json: @grid_widget, status: :created, location: @grid_widget
@@ -26,7 +26,7 @@ class GridWidgetsController < ApplicationController
 
   # PATCH/PUT /grids/1
   def update
-    if @grid_widget.update(grid_params)
+    if @grid_widget.update(grid_widget_params)
       render json: @grid_widget
     else
       render json: @grid_widget.errors, status: :unprocessable_entity
@@ -41,11 +41,11 @@ class GridWidgetsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_grid_widget
-      @grid_widget = Grid.find(params[:id])
+      @grid_widget = GridWidget.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def grid_widget_params
-      params.require(:grid).permit(:name, :title, :col, :size)
+      params.require(:grid_widget).permit(:position, :length, :width, :grid_id, :widget_id)
     end
 end
