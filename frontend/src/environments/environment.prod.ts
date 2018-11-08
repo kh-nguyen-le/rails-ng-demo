@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://rails-ng-demo.herokuapp.com:3000/'
 };
