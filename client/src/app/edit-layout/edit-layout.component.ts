@@ -29,6 +29,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       this.form = fb.group({
         name: '',
         background: '',
+        duration: ''
       });
     this.nav = this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
@@ -88,7 +89,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   onSubmit(){
     this.http.put(`${this.apiUrl}/layouts/${this.id}`, this.form.value)
       .subscribe( () => { 
-        this.snackBar.open('Name and Background updated', '', {
+        this.snackBar.open('Primary Attributes updated', '', {
           duration: 2000
         });
         }
@@ -104,6 +105,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
           this.form.patchValue({
             name: this.layout.name,
             background: this.layout.background,
+            duration: this.layout.duration
           });
         });
     });

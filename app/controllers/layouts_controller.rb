@@ -46,6 +46,6 @@ class LayoutsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def layout_params
-      params.require(:layout).permit(:name, :background)
+      params.require(:layout).permit(:name, :background, :duration)
     end
 end

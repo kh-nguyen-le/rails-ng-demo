@@ -21,6 +21,7 @@ export class NewLayoutComponent implements OnInit {
     this.form = fb.group({
       name: '',
       background: '',
+      duration: ''
     });
    }
 
