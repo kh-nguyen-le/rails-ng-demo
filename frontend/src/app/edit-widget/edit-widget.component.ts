@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-widget',
@@ -11,6 +12,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class EditWidgetComponent implements OnInit, OnDestroy {
 
+  apiUrl = environment.apiUrl;
   widget;
   form: FormGroup;
   results: FormControl;
@@ -48,7 +50,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
 
   onSubmit(){
     
-    this.http.put(`http://localhost:3000/widgets/${this.id}`, this.form.value)
+    this.http.put(`${this.apiUrl}/widgets/${this.id}`, this.form.value)
       .subscribe( () => {
         this.snackBar.open('Primary Attributes updated', '', {
           duration: 2000
@@ -60,7 +62,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
    submitData(){
     let res = JSON.parse(this.results.value);
     let widget = {results: res}; 
-    this.http.put(`http://localhost:3000/widgets/${this.id}`, widget)
+    this.http.put(`${this.apiUrl}/widgets/${this.id}`, widget)
       .subscribe( () => {
         this.snackBar.open('Data Entered', '', {
           duration: 2000
@@ -72,7 +74,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
    init() {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
-      this.http.get(`http://localhost:3000/widgets/${this.id}`)
+      this.http.get(`${this.apiUrl}/widgets/${this.id}`)
         .subscribe(res => {
           this.widget = res;
           this.form.patchValue({

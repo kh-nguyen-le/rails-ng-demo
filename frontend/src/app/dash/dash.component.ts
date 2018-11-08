@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dash',
@@ -12,6 +13,7 @@ export class DashComponent implements OnInit, OnDestroy {
   layout;
   grids;
   private sub: any;
+  apiUrl = environment.apiUrl;
 
   constructor (private http: HttpClient, 
     private app: AppComponent, 
@@ -21,7 +23,7 @@ export class DashComponent implements OnInit, OnDestroy {
   }
 
   async getData(id: Number) {
-    this.layout = await this.http.get(`http://localhost:3000/layouts/${id}.json`).toPromise();
+    this.layout = await this.http.get(`${this.apiUrl}/layouts/${id}.json`).toPromise();
     this.grids = this.layout.grids;
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
   }

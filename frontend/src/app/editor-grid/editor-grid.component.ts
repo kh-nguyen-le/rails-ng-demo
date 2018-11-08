@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editor-grid',
@@ -10,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class EditorGridComponent implements OnInit {
 
   grids;
+  apiUrl = environment.apiUrl;
 
   constructor(private app: AppComponent,
     private http: HttpClient) {
@@ -17,12 +19,12 @@ export class EditorGridComponent implements OnInit {
   }
 
   deleteGrid(id: Number) {
-    this.http.delete(`http://localhost:3000/grids/${id}`)
+    this.http.delete(`${this.apiUrl}/grids/${id}`)
       .subscribe( () => this.getGrids());
   }
   
   getGrids() {
-    this.http.get('http://localhost:3000/grids')
+    this.http.get(`${this.apiUrl}/grids`)
       .subscribe(res => this.grids = res);
   }
 

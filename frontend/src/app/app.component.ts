@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -11,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent {
   public title = 'Login';
   layouts;
+  apiUrl = environment.apiUrl;
 
   constructor (
     private http: HttpClient) {
@@ -18,7 +20,7 @@ export class AppComponent {
   }
 
   getLayouts() {
-    this.http.get('http://localhost:3000/layouts.json')
+    this.http.get(`${this.apiUrl}/layouts.json`)
       .subscribe(res => this.layouts = res);
   }
 

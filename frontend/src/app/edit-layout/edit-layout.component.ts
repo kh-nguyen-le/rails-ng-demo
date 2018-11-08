@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-layout',
@@ -11,6 +12,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class EditLayoutComponent implements OnInit, OnDestroy {
 
+  apiUrl = environment.apiUrl;
   layout;
   new_grid;
   grids;
@@ -37,7 +39,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
 
   addGrid() {
     if (!this.new_grid) return;
-    this.http.post('http://localhost:3000/layout_grids', {
+    this.http.post(`${this.apiUrl}/layout_grids`, {
       position: this.layout.grids.length,
       layout_id: this.layout.id,
       grid_id: this.new_grid
@@ -50,10 +52,10 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   async removeGrid(index: any) {
     for (let lg of this.layout.layout_grids) {
       if (lg.position == index) {
-        await this.http.delete(`http://localhost:3000/layout_grids/${lg.id}`).subscribe();
+        await this.http.delete(`${this.apiUrl}/layout_grids/${lg.id}`).subscribe();
       }
       else if (lg.position > index) {
-        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
+        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
       }
     }
     this.router.navigate(['/layouts', this.id]);
@@ -62,10 +64,10 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   async shiftGridUp(index: any) {
     for (let lg of this.layout.layout_grids) {
       if (lg.position == index) {
-        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
+        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
       }
       else if (lg.position == index - 1) {
-        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
+        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
       }
       this.router.navigate(['/layouts', this.id]);
     }
@@ -74,17 +76,17 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   async shiftGridDown(index: any) {
     for (let lg of this.layout.layout_grids) {
       if (lg.position == index) {
-        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
+        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
       }
       else if (lg.position == index + 1) {
-        await this.http.put(`http://localhost:3000/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
+        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
       }
     }
     this.router.navigate(['/layouts', this.id]);
   }
 
   onSubmit(){
-    this.http.put(`http://localhost:3000/layouts/${this.id}`, this.form.value)
+    this.http.put(`${this.apiUrl}/layouts/${this.id}`, this.form.value)
       .subscribe( () => { 
         this.snackBar.open('Name and Background updated', '', {
           duration: 2000
@@ -96,7 +98,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   init() {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
-      this.http.get(`http://localhost:3000/layouts/${this.id}`)
+      this.http.get(`${this.apiUrl}/layouts/${this.id}`)
         .subscribe(res => {
           this.layout = res;
           this.form.patchValue({
@@ -105,7 +107,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
           });
         });
     });
-    this.http.get('http://localhost:3000/grids')
+    this.http.get(`${this.apiUrl}/grids`)
       .subscribe(res => this.grids = res);
   }
 

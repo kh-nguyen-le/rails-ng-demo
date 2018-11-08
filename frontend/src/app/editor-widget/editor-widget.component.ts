@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editor-widget',
@@ -10,18 +11,19 @@ import { HttpClient } from '@angular/common/http';
 export class EditorWidgetComponent implements OnInit {
 
   widgets;
+  apiUrl = environment.apiUrl;
 
   constructor(private app: AppComponent,
     private http: HttpClient) { }
 
 
   deleteWidget(id: Number) {
-    this.http.delete(`http://localhost:3000/widgets/${id}`)
+    this.http.delete(`${this.apiUrl}/widgets/${id}`)
       .subscribe( () => this.getWidgets());
     }
     
   getWidgets() {
-    this.http.get('http://localhost:3000/widgets')
+    this.http.get(`${this.apiUrl}/widgets`)
       .subscribe(res => this.widgets = res);
     }
   ngOnInit() {
