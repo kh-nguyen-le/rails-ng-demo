@@ -20,6 +20,7 @@ export class EditorLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.app.title = "Editor - Layouts";
+    this.app.getLayouts();
   }
 
 }
