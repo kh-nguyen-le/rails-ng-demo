@@ -15,7 +15,7 @@ export class DashComponent implements OnInit, OnDestroy {
   grids;
   private sub: any;
   private timer: any;
-  index = 0;
+  index;
   apiUrl = environment.apiUrl;
 
   constructor (private http: HttpClient, 
@@ -29,10 +29,13 @@ export class DashComponent implements OnInit, OnDestroy {
     this.layout = await this.http.get(`${this.apiUrl}/layouts/${id}.json`).toPromise();
     this.grids = this.layout.grids;
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
+    this.index = 0;
     if (this.layout.duration) {
-      this.timer = interval(this.layout.duration);
-      this.timer.subscribe( () =>
+      let source = interval(this.layout.duration);
+      this.timer = source.subscribe( () =>
         this.index = (this.index + 1) % this.layout.grids.length);
+    } else {
+      this.timer.unsubscribe();
     }
   }
 
@@ -47,5 +50,6 @@ export class DashComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.timer.unsubscribe();
   }
 }
