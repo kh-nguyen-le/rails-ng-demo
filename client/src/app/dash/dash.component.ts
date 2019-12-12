@@ -34,7 +34,7 @@ export class DashComponent implements OnInit, OnDestroy {
       let source = interval(this.layout.duration);
       this.timer = source.subscribe( () =>
         this.index = (this.index + 1) % this.layout.grids.length);
-    } else {
+    } else if (this.timer != null) {
       this.timer.unsubscribe();
     }
   }
@@ -50,6 +50,5 @@ export class DashComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
-    this.timer.unsubscribe();
   }
 }
