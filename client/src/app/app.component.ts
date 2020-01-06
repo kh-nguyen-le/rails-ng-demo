@@ -25,6 +25,6 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    
+    this.getLayouts();
   }
 }
