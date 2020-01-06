@@ -5,7 +5,7 @@
     <button mat-icon-button [matMenuTriggerFor]="dashboard" (click)="getLayouts()">
         <mat-icon>dashboard</mat-icon>
     </button>
-    <mat-menu #dashboard="matMenu">
+    <mat-menu #dashboard="matMenu" xPosition="before">
         <div *ngFor="let layout of layouts">
             <button mat-menu-item  [routerLink]="[ '/dash', layout.id ]">
                 {{ layout.name }}
