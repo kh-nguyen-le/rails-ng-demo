@@ -23,7 +23,7 @@
 </form>
 
 <mat-nav-list *ngIf="grid">
-  <h3 mat-subheader>Widgets</h3>
+  <h2 mat-h2>Widgets</h2>
   <mat-form-field>
     <mat-select placeholder="Add Widget" [(ngModel)]="new_widget">
       <mat-option *ngFor="let widget of widgets" [value]="widget.id">

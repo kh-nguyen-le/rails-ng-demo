@@ -18,7 +18,7 @@
 </form>
 
 <mat-nav-list *ngIf="layout">
-  <h3 mat-subheader>Grids</h3>
+  <h2 mat-h2>Grids</h2>
   <mat-form-field>
     <mat-select placeholder="Add Grid" [(ngModel)]="new_grid">
       <mat-option *ngFor="let grid of grids" [value]="grid.id">
