@@ -2,7 +2,8 @@
   "name": "frontend",
   "version": "0.0.0",
   "engines": {
-    "node": "13.5.0"
+    "node": "13.x.x",
+    "npm": "6.x.x"
   },
   "scripts": {
     "ng": "ng",
