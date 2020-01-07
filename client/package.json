@@ -27,7 +27,7 @@
     "@angular/forms": "^9.0.0-rc.7",
     "@angular/http": "^7.0.2",
     "@angular/language-service": "^9.0.0-rc.7",
-    "@angular/material": "^7.0.2",
+    "@angular/material": "^8.2.3",
     "@angular/platform-browser": "^9.0.0-rc.7",
     "@angular/platform-browser-dynamic": "^9.0.0-rc.7",
     "@angular/router": "^9.0.0-rc.7",
