@@ -1,0 +1,21 @@
+{
+  "name": "rails-ng-demo",
+  "version": "1.0.0",
+  "description": "Widget CMS",
+  "directories": {
+    "client": "client"
+  },
+  "scripts": {
+    "heroku-postbuild": "cd client && ng build --prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kh-nguyen-le/rails-ng-demo.git"
+  },
+  "author": "Khoi Nguyen Le",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kh-nguyen-le/rails-ng-demo/issues"
+  },
+  "homepage": "https://github.com/kh-nguyen-le/rails-ng-demo#readme"
+}
