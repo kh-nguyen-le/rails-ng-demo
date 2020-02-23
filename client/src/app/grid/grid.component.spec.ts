@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { element } from 'protractor';
 
 describe('GridComponent', () => {
   let component: GridComponent;

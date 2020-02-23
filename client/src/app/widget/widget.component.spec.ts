@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WidgetComponent } from './widget.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { MatGridListModule } from '@angular/material';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 describe('WidgetComponent', () => {
   let component: WidgetComponent;
@@ -8,7 +13,16 @@ describe('WidgetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WidgetComponent ]
+      declarations: [ 
+        WidgetComponent
+       ],
+       imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatGridListModule,
+        NgxChartsModule
+       ]
     })
     .compileComponents();
   }));
