@@ -70,4 +70,8 @@ export class ConfigService {
      return this.http.get<Layout[]>(`${this.apiUrl}/layouts.json`);
    }
 
+   getLayoutById(id: number) {
+     return this.http.get<Layout>(`${this.apiUrl}/layouts/${id}.json`);
+   }
+
 }

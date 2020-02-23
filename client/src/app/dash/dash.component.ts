@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ConfigService, Layout, Grid} from '../config.service'
 import { environment } from 'src/environments/environment';
 import { interval } from 'rxjs';
 
@@ -11,22 +11,23 @@ import { interval } from 'rxjs';
   styleUrls: ['./dash.component.css']
 })
 export class DashComponent implements OnInit, OnDestroy {
-  layout;
-  grids;
+  layout: Layout;
+  grids: Grid[];
   private sub: any;
   private timer: any;
-  index;
+  index: number;
   apiUrl = environment.apiUrl;
 
-  constructor (private http: HttpClient, 
+  constructor (private conf: ConfigService, 
     private app: AppComponent, 
     private elementRef: ElementRef,
     private route: ActivatedRoute)  {
 
   }
 
-  async getData(id: Number) {
-    this.layout = await this.http.get(`${this.apiUrl}/layouts/${id}.json`).toPromise();
+  async getData(id: number) {
+    this.conf.getLayoutById(id)
+      .subscribe(res => this.layout = res);
     this.grids = this.layout.grids;
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
     this.index = 0;
