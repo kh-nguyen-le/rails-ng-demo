@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService, Layout, Grid} from '../config.service'
-import { environment } from 'src/environments/environment';
 import { interval } from 'rxjs';
 
 @Component({
@@ -16,7 +15,6 @@ export class DashComponent implements OnInit, OnDestroy {
   private sub: any;
   private timer: any;
   index: number;
-  apiUrl = environment.apiUrl;
 
   constructor (private conf: ConfigService, 
     private app: AppComponent, 
@@ -26,8 +24,7 @@ export class DashComponent implements OnInit, OnDestroy {
   }
 
   async getData(id: number) {
-    this.conf.getLayoutById(id)
-      .subscribe(res => this.layout = res);
+    this.layout = await this.conf.getLayoutById(id).toPromise();
     this.grids = this.layout.grids;
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
     this.index = 0;
@@ -46,6 +43,7 @@ export class DashComponent implements OnInit, OnDestroy {
     this.app.title = "Dashboard";
     this.sub = this.route.params.subscribe(params => {
       let id = +params['id'];
+      if (id < 1) id = 1;
       this.getData(id);
     });
   }

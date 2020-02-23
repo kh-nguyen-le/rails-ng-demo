@@ -7,14 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { Grid } from '../config.service';
 
 describe('GridComponent', () => {
   let component: GridComponent;
   let fixture: ComponentFixture<GridComponent>;
-  const grid = {
-    id: 1
-  }
-
+  let grid: Grid = {id: 1, name: '1', title: '2', widgets: [], layouts: [], layout_grids: [], grid_widgets: [] };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ 

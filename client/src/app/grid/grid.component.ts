@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { ConfigService, Grid, Widget} from '../config.service'
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,10 +11,10 @@ export class GridComponent implements OnInit {
   @Input() grid;
   widgets;
   apiUrl = environment.apiUrl;
-  constructor(private http: HttpClient) { }
+  constructor(private conf: ConfigService) { }
 
   async getData() {
-    let data: any = await this.http.get(`${this.apiUrl}/grids/${this.grid.id}.json`).toPromise();
+    let data: Grid = await this.conf.getGridById(this.grid.id).toPromise();
     this.widgets = data.widgets;
   }
 
