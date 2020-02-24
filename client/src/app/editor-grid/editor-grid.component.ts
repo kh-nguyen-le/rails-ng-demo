@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { ConfigService, Grid } from '../config.service'
 
 @Component({
   selector: 'app-editor-grid',
@@ -10,21 +9,20 @@ import { environment } from 'src/environments/environment';
 })
 export class EditorGridComponent implements OnInit {
 
-  grids;
-  apiUrl = environment.apiUrl;
+  grids: Grid[];
 
   constructor(private app: AppComponent,
-    private http: HttpClient) {
+    private conf: ConfigService) {
 
   }
 
-  deleteGrid(id: Number) {
-    this.http.delete(`${this.apiUrl}/grids/${id}`)
+  deleteGrid(id: number) {
+    this.conf.deleteGrid(id)
       .subscribe( () => this.getGrids());
   }
   
   getGrids() {
-    this.http.get(`${this.apiUrl}/grids`)
+    this.conf.getGrids()
       .subscribe(res => this.grids = res);
   }
 

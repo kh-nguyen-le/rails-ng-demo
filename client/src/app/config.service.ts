@@ -26,6 +26,8 @@ export interface Grid {
   id: number;
   name: string;
   title: string;
+  col: number;
+  size: string;
   widgets: Widget[];
   layouts: Layout[];
   layout_grids: LayoutGrid[];
@@ -82,12 +84,138 @@ export class ConfigService {
       );
    }
 
+   getGrids() {
+    return this.http.get<Grid[]>(`${this.apiUrl}/grids.json`)
+     .pipe(
+       catchError(this.handleError)
+     );
+  }
+
    getGridById(id: number) {
      return this.http.get<Grid>(`${this.apiUrl}/grids/${id}.json`)
-     .pipe(
-      catchError(this.handleError)
+      .pipe(
+        catchError(this.handleError)
     );
    }
+
+   getWidgets() {
+    return this.http.get<Widget[]>(`${this.apiUrl}/widgets.json`)
+     .pipe(
+       catchError(this.handleError)
+     );
+  }
+
+   getWidgetById(id: number) {
+     return this.http.get<Widget>(`${this.apiUrl}/widgets/${id}.json`)
+      .pipe(
+        catchError(this.handleError)
+    );
+   }
+
+   createWidget(formData: Widget) {
+    return this.http.post(`${this.apiUrl}/widgets`, formData)
+      .pipe(
+        catchError(this.handleError)
+    );
+   }
+
+   createGrid(formData: Grid) {
+    return this.http.post(`${this.apiUrl}/grids`, formData)
+      .pipe(
+        catchError(this.handleError)
+    );
+   }
+
+   createLayout(formData: Layout) {
+    return this.http.post(`${this.apiUrl}/layouts`, formData)
+      .pipe(
+        catchError(this.handleError)
+    );
+   }
+
+   createLayoutGrid(data: LayoutGrid) {
+     return this.http.post(`${this.apiUrl}/layout_grids`, data)
+      .pipe(
+        catchError(this.handleError)
+      );
+   }
+
+   createGridWidget(data: GridWidget) {
+    return this.http.post(`${this.apiUrl}/grid_widgets`, data)
+     .pipe(
+       catchError(this.handleError)
+     );
+  }
+
+   updateWidget(id: number, formData: Widget) {
+     return this.http.put(`${this.apiUrl}/widgets/${id}`, formData)
+      .pipe(
+        catchError(this.handleError)
+      );
+   }
+
+   updateGrid(id: number, formData: Grid) {
+    return this.http.put(`${this.apiUrl}/grids/${id}`, formData)
+     .pipe(
+       catchError(this.handleError)
+     );
+  }
+
+  updateLayout(id: number, formData: Layout) {
+    return this.http.put(`${this.apiUrl}/layouts/${id}`, formData)
+     .pipe(
+       catchError(this.handleError)
+     );
+  }
+
+  updateLayoutGrid(data: LayoutGrid) {
+    return this.http.put(`${this.apiUrl}/layout_grids/${data.id}`, data)
+     .pipe(
+       catchError(this.handleError)
+     );
+  }
+
+  updateGridWidget(data: GridWidget) {
+    return this.http.put(`${this.apiUrl}/grids_widgets/${data.id}`, data)
+     .pipe(
+       catchError(this.handleError)
+     );
+  }
+
+  deleteWidget(id: number) {
+    return this.http.delete(`${this.apiUrl}/widgets/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteGrid(id: number) {
+    return this.http.delete(`${this.apiUrl}/grids/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteLayout(id: number) {
+    return this.http.delete(`${this.apiUrl}/layouts/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );    
+  }
+
+  deleteLayoutGrid(id: number) {
+    return this.http.delete(`${this.apiUrl}/layout_grids/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteGridWidget(id: number) {
+    return this.http.delete(`${this.apiUrl}/grid_widgets/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
 
    private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

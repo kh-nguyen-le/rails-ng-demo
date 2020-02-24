@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ConfigService, Layout, Grid, LayoutGrid } from '../config.service'
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-layout',
@@ -12,17 +11,17 @@ import { environment } from 'src/environments/environment';
 })
 export class EditLayoutComponent implements OnInit, OnDestroy {
 
-  apiUrl = environment.apiUrl;
-  layout;
-  new_grid;
-  grids;
+  layout: Layout;
+  new_grid: number;
+  grids: Grid[];
+  targetLG: LayoutGrid;
   form: FormGroup;
-  id: Number;
+  id: number;
   private sub: any;
   private nav: any;
 
   constructor(private fb: FormBuilder,
-    private http: HttpClient,
+    private conf: ConfigService,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
     private router: Router) {
@@ -40,54 +39,77 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
 
   addGrid() {
     if (!this.new_grid) return;
-    this.http.post(`${this.apiUrl}/layout_grids`, {
+    this.targetLG = {
       position: this.layout.grids.length,
       layout_id: this.layout.id,
-      grid_id: this.new_grid
-    }).subscribe( () => {
-      this.router.navigate(['/layouts', this.id]);
-    }
+      grid_id: this.new_grid,
+      id: null
+    };
+    this.conf.createLayoutGrid(this.targetLG)
+      .subscribe( () => {
+        this.router.navigate(['/layouts', this.id]);
+      }
     );
   }
 
-  async removeGrid(index: any) {
+  async removeGrid(index: number) {
     for (let lg of this.layout.layout_grids) {
       if (lg.position == index) {
-        await this.http.delete(`${this.apiUrl}/layout_grids/${lg.id}`).subscribe();
+        this.conf.deleteLayoutGrid(lg.id).subscribe();
       }
       else if (lg.position > index) {
-        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
+        this.targetLG = {
+          position: lg.position - 1,
+          layout_id: lg.layout_id,
+          grid_id: lg.grid_id,
+          id: lg.id
+        };
+        this.conf.updateLayoutGrid(this.targetLG).subscribe();
       }
     }
     this.router.navigate(['/layouts', this.id]);
   }
 
-  async shiftGridUp(index: any) {
+  async shiftGridUp(index: number) {
     for (let lg of this.layout.layout_grids) {
+      this.targetLG = {
+        position: lg.position,
+        layout_id: lg.layout_id,
+        grid_id: lg.grid_id,
+        id: lg.id
+      };
       if (lg.position == index) {
-        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
+        this.targetLG.position -= 1;
       }
       else if (lg.position == index - 1) {
-        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
-      }
-      this.router.navigate(['/layouts', this.id]);
+        this.targetLG.position += 1;
+      } 
+      this.conf.updateLayoutGrid(this.targetLG).subscribe();
     }
+    this.router.navigate(['/layouts', this.id]);
   }
 
-  async shiftGridDown(index: any) {
+  async shiftGridDown(index: number) {
     for (let lg of this.layout.layout_grids) {
+      this.targetLG = {
+        position: lg.position,
+        layout_id: lg.layout_id,
+        grid_id: lg.grid_id,
+        id: lg.id
+      };
       if (lg.position == index) {
-        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position + 1}).subscribe();
+        this.targetLG.position += 1;
       }
       else if (lg.position == index + 1) {
-        await this.http.put(`${this.apiUrl}/layout_grids/${lg.id}`, {position: lg.position - 1}).subscribe();
+        this.targetLG.position -= 1;
       }
+      this.conf.updateLayoutGrid(this.targetLG).subscribe();
     }
     this.router.navigate(['/layouts', this.id]);
   }
 
   onSubmit(){
-    this.http.put(`${this.apiUrl}/layouts/${this.id}`, this.form.value)
+    this.conf.updateLayout(this.layout.id, this.form.value)
       .subscribe( () => { 
         this.snackBar.open('Primary Attributes updated', '', {
           duration: 2000
@@ -99,7 +121,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   init() {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
-      this.http.get(`${this.apiUrl}/layouts/${this.id}`)
+      this.conf.getLayoutById(this.id)
         .subscribe(res => {
           this.layout = res;
           this.form.patchValue({
@@ -109,7 +131,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
           });
         });
     });
-    this.http.get(`${this.apiUrl}/grids`)
+    this.conf.getGrids()
       .subscribe(res => this.grids = res);
   }
 

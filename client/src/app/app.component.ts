@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public title = 'Login';
+  public title = 'ng-rails demo';
   layouts: Layout[];
   apiUrl = environment.apiUrl;
 

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConfigService, Grid, Widget} from '../config.service'
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-grid',
@@ -10,7 +9,6 @@ import { environment } from 'src/environments/environment';
 export class GridComponent implements OnInit {
   @Input() grid;
   widgets;
-  apiUrl = environment.apiUrl;
   constructor(private conf: ConfigService) { }
 
   async getData() {

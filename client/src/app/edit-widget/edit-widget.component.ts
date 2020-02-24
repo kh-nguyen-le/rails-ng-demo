@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ConfigService, Widget } from '../config.service'
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-edit-widget',
@@ -12,16 +11,15 @@ import { environment } from 'src/environments/environment';
 })
 export class EditWidgetComponent implements OnInit, OnDestroy {
 
-  apiUrl = environment.apiUrl;
-  widget;
+  widget: Widget;
   form: FormGroup;
   results: FormControl;
-  id: Number;
+  id: number;
   private sub: any;
   private nav: any;
 
   constructor(fb: FormBuilder,
-    private http: HttpClient,
+    private conf: ConfigService,
     public snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute) {
@@ -50,7 +48,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
 
   onSubmit(){
     
-    this.http.put(`${this.apiUrl}/widgets/${this.id}`, this.form.value)
+    this.conf.updateWidget(this.id, this.form.value)
       .subscribe( () => {
         this.snackBar.open('Primary Attributes updated', '', {
           duration: 2000
@@ -60,9 +58,8 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
    }
 
    submitData(){
-    let res = JSON.parse(this.results.value);
-    let widget = {results: res}; 
-    this.http.put(`${this.apiUrl}/widgets/${this.id}`, widget)
+    let widget: Widget = {id: this.id, name: this.form.value.name, config: this.form.value.config, results: JSON.parse(this.results.value)}
+    this.conf.updateWidget(this.id, widget)
       .subscribe( () => {
         this.snackBar.open('Data Entered', '', {
           duration: 2000
@@ -74,7 +71,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
    init() {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
-      this.http.get(`${this.apiUrl}/widgets/${this.id}`)
+      this.conf.getWidgetById(this.id)
         .subscribe(res => {
           this.widget = res;
           this.form.patchValue({

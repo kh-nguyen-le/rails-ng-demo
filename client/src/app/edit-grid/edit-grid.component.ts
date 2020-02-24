@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ConfigService, Grid, Widget, GridWidget } from '../config.service'
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from 'src/environments/environment';
-
 @Component({
   selector: 'app-edit-grid',
   templateUrl: './edit-grid.component.html',
@@ -12,17 +10,17 @@ import { environment } from 'src/environments/environment';
 })
 export class EditGridComponent implements OnInit {
 
-  apiUrl = environment.apiUrl;
-  grid;
-  widgets;
-  new_widget;
+  grid: Grid;
+  widgets: Widget[];
+  new_widget: number;
+  targetGW: GridWidget;
   form: FormGroup;
-  id: Number;
+  id: number;
   private sub: any;
   private nav: any;
 
   constructor(fb: FormBuilder,
-    private http: HttpClient,
+    private conf: ConfigService,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
     private router: Router) {
@@ -41,54 +39,85 @@ export class EditGridComponent implements OnInit {
 
    addWidget() {
     if (!this.new_widget) return;
-    this.http.post(`${this.apiUrl}/grid_widgets`, {
+    this.targetGW = {
       position: this.grid.widgets.length,
       grid_id: this.grid.id,
-      widget_id: this.new_widget
-    }).subscribe( () => {
-      this.router.navigate(['/grids', this.id]);
-    }
+      widget_id: this.new_widget,
+      length: null, // TODO: Implement custom widget length and width
+      width: null,
+      id: null
+    };
+    this.conf.createGridWidget(this.targetGW)
+      .subscribe( () => {
+        this.router.navigate(['/grids', this.id]);
+      }
     );
   }
 
-  async removeWidget(index: any) {
+  async removeWidget(index: number) {
     for (let gw of this.grid.grid_widgets) {
       if (gw.position == index) {
-        await this.http.delete(`${this.apiUrl}/grid_widgets/${gw.id}`).subscribe();
+        this.conf.deleteGridWidget(gw.id).subscribe();
       }
       else if (gw.position > index) {
-        await this.http.put(`${this.apiUrl}/grid_widgets/${gw.id}`, {position: gw.position - 1}).subscribe();
+        this.targetGW = {
+          position: gw.position - 1,
+          grid_id: gw.grid_id,
+          widget_id: gw.widget_id,
+          length: gw.length,
+          width: gw.width,
+          id: gw.id
+        };
+        this.conf.updateGridWidget(this.targetGW).subscribe();
       }
     }
     this.router.navigate(['/grids', this.id]);
   }
 
-  async shiftWidgetUp(index: any) {
+  async shiftWidgetUp(index: number) {
     for (let gw of this.grid.grid_widgets) {
+      this.targetGW = {
+        position: gw.position,
+        grid_id: gw.grid_id,
+        widget_id: gw.widget_id,
+        length: gw.length,
+        width: gw.width,
+        id: gw.id
+      };
       if (gw.position == index) {
-        await this.http.put(`${this.apiUrl}/grid_widgets/${gw.id}`, {position: gw.position - 1}).subscribe();
+        this.targetGW.position -= 1;
       }
       else if (gw.position == (index - 1)) {
-        await this.http.put(`${this.apiUrl}/grid_widgets/${gw.id}`, {position: gw.position + 1}).subscribe();
+        this.targetGW.position += 1;
       }
+      this.conf.updateGridWidget(this.targetGW).subscribe();
     }
     this.router.navigate(['/grids', this.id]);
   }
 
-  async shiftWidgetDown(index: any) {
+  async shiftWidgetDown(index: number) {
     for (let gw of this.grid.grid_widgets) {
+      this.targetGW = {
+        position: gw.position,
+        grid_id: gw.grid_id,
+        widget_id: gw.widget_id,
+        length: gw.length,
+        width: gw.width,
+        id: gw.id
+      };
       if (gw.position == index) {
-        await this.http.put(`${this.apiUrl}/grid_widgets/${gw.id}`, {position: gw.position + 1}).subscribe();
+        this.targetGW.position += 1;
       }
       else if (gw.position == index + 1) {
-        await this.http.put(`${this.apiUrl}/grid_widgets/${gw.id}`, {position: gw.position - 1}).subscribe();
+        this.targetGW.position -= 1;
       }
+      this.conf.updateGridWidget(this.targetGW).subscribe();
     }
     this.router.navigate(['/grids', this.id]);
   }
 
   onSubmit(){
-    this.http.put(`${this.apiUrl}/grids/${this.id}`, this.form.value)
+    this.conf.updateGrid(this.id, this.form.value)
       .subscribe(res => { 
         this.snackBar.open('Primary Attributes updated', '', {
           duration: 2000
@@ -100,7 +129,7 @@ export class EditGridComponent implements OnInit {
   init() {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
-      this.http.get(`${this.apiUrl}/grids/${this.id}`)
+      this.conf.getGridById(this.id)
         .subscribe(res => {
           this.grid = res;
           this.form.patchValue({
@@ -111,7 +140,7 @@ export class EditGridComponent implements OnInit {
           });
         });
     });
-    this.http.get(`${this.apiUrl}/widgets`)
+    this.conf.getWidgets()
       .subscribe(res => this.widgets = res);
   }
 

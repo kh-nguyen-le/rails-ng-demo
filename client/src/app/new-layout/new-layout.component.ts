@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ConfigService } from '../config.service'
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-new-layout',
@@ -13,10 +12,9 @@ export class NewLayoutComponent implements OnInit {
 
   form: FormGroup;
   new_id;
-  apiUrl = environment.apiUrl;
   
   constructor(fb: FormBuilder,
-    private http: HttpClient,
+    private conf: ConfigService,
     private router: Router) {
     this.form = fb.group({
       name: '',
@@ -26,7 +24,7 @@ export class NewLayoutComponent implements OnInit {
    }
 
    onSubmit(){
-    this.http.post(`${this.apiUrl}/layouts`, this.form.value)
+    this.conf.createLayout(this.form.value)
       .subscribe(res => { this.new_id = res;
         this.router.navigate(['/layouts', this.new_id.id]);}
       );

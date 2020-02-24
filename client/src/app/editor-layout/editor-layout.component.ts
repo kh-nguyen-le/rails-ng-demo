@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { ConfigService } from '../config.service';
 
 @Component({
   selector: 'app-editor-layout',
@@ -10,16 +9,14 @@ import { environment } from 'src/environments/environment';
 })
 export class EditorLayoutComponent implements OnInit {
 
-  apiUrl = environment.apiUrl;
+  constructor(public app: AppComponent,
+    private conf: ConfigService,
+    ) { }
 
-  deleteLayout(id: Number) {
-    this.http.delete(`${this.apiUrl}/layouts/${id}`)
+  deleteLayout(id: number) {
+    this.conf.deleteLayout(id)
       .subscribe( () => this.app.getLayouts());
   }
-
-  constructor(public app: AppComponent,
-    private http: HttpClient,
-    ) { }
 
   ngOnInit() {
     this.app.title = "Editor - Layouts";

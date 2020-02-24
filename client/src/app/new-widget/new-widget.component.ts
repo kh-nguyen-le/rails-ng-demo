@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { ConfigService } from '../config.service'
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment'
 
 
 @Component({
@@ -14,10 +13,9 @@ export class NewWidgetComponent implements OnInit {
 
   form: FormGroup;
   new_id;
-  apiUrl = environment.apiUrl;
 
   constructor(fb: FormBuilder,
-    private http: HttpClient,
+    private conf: ConfigService,
     private router: Router) {
       this.form = fb.group({
         name: '',
@@ -38,7 +36,7 @@ export class NewWidgetComponent implements OnInit {
 
   onSubmit(){
     
-    this.http.post(`${this.apiUrl}/widgets`, this.form.value)
+    this.conf.createWidget(this.form.value)
       .subscribe(res => { this.new_id = res;
         this.router.navigate(['/widgets', this.new_id.id]);}
       );

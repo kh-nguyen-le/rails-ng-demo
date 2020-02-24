@@ -43,7 +43,7 @@ export class DashComponent implements OnInit, OnDestroy {
     this.app.title = "Dashboard";
     this.sub = this.route.params.subscribe(params => {
       let id = +params['id'];
-      if (id < 1) id = 1;
+      if (id < 1) id = 1; //fix test-only NaN error
       this.getData(id);
     });
   }

@@ -1,14 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ConfigService } from './config.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('ConfigService', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      HttpClientModule
-    ]
-  }));
+  let httpClient: HttpClient;
+  let HttpTestingController: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ]
+  })
+    httpClient = TestBed.get(HttpClient);
+  });
 
   it('should be created', () => {
     const service: ConfigService = TestBed.get(ConfigService);
