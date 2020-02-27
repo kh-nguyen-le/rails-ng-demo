@@ -195,7 +195,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 3.12)
   rack-cors
-  rails (~> 6.0.1)
+  rails (~> 6.0.2.1)
   solargraph
   spring
   spring-watcher-listen (~> 2.0.0)
