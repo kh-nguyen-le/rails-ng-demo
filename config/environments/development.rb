@@ -1,6 +1,10 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Explicitly set actioncable url
+  config.action_cable.url = 'ws://localhost:3000/cable'
+  config.action_cable.disable_request_forgery_protection = true
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
