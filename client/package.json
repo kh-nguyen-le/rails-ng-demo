@@ -32,7 +32,6 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "@swimlane/ngx-charts": "^13.0.1",
     "@types/node": "^12.11.1",
-    "angular2-actioncable": "^6.0.2",
     "codelyzer": "^5.1.2",
     "core-js": "^2.5.4",
     "rxjs": "^6.5.4",
