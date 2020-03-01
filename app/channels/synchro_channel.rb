@@ -5,5 +5,10 @@ class SynchroChannel < ApplicationCable::Channel
 
   def unsubscribed
     # Any cleanup needed when channel is unsubscribed
-  end  
+  end
+
+  def receive(data)
+    ActionCable.server.broadcast(component_channel, data)
+  end
+
 end

@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService, Layout, Grid} from '../config.service'
-import { interval } from 'rxjs';
+import { interval, Observable, of } from 'rxjs';
+import { CableService } from '../cable.service';
 
 @Component({
   selector: 'app-dash',
@@ -11,21 +12,25 @@ import { interval } from 'rxjs';
 })
 export class DashComponent implements OnInit, OnDestroy {
   layout: Layout;
-  grids: Grid[];
+  grids$: Observable<Grid[]>;
   private sub: any;
   private timer: any;
   index: number;
+  id: number;
+  channel: ActionCable.Channel;
 
   constructor (private conf: ConfigService, 
     private app: AppComponent, 
     private elementRef: ElementRef,
-    private route: ActivatedRoute)  {
+    private route: ActivatedRoute,
+    private cs: CableService)  {
 
   }
 
   async getData(id: number) {
+    this.newChannel();
     this.layout = await this.conf.getLayoutById(id).toPromise();
-    this.grids = this.layout.grids;
+    this.grids$ = of(this.layout.grids);
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
     this.index = 0;
     if (this.layout.duration) {
@@ -37,17 +42,37 @@ export class DashComponent implements OnInit, OnDestroy {
     }
   }
 
+  newChannel() {
+    if (this.channel != null) this.channel.unsubscribe();
+    this.channel = this.cs.joinSynchroChannel('layout', this.id, {
+      connected() {
+        return console.log(`layout: Connected.`);
+      },
+      disconnected() {
+        return console.log(`layout: Disconnected.`)
+      },
+      received: (data: Layout) => this.refresh(data)
+    });
+  }
+
+  refresh (data: Layout) {
+    console.log('New data received. Updating.');
+    this.grids$ = of(data.grids);
+  }
+
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.app.title = "Dashboard";
     this.sub = this.route.params.subscribe(params => {
-      let id = +params['id'];
-      if (id < 1) id = 1; //fix test-only NaN error
-      this.getData(id);
+      this.id = +params['id'];
+      if (this.id < 1) this.id = 1; //fix test-only NaN error
+      this.getData(this.id);
     });
   }
+  
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.channel.unsubscribe();
   }
 }

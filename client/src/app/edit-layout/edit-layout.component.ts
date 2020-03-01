@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ConfigService, Layout, Grid, LayoutGrid } from '../config.service'
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CableService } from '../cable.service';
 
 @Component({
   selector: 'app-edit-layout',
@@ -19,12 +20,14 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   id: number;
   private sub: any;
   private nav: any;
+  synchro: ActionCable.Channel;
 
   constructor(private fb: FormBuilder,
     private conf: ConfigService,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
-    private router: Router) {
+    private router: Router,
+    private cs: CableService) {
       this.form = fb.group({
         name: '',
         background: '',
@@ -47,7 +50,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     };
     this.conf.createLayoutGrid(this.targetLG)
       .subscribe( () => {
-        this.router.navigate(['/layouts', this.id]);
+        this.update();
       }
     );
   }
@@ -67,7 +70,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
         this.conf.updateLayoutGrid(this.targetLG).subscribe();
       }
     }
-    this.router.navigate(['/layouts', this.id]);
+    this.update();
   }
 
   async shiftGridUp(index: number) {
@@ -86,7 +89,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       } 
       this.conf.updateLayoutGrid(this.targetLG).subscribe();
     }
-    this.router.navigate(['/layouts', this.id]);
+    this.update();
   }
 
   async shiftGridDown(index: number) {
@@ -105,7 +108,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       }
       this.conf.updateLayoutGrid(this.targetLG).subscribe();
     }
-    this.router.navigate(['/layouts', this.id]);
+    this.update();
   }
 
   onSubmit(){
@@ -135,8 +138,28 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       .subscribe(res => this.grids = res);
   }
 
+  update() {
+    this.conf.getLayoutById(this.id)
+      .subscribe(res => {
+        this.synchro.send(res);
+      });
+    this.router.navigate(['/layouts', this.id]);
+  }
+
+  newSynchro() {
+    if (this.synchro != null) this.synchro.unsubscribe();
+    this.synchro = this.cs.joinSynchroChannel('layout', this.id, {
+      connected() {
+        return console.log(`layout: Connected.`);
+      },
+      disconnected() {
+        return console.log(`layout: Disconnected.`)
+      }
+    });
+  }
+
   ngOnInit() {
-    
+    this.newSynchro();
   }
 
   ngOnDestroy() {
