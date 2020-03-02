@@ -3,7 +3,7 @@ class GridWidgetsController < ApplicationController
 
   # GET /grids
   def index
-    @grid_widgets = Grid.all
+    @grid_widgets = GridWidget.all
 
     render json: @grid_widgets
   end
