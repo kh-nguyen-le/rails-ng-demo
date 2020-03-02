@@ -1,6 +1,6 @@
 <mat-grid-list [cols]="grid.col" [rowHeight]="grid.size">
   <mat-grid-tile
-    *ngFor="let widget of widgets">
+    *ngFor="let widget of (widgets$ | async)">
     <app-widget
       [widget]="widget"
     ></app-widget>

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ConfigService, Grid, Widget, GridWidget } from '../config.service'
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CableService } from '../cable.service';
 @Component({
   selector: 'app-edit-grid',
   templateUrl: './edit-grid.component.html',
@@ -18,12 +19,14 @@ export class EditGridComponent implements OnInit {
   id: number;
   private sub: any;
   private nav: any;
+  synchro: ActionCable.Channel;
 
   constructor(fb: FormBuilder,
     private conf: ConfigService,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
-    private router: Router) {
+    private router: Router,
+    private cs: CableService) {
     this.form = fb.group({
       name: '',
       title: '',
@@ -49,7 +52,7 @@ export class EditGridComponent implements OnInit {
     };
     this.conf.createGridWidget(this.targetGW)
       .subscribe( () => {
-        this.router.navigate(['/grids', this.id]);
+        this.update();
       }
     );
   }
@@ -57,7 +60,7 @@ export class EditGridComponent implements OnInit {
   async removeWidget(index: number) {
     for (let gw of this.grid.grid_widgets) {
       if (gw.position == index) {
-        this.conf.deleteGridWidget(gw.id).subscribe();
+        await this.conf.deleteGridWidget(gw.id).toPromise();
       }
       else if (gw.position > index) {
         this.targetGW = {
@@ -68,10 +71,10 @@ export class EditGridComponent implements OnInit {
           width: gw.width,
           id: gw.id
         };
-        this.conf.updateGridWidget(this.targetGW).subscribe();
+        await this.conf.updateGridWidget(this.targetGW).toPromise();
       }
     }
-    this.router.navigate(['/grids', this.id]);
+    this.update();
   }
 
   async shiftWidgetUp(index: number) {
@@ -90,9 +93,9 @@ export class EditGridComponent implements OnInit {
       else if (gw.position == (index - 1)) {
         this.targetGW.position += 1;
       }
-      this.conf.updateGridWidget(this.targetGW).subscribe();
+      await this.conf.updateGridWidget(this.targetGW).toPromise();
     }
-    this.router.navigate(['/grids', this.id]);
+    this.update();
   }
 
   async shiftWidgetDown(index: number) {
@@ -111,9 +114,9 @@ export class EditGridComponent implements OnInit {
       else if (gw.position == index + 1) {
         this.targetGW.position -= 1;
       }
-      this.conf.updateGridWidget(this.targetGW).subscribe();
+      await this.conf.updateGridWidget(this.targetGW).toPromise();
     }
-    this.router.navigate(['/grids', this.id]);
+    this.update();
   }
 
   onSubmit(){
@@ -144,7 +147,34 @@ export class EditGridComponent implements OnInit {
       .subscribe(res => this.widgets = res);
   }
 
+  update() {
+    this.conf.getGridById(this.id)
+      .subscribe(res => {
+        this.grid = res;
+        this.synchro.send(res);
+      });
+    this.router.navigate(['/grids', this.id]);
+  }
+
+  newSynchro() {
+    if (this.synchro != null) this.synchro.unsubscribe();
+    this.synchro = this.cs.joinSynchroChannel('grid', this.id, {
+      connected() {
+        return console.log(`grid: Connected.`);
+      },
+      disconnected() {
+        return console.log(`grid: Disconnected.`)
+      }
+    });
+  }
+
   ngOnInit() {
+    this.newSynchro();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+    this.nav.unsubscribe();
   }
 
 }
