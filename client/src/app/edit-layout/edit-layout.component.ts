@@ -58,7 +58,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   async removeGrid(index: number) {
     for (let lg of this.layout.layout_grids) {
       if (lg.position == index) {
-        this.conf.deleteLayoutGrid(lg.id).subscribe();
+        await this.conf.deleteLayoutGrid(lg.id).toPromise();
       }
       else if (lg.position > index) {
         this.targetLG = {
@@ -67,7 +67,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
           grid_id: lg.grid_id,
           id: lg.id
         };
-        this.conf.updateLayoutGrid(this.targetLG).subscribe();
+        await this.conf.updateLayoutGrid(this.targetLG).toPromise();
       }
     }
     this.update();
@@ -87,7 +87,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       else if (lg.position == index - 1) {
         this.targetLG.position += 1;
       } 
-      this.conf.updateLayoutGrid(this.targetLG).subscribe();
+      await this.conf.updateLayoutGrid(this.targetLG).toPromise();
     }
     this.update();
   }
@@ -106,7 +106,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       else if (lg.position == index + 1) {
         this.targetLG.position -= 1;
       }
-      this.conf.updateLayoutGrid(this.targetLG).subscribe();
+      await this.conf.updateLayoutGrid(this.targetLG).toPromise();
     }
     this.update();
   }
