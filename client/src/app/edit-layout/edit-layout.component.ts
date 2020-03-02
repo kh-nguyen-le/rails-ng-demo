@@ -141,6 +141,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   update() {
     this.conf.getLayoutById(this.id)
       .subscribe(res => {
+        this.layout = res;
         this.synchro.send(res);
       });
     this.router.navigate(['/layouts', this.id]);
