@@ -176,7 +176,7 @@ export class ConfigService {
   }
 
   updateGridWidget(data: GridWidget) {
-    return this.http.put(`${this.apiUrl}/grids_widgets/${data.id}`, data)
+    return this.http.put(`${this.apiUrl}/grid_widgets/${data.id}`, data)
      .pipe(
        catchError(this.handleError)
      );
