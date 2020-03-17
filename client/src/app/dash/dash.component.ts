@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { AppComponent } from '../app.component';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService, Layout, Grid} from '../config.service'
 import { interval, Observable, of } from 'rxjs';
 import { CableService } from '../cable.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dash',
@@ -20,11 +20,11 @@ export class DashComponent implements OnInit, OnDestroy {
   channel: ActionCable.Channel;
 
   constructor (private conf: ConfigService, 
-    private app: AppComponent, 
+    private titleService: Title, 
     private elementRef: ElementRef,
     private route: ActivatedRoute,
     private cs: CableService)  {
-
+      this.titleService.setTitle("Dashboard");
   }
 
   async getData(id: number) {
@@ -63,7 +63,7 @@ export class DashComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.app.title = "Dashboard";
+    
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
       if (this.id < 1) this.id = 1; //fix test-only NaN error

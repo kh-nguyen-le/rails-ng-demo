@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../app.component';
 import { ConfigService, Grid } from '../config.service'
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editor-grid',
@@ -11,9 +11,9 @@ export class EditorGridComponent implements OnInit {
 
   grids: Grid[];
 
-  constructor(private app: AppComponent,
+  constructor(private titleService: Title,
     private conf: ConfigService) {
-
+      this.titleService.setTitle("Editor - Grids");
   }
 
   deleteGrid(id: number) {
@@ -27,7 +27,6 @@ export class EditorGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.app.title = "Editor - Grids";
     this.getGrids();
   }
 

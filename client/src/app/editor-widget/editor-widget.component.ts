@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../app.component';
 import { ConfigService, Widget } from '../config.service'
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editor-widget',
@@ -11,8 +11,10 @@ export class EditorWidgetComponent implements OnInit {
 
   widgets: Widget[];
 
-  constructor(private app: AppComponent,
-    private conf: ConfigService) { }
+  constructor(private titleService: Title,
+    private conf: ConfigService) {
+      this.titleService.setTitle("Editor - Widgets");
+     }
 
 
   deleteWidget(id: number) {
@@ -25,7 +27,6 @@ export class EditorWidgetComponent implements OnInit {
       .subscribe(res => this.widgets = res)
     }
   ngOnInit() {
-    this.app.title = "Editor - Widgets";
     this.getWidgets();
   }
 

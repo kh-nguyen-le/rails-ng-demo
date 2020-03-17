@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ConfigService, Layout } from './config.service'
 import { environment } from 'src/environments/environment';
+import { Title } from '@angular/platform-browser';
 
 
 
@@ -10,12 +11,12 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public title = 'ng-rails demo';
   layouts: Layout[];
   apiUrl = environment.apiUrl;
 
-  constructor (private conf: ConfigService) {
-
+  constructor (private conf: ConfigService,
+    public titleService: Title) {
+      this.titleService.setTitle('rails-ng demo');
   }
 
   getLayouts() {

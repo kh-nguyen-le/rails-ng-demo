@@ -4,7 +4,7 @@
       <mat-icon>fiber_new</mat-icon>
     </button>
   </mat-list-item>
-  <mat-list-item *ngFor="let layout of app.layouts">
+  <mat-list-item *ngFor="let layout of layouts">
     <a matLine [routerLink]="[ '/layouts/', layout.id]"> {{ layout.name }} </a>
     <button mat-icon-button (click)="deleteLayout(layout.id)">
       <mat-icon>delete_forever</mat-icon>
