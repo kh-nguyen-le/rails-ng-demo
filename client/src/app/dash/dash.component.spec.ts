@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { AppComponent } from '../app.component';
 import { RouterTestingModule } from '@angular/router/testing'
 
 describe('DashComponent', () => {
@@ -33,7 +32,6 @@ describe('DashComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        AppComponent,
       ]
     })
     .compileComponents();

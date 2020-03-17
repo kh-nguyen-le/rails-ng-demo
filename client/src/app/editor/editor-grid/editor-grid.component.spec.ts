@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditGridComponent } from './edit-grid.component';
-import { EditorGridComponent } from '../editor-grid/editor-grid.component';
+import { EditorGridComponent } from './editor-grid.component';
+import { EditGridComponent } from '../edit-grid/edit-grid.component';
 import { NewGridComponent } from '../new-grid/new-grid.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,17 +18,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from '../app.component';
 
-describe('EditGridComponent', () => {
-  let component: EditGridComponent;
-  let fixture: ComponentFixture<EditGridComponent>;
+describe('EditorGridComponent', () => {
+  let component: EditorGridComponent;
+  let fixture: ComponentFixture<EditorGridComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        EditGridComponent,
         EditorGridComponent,
+        EditGridComponent,
         NewGridComponent
       ],
       imports: [
@@ -50,14 +49,13 @@ describe('EditGridComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        AppComponent
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditGridComponent);
+    fixture = TestBed.createComponent(EditorGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

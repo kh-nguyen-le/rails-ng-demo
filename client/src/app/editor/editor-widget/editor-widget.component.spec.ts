@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditWidgetComponent } from './edit-widget.component';
-import { EditorWidgetComponent } from '../editor-widget/editor-widget.component';
+import { EditorWidgetComponent } from './editor-widget.component';
+import { EditWidgetComponent } from '../edit-widget/edit-widget.component';
 import { NewWidgetComponent } from '../new-widget/new-widget.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,20 +18,19 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from '../app.component';
 
-describe('EditWidgetComponent', () => {
-  let component: EditWidgetComponent;
-  let fixture: ComponentFixture<EditWidgetComponent>;
+describe('EditorWidgetComponent', () => {
+  let component: EditorWidgetComponent;
+  let fixture: ComponentFixture<EditorWidgetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        EditWidgetComponent,
+      declarations: [ 
         EditorWidgetComponent,
+        EditWidgetComponent,
         NewWidgetComponent
-      ],
-      imports: [
+       ],
+       imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -50,14 +49,13 @@ describe('EditWidgetComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        AppComponent
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditWidgetComponent);
+    fixture = TestBed.createComponent(EditorWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditLayoutComponent } from './edit-layout.component';
-import { EditorLayoutComponent } from '../editor-layout/editor-layout.component';
-import { NewLayoutComponent } from '../new-layout/new-layout.component';
+import { EditWidgetComponent } from './edit-widget.component';
+import { EditorWidgetComponent } from '../editor-widget/editor-widget.component';
+import { NewWidgetComponent } from '../new-widget/new-widget.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,18 +18,17 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from '../app.component';
 
-describe('EditLayoutComponent', () => {
-  let component: EditLayoutComponent;
-  let fixture: ComponentFixture<EditLayoutComponent>;
+describe('EditWidgetComponent', () => {
+  let component: EditWidgetComponent;
+  let fixture: ComponentFixture<EditWidgetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        EditLayoutComponent,
-        EditorLayoutComponent,
-        NewLayoutComponent
+        EditWidgetComponent,
+        EditorWidgetComponent,
+        NewWidgetComponent
       ],
       imports: [
         BrowserModule,
@@ -50,14 +49,13 @@ describe('EditLayoutComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        AppComponent
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditLayoutComponent);
+    fixture = TestBed.createComponent(EditWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

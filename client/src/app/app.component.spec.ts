@@ -19,15 +19,15 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DashComponent } from './dash/dash.component';
-import { EditorWidgetComponent } from './editor-widget/editor-widget.component';
-import { NewWidgetComponent } from './new-widget/new-widget.component';
-import { EditWidgetComponent } from './edit-widget/edit-widget.component';
-import { EditorGridComponent } from './editor-grid/editor-grid.component';
-import { NewGridComponent } from './new-grid/new-grid.component';
-import { EditGridComponent } from './edit-grid/edit-grid.component';
-import { EditLayoutComponent } from './edit-layout/edit-layout.component';
-import { EditorLayoutComponent } from './editor-layout/editor-layout.component';
-import { NewLayoutComponent } from './new-layout/new-layout.component';
+import { EditorWidgetComponent } from './editor/editor-widget/editor-widget.component';
+import { NewWidgetComponent } from './editor/new-widget/new-widget.component';
+import { EditWidgetComponent } from './editor/edit-widget/edit-widget.component';
+import { EditorGridComponent } from './editor/editor-grid/editor-grid.component';
+import { NewGridComponent } from './editor/new-grid/new-grid.component';
+import { EditGridComponent } from './editor/edit-grid/edit-grid.component';
+import { EditLayoutComponent } from './editor/edit-layout/edit-layout.component';
+import { EditorLayoutComponent } from './editor/editor-layout/editor-layout.component';
+import { NewLayoutComponent } from './editor/new-layout/new-layout.component';
 import { GridComponent } from './grid/grid.component';
 import { WidgetComponent } from './widget/widget.component';
 
@@ -77,9 +77,9 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  it(`should have as title 'ng-rails demo'`, async(() => {
+  it(`should have as title 'rails-ng demo'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('ng-rails demo');
+    expect(app.titleService.getTitle()).toEqual('rails-ng demo');
   }));
 });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, Grid } from '../config.service'
+import { ConfigService, Grid } from '../../config.service'
 import { Title } from '@angular/platform-browser';
 
 @Component({

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ConfigService, Grid, Widget, GridWidget } from '../config.service'
+import { ConfigService, Grid, Widget, GridWidget } from '../../config.service'
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CableService } from '../cable.service';
+import { CableService } from '../../cable.service';
 @Component({
   selector: 'app-edit-grid',
   templateUrl: './edit-grid.component.html',

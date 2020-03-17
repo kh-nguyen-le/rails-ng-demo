@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditorLayoutComponent } from './editor-layout.component';
-import { EditLayoutComponent } from '../edit-layout/edit-layout.component';
-import { NewLayoutComponent } from '../new-layout/new-layout.component';
+import { EditGridComponent } from './edit-grid.component';
+import { EditorGridComponent } from '../editor-grid/editor-grid.component';
+import { NewGridComponent } from '../new-grid/new-grid.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,18 +18,17 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from '../app.component';
 
-describe('EditorLayoutComponent', () => {
-  let component: EditorLayoutComponent;
-  let fixture: ComponentFixture<EditorLayoutComponent>;
+describe('EditGridComponent', () => {
+  let component: EditGridComponent;
+  let fixture: ComponentFixture<EditGridComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
-        EditorLayoutComponent,
-        EditLayoutComponent,
-        NewLayoutComponent
+      declarations: [
+        EditGridComponent,
+        EditorGridComponent,
+        NewGridComponent
       ],
       imports: [
         BrowserModule,
@@ -50,14 +49,13 @@ describe('EditorLayoutComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        AppComponent
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditorLayoutComponent);
+    fixture = TestBed.createComponent(EditGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

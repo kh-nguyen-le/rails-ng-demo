@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditorWidgetComponent } from './editor-widget.component';
-import { EditWidgetComponent } from '../edit-widget/edit-widget.component';
-import { NewWidgetComponent } from '../new-widget/new-widget.component';
+import { EditLayoutComponent } from './edit-layout.component';
+import { EditorLayoutComponent } from '../editor-layout/editor-layout.component';
+import { NewLayoutComponent } from '../new-layout/new-layout.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,20 +18,19 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from '../app.component';
 
-describe('EditorWidgetComponent', () => {
-  let component: EditorWidgetComponent;
-  let fixture: ComponentFixture<EditorWidgetComponent>;
+describe('EditLayoutComponent', () => {
+  let component: EditLayoutComponent;
+  let fixture: ComponentFixture<EditLayoutComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
-        EditorWidgetComponent,
-        EditWidgetComponent,
-        NewWidgetComponent
-       ],
-       imports: [
+      declarations: [
+        EditLayoutComponent,
+        EditorLayoutComponent,
+        NewLayoutComponent
+      ],
+      imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -50,14 +49,13 @@ describe('EditorWidgetComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        AppComponent
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditorWidgetComponent);
+    fixture = TestBed.createComponent(EditLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
