@@ -11,7 +11,7 @@ export interface Widget {
   config: {
     gradient: string,
     autoscale: string,
-    showXAsix: string,
+    showXAxis: string,
     showYAxis: string,
     showXAxisLabel: string,
     showYAxisLabel: string,
