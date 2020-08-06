@@ -11,7 +11,7 @@ import { Widget } from '../config.service';
 describe('WidgetComponent', () => {
   let component: WidgetComponent;
   let fixture: ComponentFixture<WidgetComponent>;
-  const config: Widget["config"] = {gradient: '', autoscale: '', showXAxis: '', showYAxis: '', showXAxisLabel: '', showYAxisLabel: '', showLegend: '', xAxisLabel: '', yAxisLabel: '', widgetType: ''};
+  const config: Widget["config"] = {gradient: false, autoscale: true, showXAxis: true, showYAxis: true, showXAxisLabel: true, showYAxisLabel: true, showLegend: false, xAxisLabel: '', yAxisLabel: '', widgetType: ''};
   const widget: Widget = {id: 1, name: 'Test', results: [], config: config};
 
   beforeEach(async(() => {

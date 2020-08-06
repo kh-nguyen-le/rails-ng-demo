@@ -9,13 +9,13 @@ export interface Widget {
   name: string;
   results: any;
   config: {
-    gradient: string,
-    autoscale: string,
-    showXAxis: string,
-    showYAxis: string,
-    showXAxisLabel: string,
-    showYAxisLabel: string,
-    showLegend: string,
+    gradient: boolean,
+    autoscale: boolean,
+    showXAxis: boolean,
+    showYAxis: boolean,
+    showXAxisLabel: boolean,
+    showYAxisLabel: boolean,
+    showLegend: boolean,
     xAxisLabel: string,
     yAxisLabel: string,
     widgetType: string
