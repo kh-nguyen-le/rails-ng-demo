@@ -17,7 +17,7 @@ export interface Widget {
     showYAxisLabel: string,
     showLegend: string,
     xAxisLabel: string,
-    yAxisLbael: string,
+    yAxisLabel: string,
     widgetType: string
   };
 }
