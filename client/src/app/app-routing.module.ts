@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router'
+import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DashComponent } from './dash/dash.component';
 import { EditorWidgetComponent } from './editor/editor-widget/editor-widget.component';

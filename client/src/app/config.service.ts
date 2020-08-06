@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators';
 
 export interface Widget {
   id: number;
@@ -19,7 +19,7 @@ export interface Widget {
     xAxisLabel: string,
     yAxisLbael: string,
     widgetType: string
-  }
+  };
 }
 
 export interface Grid {
@@ -200,7 +200,7 @@ export class ConfigService {
     return this.http.delete(`${this.apiUrl}/layouts/${id}`)
     .pipe(
       catchError(this.handleError)
-    );    
+    );
   }
 
   deleteLayoutGrid(id: number) {
@@ -231,5 +231,5 @@ export class ConfigService {
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
 }

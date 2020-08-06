@@ -24,10 +24,10 @@ export class NewGridComponent implements OnInit {
     });
    }
 
-   onSubmit(){
+   onSubmit() {
     this.conf.createGrid(this.form.value)
       .subscribe(res => { this.new_id = res;
-        this.router.navigate(['/grids', this.new_id.id]);}
+        this.router.navigate(['/grids', this.new_id.id]); }
       );
    }
 

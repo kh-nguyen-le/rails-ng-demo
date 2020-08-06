@@ -25,7 +25,7 @@ describe('NewLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         NewLayoutComponent,
         EditLayoutComponent,
         EditorLayoutComponent

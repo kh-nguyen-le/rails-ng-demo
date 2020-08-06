@@ -25,7 +25,7 @@ describe('NewGridComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         NewGridComponent,
         EditGridComponent,
         EditorGridComponent

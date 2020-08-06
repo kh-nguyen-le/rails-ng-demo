@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ConfigService, Layout, Grid, LayoutGrid } from '../../config.service'
+import { ConfigService, Layout, Grid, LayoutGrid } from '../../config.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CableService } from '../../cable.service';
@@ -37,11 +37,11 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       if (e instanceof NavigationEnd) {
         this.init();
       }
-    })
+    });
   }
 
   addGrid() {
-    if (!this.new_grid) return;
+    if (!this.new_grid) { return; }
     this.targetLG = {
       position: this.layout.grids.length,
       layout_id: this.layout.id,
@@ -56,11 +56,10 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   }
 
   async removeGrid(index: number) {
-    for (let lg of this.layout.layout_grids) {
-      if (lg.position == index) {
+    for (const lg of this.layout.layout_grids) {
+      if (lg.position === index) {
         await this.conf.deleteLayoutGrid(lg.id).toPromise();
-      }
-      else if (lg.position > index) {
+      } else if (lg.position > index) {
         this.targetLG = {
           position: lg.position - 1,
           layout_id: lg.layout_id,
@@ -74,36 +73,34 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   }
 
   async shiftGridUp(index: number) {
-    for (let lg of this.layout.layout_grids) {
+    for (const lg of this.layout.layout_grids) {
       this.targetLG = {
         position: lg.position,
         layout_id: lg.layout_id,
         grid_id: lg.grid_id,
         id: lg.id
       };
-      if (lg.position == index) {
+      if (lg.position === index) {
         this.targetLG.position -= 1;
-      }
-      else if (lg.position == index - 1) {
+      } else if (lg.position === index - 1) {
         this.targetLG.position += 1;
-      } 
+      }
       await this.conf.updateLayoutGrid(this.targetLG).toPromise();
     }
     this.update();
   }
 
   async shiftGridDown(index: number) {
-    for (let lg of this.layout.layout_grids) {
+    for (const lg of this.layout.layout_grids) {
       this.targetLG = {
         position: lg.position,
         layout_id: lg.layout_id,
         grid_id: lg.grid_id,
         id: lg.id
       };
-      if (lg.position == index) {
+      if (lg.position === index) {
         this.targetLG.position += 1;
-      }
-      else if (lg.position == index + 1) {
+      } else if (lg.position === index + 1) {
         this.targetLG.position -= 1;
       }
       await this.conf.updateLayoutGrid(this.targetLG).toPromise();
@@ -111,9 +108,9 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.update();
   }
 
-  onSubmit(){
+  onSubmit() {
     this.conf.updateLayout(this.layout.id, this.form.value)
-      .subscribe( () => { 
+      .subscribe( () => {
         this.snackBar.open('Primary Attributes updated', '', {
           duration: 2000
         });
@@ -148,13 +145,13 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   }
 
   newSynchro() {
-    if (this.synchro != null) this.synchro.unsubscribe();
+    if (this.synchro != null) { this.synchro.unsubscribe(); }
     this.synchro = this.cs.joinSynchroChannel('layout', this.id, {
       connected() {
         return console.log(`layout: Connected.`);
       },
       disconnected() {
-        return console.log(`layout: Disconnected.`)
+        return console.log(`layout: Disconnected.`);
       }
     });
   }

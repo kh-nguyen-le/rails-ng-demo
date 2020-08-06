@@ -12,7 +12,7 @@ export class EditorLayoutComponent implements OnInit {
 
   constructor(private titleService: Title,
     private conf: ConfigService) {
-      this.titleService.setTitle("Editor - Layouts");
+      this.titleService.setTitle('Editor - Layouts');
     }
 
   deleteLayout(id: number) {

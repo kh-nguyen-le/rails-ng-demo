@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, Grid } from '../../config.service'
+import { ConfigService, Grid } from '../../config.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -13,14 +13,14 @@ export class EditorGridComponent implements OnInit {
 
   constructor(private titleService: Title,
     private conf: ConfigService) {
-      this.titleService.setTitle("Editor - Grids");
+      this.titleService.setTitle('Editor - Grids');
   }
 
   deleteGrid(id: number) {
     this.conf.deleteGrid(id)
       .subscribe( () => this.getGrids());
   }
-  
+
   getGrids() {
     this.conf.getGrids()
       .subscribe(res => this.grids = res);

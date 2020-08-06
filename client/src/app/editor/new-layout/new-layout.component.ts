@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ConfigService } from '../../config.service'
+import { ConfigService } from '../../config.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ export class NewLayoutComponent implements OnInit {
 
   form: FormGroup;
   new_id;
-  
+
   constructor(fb: FormBuilder,
     private conf: ConfigService,
     private router: Router) {
@@ -23,10 +23,10 @@ export class NewLayoutComponent implements OnInit {
     });
    }
 
-   onSubmit(){
+   onSubmit() {
     this.conf.createLayout(this.form.value)
       .subscribe(res => { this.new_id = res;
-        this.router.navigate(['/layouts', this.new_id.id]);}
+        this.router.navigate(['/layouts', this.new_id.id]); }
       );
    }
 

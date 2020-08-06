@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigService, Layout, Grid} from '../config.service'
+import { ConfigService, Layout, Grid} from '../config.service';
 import { interval, Observable, of } from 'rxjs';
 import { CableService } from '../cable.service';
 import { Title } from '@angular/platform-browser';
@@ -19,12 +19,12 @@ export class DashComponent implements OnInit, OnDestroy {
   id: number;
   channel: ActionCable.Channel;
 
-  constructor (private conf: ConfigService, 
-    private titleService: Title, 
+  constructor (private conf: ConfigService,
+    private titleService: Title,
     private elementRef: ElementRef,
     private route: ActivatedRoute,
     private cs: CableService)  {
-      this.titleService.setTitle("Dashboard");
+      this.titleService.setTitle('Dashboard');
   }
 
   async getData(id: number) {
@@ -34,7 +34,7 @@ export class DashComponent implements OnInit, OnDestroy {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
     this.index = 0;
     if (this.layout.duration) {
-      let source = interval(this.layout.duration);
+      const source = interval(this.layout.duration);
       this.timer = source.subscribe( () =>
         this.index = (this.index + 1) % this.layout.grids.length);
     } else if (this.timer != null) {
@@ -43,13 +43,13 @@ export class DashComponent implements OnInit, OnDestroy {
   }
 
   newChannel() {
-    if (this.channel != null) this.channel.unsubscribe();
+    if (this.channel != null) { this.channel.unsubscribe(); }
     this.channel = this.cs.joinSynchroChannel('layout', this.id, {
       connected() {
         return console.log(`layout: Connected.`);
       },
       disconnected() {
-        return console.log(`layout: Disconnected.`)
+        return console.log(`layout: Disconnected.`);
       },
       received: (data: Layout) => this.refresh(data)
     });
@@ -61,16 +61,16 @@ export class DashComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    
+    // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    // Add 'implements OnInit' to the class.
+
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
-      if (this.id < 1) this.id = 1; //fix test-only NaN error
+      if (this.id < 1) { this.id = 1; }// fix test-only NaN error
       this.getData(this.id);
     });
   }
-  
+
   ngOnDestroy() {
     this.sub.unsubscribe();
     this.channel.unsubscribe();

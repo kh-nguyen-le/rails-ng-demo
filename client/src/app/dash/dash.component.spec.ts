@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { RouterTestingModule } from '@angular/router/testing'
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DashComponent', () => {
   let component: DashComponent;
@@ -17,10 +17,10 @@ describe('DashComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         DashComponent,
         GridComponent,
-        WidgetComponent 
+        WidgetComponent
       ],
       imports: [
         BrowserModule,

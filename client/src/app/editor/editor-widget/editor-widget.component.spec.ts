@@ -25,7 +25,7 @@ describe('EditorWidgetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         EditorWidgetComponent,
         EditWidgetComponent,
         NewWidgetComponent

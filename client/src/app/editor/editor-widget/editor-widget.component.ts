@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, Widget } from '../../config.service'
+import { ConfigService, Widget } from '../../config.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -13,18 +13,17 @@ export class EditorWidgetComponent implements OnInit {
 
   constructor(private titleService: Title,
     private conf: ConfigService) {
-      this.titleService.setTitle("Editor - Widgets");
+      this.titleService.setTitle('Editor - Widgets');
      }
-
 
   deleteWidget(id: number) {
     this.conf.deleteWidget(id)
       .subscribe( () => this.getWidgets());
     }
-    
+
   getWidgets() {
     this.conf.getWidgets()
-      .subscribe(res => this.widgets = res)
+      .subscribe(res => this.widgets = res);
     }
   ngOnInit() {
     this.getWidgets();

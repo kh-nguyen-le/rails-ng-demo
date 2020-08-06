@@ -13,7 +13,7 @@ describe('WidgetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         WidgetComponent
        ],
        imports: [

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ConfigService, Grid, Widget} from '../config.service'
+import { ConfigService, Grid, Widget} from '../config.service';
 import { Observable, of } from 'rxjs';
 import { CableService } from '../cable.service';
 
@@ -18,18 +18,18 @@ export class GridComponent implements OnInit {
 
   async getData() {
     this.newChannel();
-    let data: Grid = await this.conf.getGridById(this.grid.id).toPromise();
+    const data: Grid = await this.conf.getGridById(this.grid.id).toPromise();
     this.widgets$ = of(data.widgets);
   }
 
   newChannel() {
-    if (this.channel != null) this.channel.unsubscribe();
+    if (this.channel != null) { this.channel.unsubscribe(); }
     this.channel = this.cs.joinSynchroChannel('grid', this.grid.id, {
       connected() {
         return console.log(`grid: Connected.`);
       },
       disconnected() {
-        return console.log(`grid: Disconnected.`)
+        return console.log(`grid: Disconnected.`);
       },
       received: (data: Grid) => this.refresh(data)
     });

@@ -12,12 +12,12 @@ import { Grid } from '../config.service';
 describe('GridComponent', () => {
   let component: GridComponent;
   let fixture: ComponentFixture<GridComponent>;
-  let grid: Grid = {id: 1, name: '1', title: '2', col : 5, size: "2:1", widgets: [], layouts: [], layout_grids: [], grid_widgets: [] };
+  const grid: Grid = {id: 1, name: '1', title: '2', col : 5, size: '2:1', widgets: [], layouts: [], layout_grids: [], grid_widgets: [] };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         GridComponent,
-        WidgetComponent 
+        WidgetComponent
       ],
       imports: [
         BrowserModule,

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ConfigService, Layout } from './config.service'
+import { Component, OnInit } from '@angular/core';
+import { ConfigService, Layout } from './config.service';
 import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 
@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   layouts: Layout[];
   apiUrl = environment.apiUrl;
 

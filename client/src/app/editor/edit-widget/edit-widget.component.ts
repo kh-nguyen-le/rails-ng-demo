@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ConfigService, Widget } from '../../config.service'
+import { ConfigService, Widget } from '../../config.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -46,8 +46,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit(){
-    
+  onSubmit() {
     this.conf.updateWidget(this.id, this.form.value)
       .subscribe( () => {
         this.snackBar.open('Primary Attributes updated', '', {
@@ -57,8 +56,8 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
       );
    }
 
-   submitData(){
-    let widget: Widget = {id: this.id, name: this.form.value.name, config: this.form.value.config, results: JSON.parse(this.results.value)}
+   submitData() {
+    const widget: Widget = {id: this.id, name: this.form.value.name, config: this.form.value.config, results: JSON.parse(this.results.value)};
     this.conf.updateWidget(this.id, widget)
       .subscribe( () => {
         this.snackBar.open('Data Entered', '', {
