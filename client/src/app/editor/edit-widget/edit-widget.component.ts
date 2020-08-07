@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ConfigService, Widget } from '../../config.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CableService } from 'src/app/cable.service';
 
 @Component({
   selector: 'app-edit-widget',
@@ -17,12 +18,14 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
   id: number;
   private sub: any;
   private nav: any;
+  synchro: ActionCable.Channel;
 
   constructor(fb: FormBuilder,
     private conf: ConfigService,
     public snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private cs: CableService) {
       this.form = fb.group({
         name: '',
         config: fb.group({
@@ -52,6 +55,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
         this.snackBar.open('Primary Attributes updated', '', {
           duration: 2000
         });
+        this.sendUpdate();
         }
       );
    }
@@ -63,6 +67,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
         this.snackBar.open('Data Entered', '', {
           duration: 2000
         });
+        this.sendUpdate();
         }
       );
    }
@@ -82,7 +87,27 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     });
   }
 
+  sendUpdate() {
+    this.conf.getWidgetById(this.id)
+      .subscribe(res => {
+        this.synchro.send(res);
+      });
+  }
+
+  newSynchro() {
+    if (this.synchro != null) { this.synchro.unsubscribe(); }
+    this.synchro = this.cs.joinSynchroChannel('widget', this.id, {
+      connected() {
+        return console.log(`widget: Connected.`);
+      },
+      disconnected() {
+        return console.log(`widget: Disconnected.`);
+      }
+    });
+  }
+
   ngOnInit() {
+    this.newSynchro();
   }
 
   ngOnDestroy() {
