@@ -13,12 +13,12 @@ export class WidgetComponent implements OnInit {
 
   constructor(private cs: CableService) {}
 
-  refresh(data: Widget) {
+  refresh(data: Widget): void {
     console.log('New data received. Updating.');
     this.widget = data;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.channel != null) {
       this.channel.unsubscribe();
     }

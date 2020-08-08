@@ -14,15 +14,15 @@ export class EditorLayoutComponent implements OnInit {
     this.titleService.setTitle('Editor - Layouts');
   }
 
-  deleteLayout(id: number) {
+  deleteLayout(id: number): void {
     this.conf.deleteLayout(id).subscribe(() => this.getLayouts());
   }
 
-  getLayouts() {
+  getLayouts(): void {
     this.conf.getLayouts().subscribe((res) => (this.layouts = res));
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getLayouts();
   }
 }

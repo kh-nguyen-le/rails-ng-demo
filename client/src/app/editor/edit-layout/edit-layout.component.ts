@@ -4,6 +4,7 @@ import { ConfigService, Layout, Grid, LayoutGrid } from '../../config.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CableService } from '../../cable.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-layout',
@@ -17,8 +18,8 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   targetLG: LayoutGrid;
   form: FormGroup;
   id: number;
-  private sub: any;
-  private nav: any;
+  private sub: Subscription;
+  private nav: Subscription;
   synchro: ActionCable.Channel;
 
   constructor(
@@ -34,14 +35,14 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       background: '',
       duration: '',
     });
-    this.nav = this.router.events.subscribe((e: any) => {
+    this.nav = this.router.events.subscribe((e: unknown) => {
       if (e instanceof NavigationEnd) {
         this.init();
       }
     });
   }
 
-  addGrid() {
+  addGrid(): void {
     if (!this.new_grid) {
       return;
     }
@@ -56,7 +57,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  async removeGrid(index: number) {
+  async removeGrid(index: number): Promise<void> {
     for (const lg of this.layout.layout_grids) {
       if (lg.position === index) {
         await this.conf.deleteLayoutGrid(lg.id).toPromise();
@@ -73,7 +74,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.update();
   }
 
-  async shiftGridUp(index: number) {
+  async shiftGridUp(index: number): Promise<void> {
     for (const lg of this.layout.layout_grids) {
       this.targetLG = {
         position: lg.position,
@@ -91,7 +92,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.update();
   }
 
-  async shiftGridDown(index: number) {
+  async shiftGridDown(index: number): Promise<void> {
     for (const lg of this.layout.layout_grids) {
       this.targetLG = {
         position: lg.position,
@@ -109,7 +110,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.update();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.conf.updateLayout(this.layout.id, this.form.value).subscribe(() => {
       this.snackBar.open('Primary Attributes updated', '', {
         duration: 2000,
@@ -117,7 +118,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  init() {
+  init(): void {
     this.sub = this.route.params.subscribe((params) => {
       this.id = +params['id'];
       this.conf.getLayoutById(this.id).subscribe((res) => {
@@ -132,7 +133,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.conf.getGrids().subscribe((res) => (this.grids = res));
   }
 
-  update() {
+  update(): void {
     this.conf.getLayoutById(this.id).subscribe((res) => {
       this.layout = res;
       this.synchro.send(res);
@@ -140,7 +141,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.router.navigate(['/layouts', this.id]);
   }
 
-  newSynchro() {
+  newSynchro(): void {
     if (this.synchro != null) {
       this.synchro.unsubscribe();
     }
@@ -154,11 +155,11 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.newSynchro();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
     this.nav.unsubscribe();
   }

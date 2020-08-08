@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ConfigService } from '../../config.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './new-grid.component.html',
   styleUrls: ['./new-grid.component.css'],
 })
-export class NewGridComponent implements OnInit {
+export class NewGridComponent {
   form: FormGroup;
   new_id;
 
@@ -25,12 +25,10 @@ export class NewGridComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.conf.createGrid(this.form.value).subscribe((res) => {
       this.new_id = res;
       this.router.navigate(['/grids', this.new_id.id]);
     });
   }
-
-  ngOnInit() {}
 }

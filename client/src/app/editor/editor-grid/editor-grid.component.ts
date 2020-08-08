@@ -14,15 +14,15 @@ export class EditorGridComponent implements OnInit {
     this.titleService.setTitle('Editor - Grids');
   }
 
-  deleteGrid(id: number) {
+  deleteGrid(id: number): void {
     this.conf.deleteGrid(id).subscribe(() => this.getGrids());
   }
 
-  getGrids() {
+  getGrids(): void {
     this.conf.getGrids().subscribe((res) => (this.grids = res));
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getGrids();
   }
 }

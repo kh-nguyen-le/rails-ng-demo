@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     this.titleService.setTitle('rails-ng demo');
   }
 
-  getLayouts() {
+  getLayouts(): void {
     this.conf.getLayouts().subscribe((res) => (this.layouts = res));
   }
 

@@ -14,14 +14,14 @@ export class EditorWidgetComponent implements OnInit {
     this.titleService.setTitle('Editor - Widgets');
   }
 
-  deleteWidget(id: number) {
+  deleteWidget(id: number): void {
     this.conf.deleteWidget(id).subscribe(() => this.getWidgets());
   }
 
-  getWidgets() {
+  getWidgets(): void {
     this.conf.getWidgets().subscribe((res) => (this.widgets = res));
   }
-  ngOnInit() {
+  ngOnInit(): void {
     this.getWidgets();
   }
 }

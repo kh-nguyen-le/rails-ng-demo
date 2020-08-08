@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfigService } from '../../config.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './new-widget.component.html',
   styleUrls: ['./new-widget.component.css'],
 })
-export class NewWidgetComponent implements OnInit {
+export class NewWidgetComponent {
   form: FormGroup;
   new_id;
 
@@ -34,12 +34,10 @@ export class NewWidgetComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.conf.createWidget(this.form.value).subscribe((res) => {
       this.new_id = res;
       this.router.navigate(['/widgets', this.new_id.id]);
     });
   }
-
-  ngOnInit() {}
 }

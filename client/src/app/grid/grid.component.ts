@@ -15,13 +15,13 @@ export class GridComponent implements OnInit {
 
   constructor(private conf: ConfigService, private cs: CableService) {}
 
-  async getData() {
+  async getData(): Promise<void> {
     this.newChannel();
     const data: Grid = await this.conf.getGridById(this.grid.id).toPromise();
     this.widgets$ = of(data.widgets);
   }
 
-  newChannel() {
+  newChannel(): void {
     if (this.channel != null) {
       this.channel.unsubscribe();
     }
@@ -36,12 +36,12 @@ export class GridComponent implements OnInit {
     });
   }
 
-  refresh(data: Grid) {
+  refresh(data: Grid): void {
     console.log('New data received. Updating.');
     this.widgets$ = of(data.widgets);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getData();
   }
 }

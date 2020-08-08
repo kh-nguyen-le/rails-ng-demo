@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ConfigService, Layout, Grid } from '../config.service';
-import { interval, Observable, of } from 'rxjs';
+import { interval, Observable, of, Subscription } from 'rxjs';
 import { CableService } from '../cable.service';
 import { Title } from '@angular/platform-browser';
 
@@ -13,8 +13,8 @@ import { Title } from '@angular/platform-browser';
 export class DashComponent implements OnInit, OnDestroy {
   layout: Layout;
   grids$: Observable<Grid[]>;
-  private sub: any;
-  private timer: any;
+  private sub: Subscription;
+  private timer: Subscription;
   index: number;
   id: number;
   channel: ActionCable.Channel;
@@ -29,7 +29,7 @@ export class DashComponent implements OnInit, OnDestroy {
     this.titleService.setTitle('Dashboard');
   }
 
-  async getData(id: number) {
+  async getData(id: number): Promise<void> {
     this.newChannel();
     this.layout = await this.conf.getLayoutById(id).toPromise();
     this.grids$ = of(this.layout.grids);
@@ -45,7 +45,7 @@ export class DashComponent implements OnInit, OnDestroy {
     }
   }
 
-  newChannel() {
+  newChannel(): void {
     if (this.channel != null) {
       this.channel.unsubscribe();
     }
@@ -60,7 +60,7 @@ export class DashComponent implements OnInit, OnDestroy {
     });
   }
 
-  refresh(data: Layout) {
+  refresh(data: Layout): void {
     console.log('New data received. Updating.');
     this.grids$ = of(data.grids);
   }
@@ -78,7 +78,7 @@ export class DashComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
     this.channel.unsubscribe();
   }

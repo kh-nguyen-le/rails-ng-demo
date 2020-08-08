@@ -9,7 +9,11 @@ export class CableService {
   sockUrl = environment.sockUrl;
   cable: ActionCable.Cable = ActionCable.createConsumer(environment.sockUrl);
 
-  joinSynchroChannel(type: string, id: number, callbacks: Object) {
+  joinSynchroChannel(
+    type: string,
+    id: number,
+    callbacks: unknown
+  ): ActionCable.Channel {
     return this.cable.subscriptions.create(
       { channel: 'SynchroChannel', type: type, id: id },
       callbacks

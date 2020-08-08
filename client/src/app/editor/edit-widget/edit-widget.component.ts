@@ -9,6 +9,7 @@ import { ConfigService, Widget } from '../../config.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CableService } from 'src/app/cable.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-widget',
@@ -20,8 +21,8 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
   form: FormGroup;
   results: FormControl;
   id: number;
-  private sub: any;
-  private nav: any;
+  private sub: Subscription;
+  private nav: Subscription;
   synchro: ActionCable.Channel;
 
   constructor(
@@ -48,14 +49,14 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
       }),
     });
     this.results = fb.control('');
-    this.nav = this.router.events.subscribe((e: any) => {
+    this.nav = this.router.events.subscribe((e: unknown) => {
       if (e instanceof NavigationEnd) {
         this.init();
       }
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.conf.updateWidget(this.id, this.form.value).subscribe(() => {
       this.snackBar.open('Primary Attributes updated', '', {
         duration: 2000,
@@ -64,7 +65,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitData() {
+  submitData(): void {
     const widget: Widget = {
       id: this.id,
       name: this.form.value.name,
@@ -79,7 +80,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     });
   }
 
-  init() {
+  init(): void {
     this.sub = this.route.params.subscribe((params) => {
       this.id = +params['id'];
       this.conf.getWidgetById(this.id).subscribe((res) => {
@@ -93,13 +94,13 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     });
   }
 
-  sendUpdate() {
+  sendUpdate(): void {
     this.conf.getWidgetById(this.id).subscribe((res) => {
       this.synchro.send(res);
     });
   }
 
-  newSynchro() {
+  newSynchro(): void {
     if (this.synchro != null) {
       this.synchro.unsubscribe();
     }
@@ -113,11 +114,11 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.newSynchro();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
     this.nav.unsubscribe();
   }
