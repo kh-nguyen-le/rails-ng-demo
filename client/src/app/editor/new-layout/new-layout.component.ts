@@ -6,31 +6,30 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-new-layout',
   templateUrl: './new-layout.component.html',
-  styleUrls: ['./new-layout.component.css']
+  styleUrls: ['./new-layout.component.css'],
 })
 export class NewLayoutComponent implements OnInit {
-
   form: FormGroup;
   new_id;
 
-  constructor(fb: FormBuilder,
+  constructor(
+    fb: FormBuilder,
     private conf: ConfigService,
-    private router: Router) {
+    private router: Router
+  ) {
     this.form = fb.group({
       name: '',
       background: '',
-      duration: ''
+      duration: '',
     });
-   }
-
-   onSubmit() {
-    this.conf.createLayout(this.form.value)
-      .subscribe(res => { this.new_id = res;
-        this.router.navigate(['/layouts', this.new_id.id]); }
-      );
-   }
-
-  ngOnInit() {
   }
 
+  onSubmit() {
+    this.conf.createLayout(this.form.value).subscribe((res) => {
+      this.new_id = res;
+      this.router.navigate(['/layouts', this.new_id.id]);
+    });
+  }
+
+  ngOnInit() {}
 }

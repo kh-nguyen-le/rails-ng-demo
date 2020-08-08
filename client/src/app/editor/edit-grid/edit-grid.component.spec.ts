@@ -25,11 +25,7 @@ describe('EditGridComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        EditGridComponent,
-        EditorGridComponent,
-        NewGridComponent
-      ],
+      declarations: [EditGridComponent, EditorGridComponent, NewGridComponent],
       imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -46,12 +42,10 @@ describe('EditGridComponent', () => {
         MatCheckboxModule,
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
-      providers: [
-      ]
-    })
-    .compileComponents();
+      providers: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

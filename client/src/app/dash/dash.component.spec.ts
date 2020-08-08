@@ -17,11 +17,7 @@ describe('DashComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        DashComponent,
-        GridComponent,
-        WidgetComponent
-      ],
+      declarations: [DashComponent, GridComponent, WidgetComponent],
       imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -29,12 +25,10 @@ describe('DashComponent', () => {
         MatGridListModule,
         NgxChartsModule,
         MatTabsModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
-      providers: [
-      ]
-    })
-    .compileComponents();
+      providers: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

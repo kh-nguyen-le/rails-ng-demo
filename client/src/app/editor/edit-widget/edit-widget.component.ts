@@ -1,5 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { ConfigService, Widget } from '../../config.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,10 +13,9 @@ import { CableService } from 'src/app/cable.service';
 @Component({
   selector: 'app-edit-widget',
   templateUrl: './edit-widget.component.html',
-  styleUrls: ['./edit-widget.component.css']
+  styleUrls: ['./edit-widget.component.css'],
 })
 export class EditWidgetComponent implements OnInit, OnDestroy {
-
   widget: Widget;
   form: FormGroup;
   results: FormControl;
@@ -20,26 +24,28 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
   private nav: any;
   synchro: ActionCable.Channel;
 
-  constructor(fb: FormBuilder,
+  constructor(
+    fb: FormBuilder,
     private conf: ConfigService,
     public snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
-    private cs: CableService) {
-      this.form = fb.group({
-        name: '',
-        config: fb.group({
-          widgetType: ['', Validators.required],
-          gradient: false,
-          showXAxis: false,
-          showYAxis: false,
-          showLegend: false,
-          showXAxisLabel: false,
-          showYAxisLabel: false,
-          xAxisLabel: 'x-axis',
-          yAxisLabel: 'y-axis',
-          autoScale: false
-      })
+    private cs: CableService
+  ) {
+    this.form = fb.group({
+      name: '',
+      config: fb.group({
+        widgetType: ['', Validators.required],
+        gradient: false,
+        showXAxis: false,
+        showYAxis: false,
+        showLegend: false,
+        showXAxisLabel: false,
+        showYAxisLabel: false,
+        xAxisLabel: 'x-axis',
+        yAxisLabel: 'y-axis',
+        autoScale: false,
+      }),
     });
     this.results = fb.control('');
     this.nav = this.router.events.subscribe((e: any) => {
@@ -50,59 +56,60 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.conf.updateWidget(this.id, this.form.value)
-      .subscribe( () => {
-        this.snackBar.open('Primary Attributes updated', '', {
-          duration: 2000
-        });
-        this.sendUpdate();
-        }
-      );
-   }
+    this.conf.updateWidget(this.id, this.form.value).subscribe(() => {
+      this.snackBar.open('Primary Attributes updated', '', {
+        duration: 2000,
+      });
+      this.sendUpdate();
+    });
+  }
 
-   submitData() {
-    const widget: Widget = {id: this.id, name: this.form.value.name, config: this.form.value.config, results: JSON.parse(this.results.value)};
-    this.conf.updateWidget(this.id, widget)
-      .subscribe( () => {
-        this.snackBar.open('Data Entered', '', {
-          duration: 2000
-        });
-        this.sendUpdate();
-        }
-      );
-   }
+  submitData() {
+    const widget: Widget = {
+      id: this.id,
+      name: this.form.value.name,
+      config: this.form.value.config,
+      results: JSON.parse(this.results.value),
+    };
+    this.conf.updateWidget(this.id, widget).subscribe(() => {
+      this.snackBar.open('Data Entered', '', {
+        duration: 2000,
+      });
+      this.sendUpdate();
+    });
+  }
 
-   init() {
-    this.sub = this.route.params.subscribe(params => {
+  init() {
+    this.sub = this.route.params.subscribe((params) => {
       this.id = +params['id'];
-      this.conf.getWidgetById(this.id)
-        .subscribe(res => {
-          this.widget = res;
-          this.form.patchValue({
-            name: this.widget.name,
-            config: this.widget.config,
-          });
-          this.results.patchValue(JSON.stringify(this.widget.results));
+      this.conf.getWidgetById(this.id).subscribe((res) => {
+        this.widget = res;
+        this.form.patchValue({
+          name: this.widget.name,
+          config: this.widget.config,
         });
+        this.results.patchValue(JSON.stringify(this.widget.results));
+      });
     });
   }
 
   sendUpdate() {
-    this.conf.getWidgetById(this.id)
-      .subscribe(res => {
-        this.synchro.send(res);
-      });
+    this.conf.getWidgetById(this.id).subscribe((res) => {
+      this.synchro.send(res);
+    });
   }
 
   newSynchro() {
-    if (this.synchro != null) { this.synchro.unsubscribe(); }
+    if (this.synchro != null) {
+      this.synchro.unsubscribe();
+    }
     this.synchro = this.cs.joinSynchroChannel('widget', this.id, {
       connected() {
         return console.log(`widget: Connected.`);
       },
       disconnected() {
         return console.log(`widget: Disconnected.`);
-      }
+      },
     });
   }
 

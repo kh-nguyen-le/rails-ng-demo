@@ -28,7 +28,7 @@ describe('EditWidgetComponent', () => {
       declarations: [
         EditWidgetComponent,
         EditorWidgetComponent,
-        NewWidgetComponent
+        NewWidgetComponent,
       ],
       imports: [
         BrowserModule,
@@ -46,12 +46,10 @@ describe('EditWidgetComponent', () => {
         MatCheckboxModule,
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
-      providers: [
-      ]
-    })
-    .compileComponents();
+      providers: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

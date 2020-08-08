@@ -28,9 +28,9 @@ describe('EditorWidgetComponent', () => {
       declarations: [
         EditorWidgetComponent,
         EditWidgetComponent,
-        NewWidgetComponent
-       ],
-       imports: [
+        NewWidgetComponent,
+      ],
+      imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -46,12 +46,10 @@ describe('EditorWidgetComponent', () => {
         MatCheckboxModule,
         ReactiveFormsModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
-      providers: [
-      ]
-    })
-    .compileComponents();
+      providers: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

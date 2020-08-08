@@ -8,10 +8,9 @@ import { CableService } from '../../cable.service';
 @Component({
   selector: 'app-edit-layout',
   templateUrl: './edit-layout.component.html',
-  styleUrls: ['./edit-layout.component.css']
+  styleUrls: ['./edit-layout.component.css'],
 })
 export class EditLayoutComponent implements OnInit, OnDestroy {
-
   layout: Layout;
   new_grid: number;
   grids: Grid[];
@@ -22,17 +21,19 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   private nav: any;
   synchro: ActionCable.Channel;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private conf: ConfigService,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
     private router: Router,
-    private cs: CableService) {
-      this.form = fb.group({
-        name: '',
-        background: '',
-        duration: ''
-      });
+    private cs: CableService
+  ) {
+    this.form = fb.group({
+      name: '',
+      background: '',
+      duration: '',
+    });
     this.nav = this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
         this.init();
@@ -41,18 +42,18 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   }
 
   addGrid() {
-    if (!this.new_grid) { return; }
+    if (!this.new_grid) {
+      return;
+    }
     this.targetLG = {
       position: this.layout.grids.length,
       layout_id: this.layout.id,
       grid_id: this.new_grid,
-      id: null
+      id: null,
     };
-    this.conf.createLayoutGrid(this.targetLG)
-      .subscribe( () => {
-        this.update();
-      }
-    );
+    this.conf.createLayoutGrid(this.targetLG).subscribe(() => {
+      this.update();
+    });
   }
 
   async removeGrid(index: number) {
@@ -64,7 +65,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
           position: lg.position - 1,
           layout_id: lg.layout_id,
           grid_id: lg.grid_id,
-          id: lg.id
+          id: lg.id,
         };
         await this.conf.updateLayoutGrid(this.targetLG).toPromise();
       }
@@ -78,7 +79,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
         position: lg.position,
         layout_id: lg.layout_id,
         grid_id: lg.grid_id,
-        id: lg.id
+        id: lg.id,
       };
       if (lg.position === index) {
         this.targetLG.position -= 1;
@@ -96,7 +97,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
         position: lg.position,
         layout_id: lg.layout_id,
         grid_id: lg.grid_id,
-        id: lg.id
+        id: lg.id,
       };
       if (lg.position === index) {
         this.targetLG.position += 1;
@@ -109,50 +110,47 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.conf.updateLayout(this.layout.id, this.form.value)
-      .subscribe( () => {
-        this.snackBar.open('Primary Attributes updated', '', {
-          duration: 2000
-        });
-        }
-      );
-   }
+    this.conf.updateLayout(this.layout.id, this.form.value).subscribe(() => {
+      this.snackBar.open('Primary Attributes updated', '', {
+        duration: 2000,
+      });
+    });
+  }
 
   init() {
-    this.sub = this.route.params.subscribe(params => {
+    this.sub = this.route.params.subscribe((params) => {
       this.id = +params['id'];
-      this.conf.getLayoutById(this.id)
-        .subscribe(res => {
-          this.layout = res;
-          this.form.patchValue({
-            name: this.layout.name,
-            background: this.layout.background,
-            duration: this.layout.duration
-          });
+      this.conf.getLayoutById(this.id).subscribe((res) => {
+        this.layout = res;
+        this.form.patchValue({
+          name: this.layout.name,
+          background: this.layout.background,
+          duration: this.layout.duration,
         });
+      });
     });
-    this.conf.getGrids()
-      .subscribe(res => this.grids = res);
+    this.conf.getGrids().subscribe((res) => (this.grids = res));
   }
 
   update() {
-    this.conf.getLayoutById(this.id)
-      .subscribe(res => {
-        this.layout = res;
-        this.synchro.send(res);
-      });
+    this.conf.getLayoutById(this.id).subscribe((res) => {
+      this.layout = res;
+      this.synchro.send(res);
+    });
     this.router.navigate(['/layouts', this.id]);
   }
 
   newSynchro() {
-    if (this.synchro != null) { this.synchro.unsubscribe(); }
+    if (this.synchro != null) {
+      this.synchro.unsubscribe();
+    }
     this.synchro = this.cs.joinSynchroChannel('layout', this.id, {
       connected() {
         return console.log(`layout: Connected.`);
       },
       disconnected() {
         return console.log(`layout: Disconnected.`);
-      }
+      },
     });
   }
 
@@ -164,5 +162,4 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
     this.nav.unsubscribe();
   }
-
 }

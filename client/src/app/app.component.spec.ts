@@ -47,7 +47,7 @@ describe('AppComponent', () => {
         EditLayoutComponent,
         NewLayoutComponent,
         NewGridComponent,
-        NewWidgetComponent
+        NewWidgetComponent,
       ],
       imports: [
         BrowserModule,
@@ -68,8 +68,8 @@ describe('AppComponent', () => {
         MatTabsModule,
         AppRoutingModule,
         ReactiveFormsModule,
-        FormsModule
-      ]
+        FormsModule,
+      ],
     }).compileComponents();
   }));
   it('should create the app', async(() => {

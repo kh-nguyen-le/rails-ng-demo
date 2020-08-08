@@ -46,7 +46,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     NewWidgetComponent,
     EditLayoutComponent,
     EditGridComponent,
-    EditWidgetComponent
+    EditWidgetComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,9 +67,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatTabsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

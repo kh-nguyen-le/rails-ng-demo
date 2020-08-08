@@ -16,22 +16,32 @@ const appRoutes: Routes = [
   { path: 'dash/:id', component: DashComponent },
   { path: 'widgets', component: EditorWidgetComponent },
   { path: 'widgets/new', component: NewWidgetComponent },
-  { path: 'widgets/:id', component: EditWidgetComponent, runGuardsAndResolvers: 'always' },
+  {
+    path: 'widgets/:id',
+    component: EditWidgetComponent,
+    runGuardsAndResolvers: 'always',
+  },
   { path: 'grids', component: EditorGridComponent },
   { path: 'grids/new', component: NewGridComponent },
-  { path: 'grids/:id', component: EditGridComponent, runGuardsAndResolvers: 'always' },
-  { path: 'layouts', component: EditorLayoutComponent},
+  {
+    path: 'grids/:id',
+    component: EditGridComponent,
+    runGuardsAndResolvers: 'always',
+  },
+  { path: 'layouts', component: EditorLayoutComponent },
   { path: 'layouts/new', component: NewLayoutComponent },
-  { path: 'layouts/:id', component: EditLayoutComponent, runGuardsAndResolvers: 'always' }
+  {
+    path: 'layouts/:id',
+    component: EditLayoutComponent,
+    runGuardsAndResolvers: 'always',
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {onSameUrlNavigation: 'reload'}),
-    CommonModule
+    RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload' }),
+    CommonModule,
   ],
-  exports: [
-    RouterModule
-  ]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

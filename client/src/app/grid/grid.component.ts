@@ -1,20 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ConfigService, Grid, Widget} from '../config.service';
+import { ConfigService, Grid, Widget } from '../config.service';
 import { Observable, of } from 'rxjs';
 import { CableService } from '../cable.service';
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css']
+  styleUrls: ['./grid.component.css'],
 })
 export class GridComponent implements OnInit {
   @Input() grid: Grid;
   widgets$: Observable<Widget[]>;
   channel: ActionCable.Channel;
 
-  constructor(private conf: ConfigService,
-    private cs: CableService) { }
+  constructor(private conf: ConfigService, private cs: CableService) {}
 
   async getData() {
     this.newChannel();
@@ -23,7 +22,9 @@ export class GridComponent implements OnInit {
   }
 
   newChannel() {
-    if (this.channel != null) { this.channel.unsubscribe(); }
+    if (this.channel != null) {
+      this.channel.unsubscribe();
+    }
     this.channel = this.cs.joinSynchroChannel('grid', this.grid.id, {
       connected() {
         return console.log(`grid: Connected.`);
@@ -31,11 +32,11 @@ export class GridComponent implements OnInit {
       disconnected() {
         return console.log(`grid: Disconnected.`);
       },
-      received: (data: Grid) => this.refresh(data)
+      received: (data: Grid) => this.refresh(data),
     });
   }
 
-  refresh (data: Grid) {
+  refresh(data: Grid) {
     console.log('New data received. Updating.');
     this.widgets$ = of(data.widgets);
   }
@@ -43,5 +44,4 @@ export class GridComponent implements OnInit {
   ngOnInit() {
     this.getData();
   }
-
 }
