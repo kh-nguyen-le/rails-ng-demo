@@ -18,7 +18,7 @@ export class NewWidgetComponent {
     private router: Router
   ) {
     this.form = fb.group({
-      name: '',
+      name: ['', Validators.required],
       config: fb.group({
         widgetType: ['', Validators.required],
         gradient: false,

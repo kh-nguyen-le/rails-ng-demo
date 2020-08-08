@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfigService, Grid, Widget, GridWidget } from '../../config.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,7 +30,7 @@ export class EditGridComponent implements OnInit, OnDestroy {
     private cs: CableService
   ) {
     this.form = fb.group({
-      name: '',
+      name: ['', Validators.required],
       title: '',
       col: '',
       size: '',

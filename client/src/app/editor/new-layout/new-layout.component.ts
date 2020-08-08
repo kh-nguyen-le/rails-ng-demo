@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../../config.service';
 import { Router } from '@angular/router';
 
@@ -18,7 +18,7 @@ export class NewLayoutComponent {
     private router: Router
   ) {
     this.form = fb.group({
-      name: '',
+      name: ['', Validators.required],
       background: '',
       duration: '',
     });

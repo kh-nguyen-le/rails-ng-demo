@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfigService, Layout, Grid, LayoutGrid } from '../../config.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,7 +31,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     private cs: CableService
   ) {
     this.form = fb.group({
-      name: '',
+      name: ['', Validators.required],
       background: '',
       duration: '',
     });

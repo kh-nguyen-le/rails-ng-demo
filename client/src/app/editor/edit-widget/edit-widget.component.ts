@@ -34,7 +34,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     private cs: CableService
   ) {
     this.form = fb.group({
-      name: '',
+      name: ['', Validators.required],
       config: fb.group({
         widgetType: ['', Validators.required],
         gradient: false,
