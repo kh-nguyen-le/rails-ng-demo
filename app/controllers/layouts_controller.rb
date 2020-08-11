@@ -1,5 +1,5 @@
 class LayoutsController < ApplicationController
-  before_action :set_layout, only: [:show, :update, :destroy]
+  before_action :set_layout, only: %i[show update destroy]
 
   # GET /layouts
   def index
@@ -10,7 +10,7 @@ class LayoutsController < ApplicationController
 
   # GET /layouts/1
   def show
-    render json: @layout.to_json(include: [:grids, :layout_grids])
+    render json: @layout.to_json(include: %i[grids layout_grids])
   end
 
   # POST /layouts
@@ -39,13 +39,14 @@ class LayoutsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_layout
-      @layout = Layout.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def layout_params
-      params.require(:layout).permit(:name, :background, :duration)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_layout
+    @layout = Layout.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def layout_params
+    params.require(:layout).permit(:name, :background, :duration)
+  end
 end

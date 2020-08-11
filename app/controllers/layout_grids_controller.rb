@@ -1,5 +1,5 @@
 class LayoutGridsController < ApplicationController
-    before_action :set_layout_grid, only: [:show, :update, :destroy]
+  before_action :set_layout_grid, only: %i[show update destroy]
 
   # GET /layout_grids
   def index
@@ -39,13 +39,14 @@ class LayoutGridsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_layout_grid
-      @layout_grid = LayoutGrid.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def layout_grid_params
-      params.require(:layout_grid).permit(:position, :layout_id, :grid_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_layout_grid
+    @layout_grid = LayoutGrid.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def layout_grid_params
+    params.require(:layout_grid).permit(:position, :layout_id, :grid_id)
+  end
 end

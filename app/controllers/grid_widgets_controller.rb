@@ -1,5 +1,5 @@
 class GridWidgetsController < ApplicationController
-    before_action :set_grid_widget, only: [:show, :update, :destroy]
+  before_action :set_grid_widget, only: %i[show update destroy]
 
   # GET /grids
   def index
@@ -39,13 +39,14 @@ class GridWidgetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_grid_widget
-      @grid_widget = GridWidget.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def grid_widget_params
-      params.require(:grid_widget).permit(:position, :length, :width, :grid_id, :widget_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_grid_widget
+    @grid_widget = GridWidget.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def grid_widget_params
+    params.require(:grid_widget).permit(:position, :length, :width, :grid_id, :widget_id)
+  end
 end

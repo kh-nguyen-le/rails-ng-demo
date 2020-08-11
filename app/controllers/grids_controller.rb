@@ -1,5 +1,5 @@
 class GridsController < ApplicationController
-  before_action :set_grid, only: [:show, :update, :destroy]
+  before_action :set_grid, only: %i[show update destroy]
 
   # GET /grids
   def index
@@ -10,7 +10,7 @@ class GridsController < ApplicationController
 
   # GET /grids/1
   def show
-    render json: @grid.to_json(include: [:layouts, :layout_grids, :grid_widgets, :widgets])
+    render json: @grid.to_json(include: %i[layouts layout_grids grid_widgets widgets])
   end
 
   # POST /grids
@@ -39,13 +39,14 @@ class GridsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_grid
-      @grid = Grid.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def grid_params
-      params.require(:grid).permit(:name, :title, :col, :size)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_grid
+    @grid = Grid.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def grid_params
+    params.require(:grid).permit(:name, :title, :col, :size)
+  end
 end

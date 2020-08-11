@@ -1,5 +1,5 @@
 class WidgetsController < ApplicationController
-  before_action :set_widget, only: [:show, :update, :destroy]
+  before_action :set_widget, only: %i[show update destroy]
 
   # GET /widgets
   def index
@@ -10,7 +10,7 @@ class WidgetsController < ApplicationController
 
   # GET /widgets/1
   def show
-    render json: @widget.to_json(include: [:grids, :grid_widgets])
+    render json: @widget.to_json(include: %i[grids grid_widgets])
   end
 
   # POST /widgets
@@ -39,13 +39,14 @@ class WidgetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_widget
-      @widget = Widget.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def widget_params
-      params.require(:widget).permit(:name, { results: [:name, :value, series: [:name, :value] ] }, { config: [:widgetType, :gradient, :showXAxis, :showYAxis, :showLegend, :showXAxisLabel, :showYAxisLabel, :xAxisLabel, :yAxisLabel, :autoScale] })
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_widget
+    @widget = Widget.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def widget_params
+    params.require(:widget).permit(:name, { results: [:name, :value, series: %i[name value]] }, { config: %i[widgetType gradient showXAxis showYAxis showLegend showXAxisLabel showYAxisLabel xAxisLabel yAxisLabel autoScale] })
+  end
 end

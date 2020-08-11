@@ -10,5 +10,4 @@ class SynchroChannel < ApplicationCable::Channel
   def receive(data)
     ActionCable.server.broadcast(component_channel, data)
   end
-
 end
