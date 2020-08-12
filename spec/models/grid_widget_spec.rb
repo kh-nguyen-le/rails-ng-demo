@@ -23,9 +23,6 @@ RSpec.describe GridWidget, type: :model do
 
     it { is_expected.to be_valid }
 
-    it 'is invalid with negative position' do
-      subject.position = -1
-      expect(subject).to be_invalid
-    end
+    include_examples 'invalid position'
   end
 end

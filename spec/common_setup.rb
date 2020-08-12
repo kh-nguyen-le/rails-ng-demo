@@ -27,3 +27,10 @@ RSpec.shared_context 'layout' do
     @layout = Layout.create!(name: 'Layout')
   end
 end
+
+RSpec.shared_examples 'invalid position' do
+  it 'is invalid with negative position' do
+    subject.position = -1
+    expect(subject).to be_invalid
+  end
+end
