@@ -12,116 +12,169 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/widgets", type: :request do
+RSpec.describe '/widgets', type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Widget. As you add validations to Widget, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) do
+    { name: 'Widget',
+      config: {
+        widgetType: 'line',
+        showXAxis: 'true',
+        showYAxis: 'true',
+        gradient: 'false',
+        showLegend: 'true',
+        showXAxisLabel: 'true',
+        xAxisLabel: 'Country',
+        showYAxisLabel: 'true',
+        yAxisLabel: 'Population',
+        autoScale: 'true'
+      } }
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    { name: 'Widget', config: {} }
+  end
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
   # WidgetsController, or in your router and rack
   # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
+  let(:valid_headers) do
     {}
-  }
+  end
 
-  describe "GET /index" do
-    it "renders a successful response" do
+  describe 'GET /index' do
+    it 'renders a successful response' do
       Widget.create! valid_attributes
       get widgets_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
+  describe 'GET /show' do
+    it 'renders a successful response' do
       widget = Widget.create! valid_attributes
       get widget_url(widget), as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Widget" do
-        expect {
+  describe 'POST /create' do
+    context 'with valid parameters' do
+      it 'creates a new Widget' do
+        expect do
           post widgets_url,
                params: { widget: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Widget, :count).by(1)
+        end.to change(Widget, :count).by(1)
       end
 
-      it "renders a JSON response with the new widget" do
+      it 'renders a JSON response with the new widget' do
         post widgets_url,
              params: { widget: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new Widget" do
-        expect {
+    context 'with invalid parameters' do
+      it 'does not create a new Widget' do
+        expect do
           post widgets_url,
                params: { widget: invalid_attributes }, as: :json
-        }.to change(Widget, :count).by(0)
+        end.to change(Widget, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new widget" do
+      it 'renders a JSON response with errors for the new widget' do
         post widgets_url,
              params: { widget: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq('application/json')
       end
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+  describe 'PATCH /update' do
+    context 'with valid parameters' do
+      let(:new_attributes) do
+        { name: 'Widget',
+          config: {
+            widgetType: 'line',
+            showXAxis: 'true',
+            showYAxis: 'true',
+            gradient: 'false',
+            showLegend: 'true',
+            showXAxisLabel: 'true',
+            xAxisLabel: 'Country',
+            showYAxisLabel: 'true',
+            yAxisLabel: 'Population',
+            autoScale: 'true'
+          },
+          results: [
+            {
+              name: 'Germany',
+              series: [
+                {
+                  name: '2010',
+                  value: 7_300_000
+                },
+                {
+                  name: '2011',
+                  value: 8_940_000
+                }
+              ]
+            },
 
-      it "updates the requested widget" do
-        widget = Widget.create! valid_attributes
-        patch widget_url(widget),
-              params: { widget: invalid_attributes }, headers: valid_headers, as: :json
-        widget.reload
-        skip("Add assertions for updated state")
+            {
+              name: 'USA',
+              series: [
+                {
+                  name: '2010',
+                  value: 7_870_000
+                },
+                {
+                  name: '2011',
+                  value: 8_270_000
+                }
+              ]
+            }
+          ] }
       end
 
-      it "renders a JSON response with the widget" do
+      it 'updates the requested widget' do
         widget = Widget.create! valid_attributes
         patch widget_url(widget),
-              params: { widget: invalid_attributes }, headers: valid_headers, as: :json
+              params: { widget: new_attributes }, headers: valid_headers, as: :json
+        widget.reload
+        expect(widget.results).to be_truthy
+      end
+
+      it 'renders a JSON response with the widget' do
+        widget = Widget.create! valid_attributes
+        patch widget_url(widget),
+              params: { widget: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq('application/json')
       end
     end
 
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the widget" do
+    context 'with invalid parameters' do
+      it 'renders a JSON response with errors for the widget' do
         widget = Widget.create! valid_attributes
         patch widget_url(widget),
               params: { widget: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq('application/json')
       end
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested widget" do
+  describe 'DELETE /destroy' do
+    it 'destroys the requested widget' do
       widget = Widget.create! valid_attributes
-      expect {
+      expect do
         delete widget_url(widget), headers: valid_headers, as: :json
-      }.to change(Widget, :count).by(-1)
+      end.to change(Widget, :count).by(-1)
     end
   end
 end
