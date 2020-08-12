@@ -12,116 +12,116 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/layouts", type: :request do
+RSpec.describe '/layouts', type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Layout. As you add validations to Layout, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) do
+    { name: 'Layout', duration: 0 }
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    { name: 'Layout', duration: -1 }
+  end
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
   # LayoutsController, or in your router and rack
   # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
+  let(:valid_headers) do
     {}
-  }
+  end
 
-  describe "GET /index" do
-    it "renders a successful response" do
+  describe 'GET /index' do
+    it 'renders a successful response' do
       Layout.create! valid_attributes
       get layouts_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
+  describe 'GET /show' do
+    it 'renders a successful response' do
       layout = Layout.create! valid_attributes
       get layout_url(layout), as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Layout" do
-        expect {
+  describe 'POST /create' do
+    context 'with valid parameters' do
+      it 'creates a new Layout' do
+        expect do
           post layouts_url,
                params: { layout: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Layout, :count).by(1)
+        end.to change(Layout, :count).by(1)
       end
 
-      it "renders a JSON response with the new layout" do
+      it 'renders a JSON response with the new layout' do
         post layouts_url,
              params: { layout: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new Layout" do
-        expect {
+    context 'with invalid parameters' do
+      it 'does not create a new Layout' do
+        expect do
           post layouts_url,
                params: { layout: invalid_attributes }, as: :json
-        }.to change(Layout, :count).by(0)
+        end.to change(Layout, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new layout" do
+      it 'renders a JSON response with errors for the new layout' do
         post layouts_url,
              params: { layout: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq('application/json')
       end
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested layout" do
-        layout = Layout.create! valid_attributes
-        patch layout_url(layout),
-              params: { layout: invalid_attributes }, headers: valid_headers, as: :json
-        layout.reload
-        skip("Add assertions for updated state")
+  describe 'PATCH /update' do
+    context 'with valid parameters' do
+      let(:new_attributes) do
+        { name: 'Layout', duration: 0, background: 'white' }
       end
 
-      it "renders a JSON response with the layout" do
+      it 'updates the requested layout' do
         layout = Layout.create! valid_attributes
         patch layout_url(layout),
-              params: { layout: invalid_attributes }, headers: valid_headers, as: :json
+              params: { layout: new_attributes }, headers: valid_headers, as: :json
+        layout.reload
+        expect(layout).to have_attributes(background: 'white', name: 'Layout', duration: 0)
+      end
+
+      it 'renders a JSON response with the layout' do
+        layout = Layout.create! valid_attributes
+        patch layout_url(layout),
+              params: { layout: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq('application/json')
       end
     end
 
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the layout" do
+    context 'with invalid parameters' do
+      it 'renders a JSON response with errors for the layout' do
         layout = Layout.create! valid_attributes
         patch layout_url(layout),
               params: { layout: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq('application/json')
       end
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested layout" do
+  describe 'DELETE /destroy' do
+    it 'destroys the requested layout' do
       layout = Layout.create! valid_attributes
-      expect {
+      expect do
         delete layout_url(layout), headers: valid_headers, as: :json
-      }.to change(Layout, :count).by(-1)
+      end.to change(Layout, :count).by(-1)
     end
   end
 end
