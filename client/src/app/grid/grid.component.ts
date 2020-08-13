@@ -37,7 +37,8 @@ export class GridComponent implements OnInit {
   }
 
   refresh(data: Grid): void {
-    console.log('New data received. Updating.');
+    console.log('New grid received. Updating.');
+    this.grid = data;
     this.widgets$ = of(data.widgets);
   }
 

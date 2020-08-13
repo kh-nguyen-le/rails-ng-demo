@@ -61,7 +61,8 @@ export class DashComponent implements OnInit, OnDestroy {
   }
 
   refresh(data: Layout): void {
-    console.log('New data received. Updating.');
+    console.log('New layout received. Updating.');
+    this.layout = data;
     this.grids$ = of(data.grids);
   }
 

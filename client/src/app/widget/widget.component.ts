@@ -14,7 +14,7 @@ export class WidgetComponent implements OnInit {
   constructor(private cs: CableService) {}
 
   refresh(data: Widget): void {
-    console.log('New data received. Updating.');
+    console.log('New widget received. Updating.');
     this.widget = data;
   }
 

@@ -46,6 +46,11 @@ describe('WidgetComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeDefined();
+  });
+
+  it('should update upon receiving new data with #refresh', () => {
+    component.refresh({ name: 'Widget', id: 1, config: config, results: []});
+    expect(component.widget.name).toBe('Widget');
   });
 });

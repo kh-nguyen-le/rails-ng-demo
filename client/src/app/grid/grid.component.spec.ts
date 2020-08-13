@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { Grid } from '../config.service';
+import { Grid, Widget } from '../config.service';
 
 describe('GridComponent', () => {
   let component: GridComponent;
@@ -22,6 +22,18 @@ describe('GridComponent', () => {
     layouts: [],
     layout_grids: [],
     grid_widgets: [],
+  };
+  const config: Widget['config'] = {
+    gradient: false,
+    autoscale: true,
+    showXAxis: true,
+    showYAxis: true,
+    showXAxisLabel: true,
+    showYAxisLabel: true,
+    showLegend: false,
+    xAxisLabel: '',
+    yAxisLabel: '',
+    widgetType: 'line',
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -45,5 +57,33 @@ describe('GridComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('when receiving new data', () => {
+      const new_grid = {
+        id: 1,
+        name: 'Grid',
+        title: 'Test',
+        col: 2,
+        size: '2:1',
+        widgets: [{ id: 1, name: 'Test', results: [], config: config }],
+        layouts: [],
+        layout_grids: [],
+        grid_widgets: [],
+      };
+
+    it('should be able to update attributes', () => {
+      component.refresh(new_grid);
+      expect(component.grid.name).toEqual('Grid');
+      expect(component.grid.title).toEqual('Test');
+      expect(component.grid.col).toEqual(2);
+    });
+
+    it('should be able to add a widget', () => {
+      component.refresh(new_grid);
+      component.widgets$.subscribe((widgets: Widget[]) => {
+        expect(widgets).toEqual(this.new_grid.widgets);
+      });
+    });
   });
 });
