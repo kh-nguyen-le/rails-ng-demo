@@ -123,6 +123,11 @@ export class EditGridComponent implements OnInit, OnDestroy {
       this.snackBar.open('Primary Attributes updated', '', {
         duration: 2000,
       });
+      this.grid.name = this.form.value.name;
+      this.grid.title = this.form.value.title;
+      this.grid.col = this.form.value.col;
+      this.grid.size = this.form.value.size;
+      this.synchro.send(this.grid);
     });
   }
 

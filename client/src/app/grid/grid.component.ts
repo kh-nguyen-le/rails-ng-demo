@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { ConfigService, Grid, Widget } from '../config.service';
 import { Observable, of } from 'rxjs';
 import { CableService } from '../cable.service';
@@ -13,7 +13,11 @@ export class GridComponent implements OnInit {
   widgets$: Observable<Widget[]>;
   channel: ActionCable.Channel;
 
-  constructor(private conf: ConfigService, private cs: CableService) {}
+  constructor(
+    private conf: ConfigService,
+    private cs: CableService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   async getData(): Promise<void> {
     this.newChannel();
@@ -40,6 +44,7 @@ export class GridComponent implements OnInit {
     console.log('New grid received. Updating.');
     this.grid = data;
     this.widgets$ = of(data.widgets);
+    this.cd.detectChanges();
   }
 
   ngOnInit(): void {

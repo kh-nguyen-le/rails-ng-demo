@@ -115,6 +115,10 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       this.snackBar.open('Primary Attributes updated', '', {
         duration: 2000,
       });
+      this.layout.name = this.form.value.name;
+      this.layout.background = this.form.value.background;
+      this.layout.duration = this.form.value.duration;
+      this.synchro.send(this.layout);
     });
   }
 

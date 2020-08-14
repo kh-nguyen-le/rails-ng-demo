@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigService, Layout, Grid } from '../config.service';
 import { interval, Observable, of, Subscription } from 'rxjs';
@@ -24,7 +24,8 @@ export class DashComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private elementRef: ElementRef,
     private route: ActivatedRoute,
-    private cs: CableService
+    private cs: CableService,
+    private cd: ChangeDetectorRef
   ) {
     this.titleService.setTitle('Dashboard');
   }
@@ -64,6 +65,7 @@ export class DashComponent implements OnInit, OnDestroy {
     console.log('New layout received. Updating.');
     this.layout = data;
     this.grids$ = of(data.grids);
+    this.cd.detectChanges();
   }
 
   ngOnInit(): void {
