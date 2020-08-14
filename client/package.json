@@ -38,7 +38,7 @@
     "actioncable": "^5.2.4-1",
     "codelyzer": "^5.1.2",
     "core-js": "^2.5.4",
-    "rxjs": "^6.5.5",
+    "rxjs": "^6.6.2",
     "ts-node": "~7.0.1",
     "tslib": "^1.10.0",
     "typescript": "^3.9.7",
