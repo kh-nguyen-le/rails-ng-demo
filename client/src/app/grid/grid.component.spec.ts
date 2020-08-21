@@ -84,6 +84,7 @@ describe('GridComponent', () => {
       component.widgets$.subscribe((widgets: Widget[]) => {
         expect(widgets).toEqual(this.new_grid.widgets);
       });
+      expect(component.grid).toEqual(new_grid);
     });
   });
 });

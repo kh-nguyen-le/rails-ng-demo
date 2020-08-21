@@ -95,6 +95,7 @@ describe('DashComponent', () => {
       component.grids$.subscribe((grids: Grid[]) => {
         expect(grids).toEqual(new_layout.grids);
       });
+      expect(component.layout).toEqual(new_layout);
     });
   });
 });
