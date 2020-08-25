@@ -20,8 +20,8 @@ export class NewGridComponent {
     this.form = fb.group({
       name: ['', Validators.required],
       title: '',
-      col: '',
-      size: '',
+      col: [1, [Validators.required, Validators.min(1), Validators.max(10)]],
+      size: '1:1',
     });
   }
 

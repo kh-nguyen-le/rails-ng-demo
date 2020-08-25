@@ -20,4 +20,9 @@ RSpec.describe Grid, type: :model do
     subject.col = 0
     expect(subject).to_not be_valid
   end
+
+  it 'has at most 10 columns' do
+    subject.col = 100
+    expect(subject).to_not be_valid
+  end
 end

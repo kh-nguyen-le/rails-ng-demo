@@ -56,4 +56,43 @@ describe('NewGridComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should not be valid when empty', () => {
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('should require a name', () => {
+    const form = component.form;
+    const name = form.controls['name'];
+    let errors = name.errors || {};
+    
+    expect(name.valid).toBeFalsy();
+    expect(errors['required']).toBeTruthy();
+    
+    name.setValue('Test');
+    errors = name.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(name.valid).toBeTruthy();
+  });
+  
+  it('should have between 1 and 10 columns inclusive', () => {
+    const form = component.form;
+    const columns = form.controls['col'];
+    let errors = columns.errors || {};
+
+    expect(columns.value).toBe(1);
+    expect(errors['min']).toBeFalsy();
+    expect(errors['max']).toBeFalsy();
+    expect(columns.valid).toBeTruthy();
+
+    columns.setValue(0);
+    errors = columns.errors || {};
+    expect(errors['min']).toBeTruthy();
+    expect(columns.valid).toBeFalsy();
+
+    columns.setValue(100);
+    errors = columns.errors || {};
+    expect(errors['max']).toBeTruthy();
+    expect(columns.valid).toBeFalsy();
+  });
 });
