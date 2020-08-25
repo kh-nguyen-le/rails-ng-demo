@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfigService } from '../../config.service';
+import { ConfigService, Grid } from '../../config.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NewGridComponent {
   form: FormGroup;
-  new_id;
+  new_id: Grid;
 
   constructor(
     fb: FormBuilder,
@@ -26,7 +26,7 @@ export class NewGridComponent {
   }
 
   onSubmit(): void {
-    this.conf.createGrid(this.form.value).subscribe((res) => {
+    this.conf.createGrid(this.form.value).subscribe((res: Grid) => {
       this.new_id = res;
       this.router.navigate(['/grids', this.new_id.id]);
     });

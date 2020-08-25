@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfigService } from '../../config.service';
+import { ConfigService, Widget } from '../../config.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NewWidgetComponent {
   form: FormGroup;
-  new_id;
+  new_id: Widget;
 
   constructor(
     fb: FormBuilder,
@@ -35,7 +35,7 @@ export class NewWidgetComponent {
   }
 
   onSubmit(): void {
-    this.conf.createWidget(this.form.value).subscribe((res) => {
+    this.conf.createWidget(this.form.value).subscribe((res: Widget) => {
       this.new_id = res;
       this.router.navigate(['/widgets', this.new_id.id]);
     });

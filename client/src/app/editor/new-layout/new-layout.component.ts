@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfigService } from '../../config.service';
+import { ConfigService, Layout } from '../../config.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NewLayoutComponent {
   form: FormGroup;
-  new_id;
+  new_id: Layout;
 
   constructor(
     fb: FormBuilder,
@@ -25,7 +25,7 @@ export class NewLayoutComponent {
   }
 
   onSubmit(): void {
-    this.conf.createLayout(this.form.value).subscribe((res) => {
+    this.conf.createLayout(this.form.value).subscribe((res: Layout) => {
       this.new_id = res;
       this.router.navigate(['/layouts', this.new_id.id]);
     });
