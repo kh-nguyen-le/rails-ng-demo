@@ -32,7 +32,7 @@ export class EditGridComponent implements OnInit, OnDestroy {
     this.form = fb.group({
       name: ['', Validators.required],
       title: '',
-      col: '',
+      col: [1, [Validators.required, Validators.min(1), Validators.max(10)]],
       size: '',
     });
     this.nav = this.router.events.subscribe((e: unknown) => {

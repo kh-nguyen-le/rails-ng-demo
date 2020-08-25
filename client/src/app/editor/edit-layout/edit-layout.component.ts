@@ -33,7 +33,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.form = fb.group({
       name: ['', Validators.required],
       background: '',
-      duration: '',
+      duration: [0, Validators.min(0)],
     });
     this.nav = this.router.events.subscribe((e: unknown) => {
       if (e instanceof NavigationEnd) {
