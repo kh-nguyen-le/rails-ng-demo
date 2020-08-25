@@ -16,7 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormGroup } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NewWidgetComponent', () => {
@@ -59,5 +59,50 @@ describe('NewWidgetComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not be valid when empty', () => {
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('should require a name', () => {
+    const form = component.form;
+    const name = form.controls['name'];
+    let errors = name.errors || {};
+    
+    expect(name.valid).toBeFalsy();
+    expect(errors['required']).toBeTruthy();
+    
+    name.setValue('Test');
+    errors = name.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(name.valid).toBeTruthy();
+  });
+
+  it('should require a widget type', () => {
+    const form = component.form;
+    const config = form.controls['config'] as FormGroup;
+    const widgetType = config.controls['widgetType'];
+    let errors = widgetType.errors || {};
+    
+    expect(widgetType.valid).toBeFalsy();
+    expect(errors['required']).toBeTruthy();
+
+    widgetType.setValue('line');
+    errors = widgetType.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(widgetType.valid).toBeTruthy();
+  });
+
+  it('should be valid with required values valid', () => {
+    const form = component.form;
+    const name = form.controls['name'];
+    const config = form.controls['config'] as FormGroup;
+    
+    name.setValue('Test');
+    const widgetType = config.controls['widgetType'];
+    widgetType.setValue('line');
+    expect(form.errors).toBeFalsy();
+    expect(form.valid).toBeTruthy();
   });
 });
