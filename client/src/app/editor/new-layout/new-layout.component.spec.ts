@@ -60,4 +60,37 @@ describe('NewLayoutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should not be valid when empty', () => {
+    expect(component.form.valid).toBeFalsy();
+  });
+
+  it('should require a name', () => {
+    const form = component.form;
+    const name = form.controls['name'];
+    let errors = name.errors || {};
+    
+    expect(name.valid).toBeFalsy();
+    expect(errors['required']).toBeTruthy();
+    
+    name.setValue('Test');
+    errors = name.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(name.valid).toBeTruthy();
+  });
+
+  it('should not allow negative duration', () => {
+    const form = component.form;
+    const duration = form.controls['duration'];
+    let errors = duration.errors || {};
+
+    expect(errors['min']).toBeFalsy();
+    expect(duration.value).toBe(0);
+    expect(duration.valid).toBeTruthy();
+
+    duration.setValue(-1000);
+    errors = duration.errors || {};
+    expect(errors['min']).toBeTruthy();
+    expect(duration.valid).toBeFalsy();
+  });
 });

@@ -20,7 +20,7 @@ export class NewLayoutComponent {
     this.form = fb.group({
       name: ['', Validators.required],
       background: '',
-      duration: '',
+      duration: [0, Validators.min(0)],
     });
   }
 
