@@ -4,11 +4,11 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
+    hostname: 'frontend',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-firefox-launcher'),
-      require('karma-chrome-launcher'),
+      require('karma-selenium-grid-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -21,12 +21,25 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
+    customLaunchers: {
+      'selenium-ff': {
+        base: 'SeleniumGrid',
+        gridUrl: 'http://selenium-hub:4444/wd/hub',
+        browserName: 'firefox'
+      },
+      'selenium-chrome': {
+        base: 'SeleniumGrid',
+        gridUrl: 'http://selenium-hub:4444/wd/hub',
+        browserName: 'chrome',
+        //delayLaunch: 10000
+      }
+    },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Firefox', 'Chrome'],
-    singleRun: false
+    autoWatch: false,
+    browsers: ['selenium-chrome'],
+    singleRun: true
   });
 };
