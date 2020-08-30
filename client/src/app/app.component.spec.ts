@@ -30,6 +30,7 @@ import { EditorLayoutComponent } from './editor/editor-layout/editor-layout.comp
 import { NewLayoutComponent } from './editor/new-layout/new-layout.component';
 import { GridComponent } from './grid/grid.component';
 import { WidgetComponent } from './widget/widget.component';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -70,6 +71,7 @@ describe('AppComponent', () => {
         ReactiveFormsModule,
         FormsModule,
       ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }],
     }).compileComponents();
   }));
   it('should create the app', async(() => {
