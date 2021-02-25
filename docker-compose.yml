@@ -37,6 +37,8 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     networks:
       - client
+    ports:
+      - "5900:5900"
 
   firefox:
     image: selenium/node-firefox:4.0.0-alpha-7-prerelease-20200826
