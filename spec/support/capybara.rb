@@ -21,3 +21,4 @@ Capybara.register_driver :selenium_remote_chrome do |app|
 end
 
 Capybara.javascript_driver = :selenium_remote_chrome
+Capybara.app_host = 'http://frontend:4200'
