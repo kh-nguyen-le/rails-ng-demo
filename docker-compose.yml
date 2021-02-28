@@ -1,76 +1,20 @@
 version: "3"
 services:
-  backend:
-    build:
-      context: .
-    ports:
-      - "3000:3000"
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    volumes:
-      - .:/app
-    environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+  api:
     depends_on:
       - db
     networks:
       - app
       - rails
   frontend:
-    build:
-      context: ./client
-    ports:
-      - "4200:4200"
     depends_on:
-      - backend
+      - api
     networks:
       - app
-      - client
-  chrome:
-    image: selenium/node-chrome:4.0.0-alpha-7-prerelease-20200826
-    volumes:
-      - /dev/shm:/dev/shm
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-    networks:
-      - client
-    ports:
-      - "5900:5900"
-
-  firefox:
-    image: selenium/node-firefox:4.0.0-alpha-7-prerelease-20200826
-    volumes:
-      - /dev/shm:/dev/shm
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-    networks:
-      - client
-  selenium-hub:
-    image: selenium/hub:4.0.0-alpha-7-prerelease-20200826
-    container_name: selenium-hub
-    ports:
-      - "4442:4442"
-      - "4443:4443"
-      - "4444:4444"
-    networks:
-      - app
-      - client
   db:
     image: postgres:13
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
     networks:
       - rails
 networks:
   app:
-  client:
   rails:

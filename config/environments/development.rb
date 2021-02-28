@@ -1,6 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.hosts << "api"
+
   # Explicitly set actioncable url
   config.action_cable.url = 'ws://localhost:3000/cable'
   config.action_cable.disable_request_forgery_protection = true

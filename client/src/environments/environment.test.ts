@@ -4,14 +4,14 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://api.localhost',
-  sockUrl: 'ws://api.localhost/cable'
+  apiUrl: 'http://api:3000',
+  sockUrl: 'ws://api:3000/cable'
 };
 
 /*
  * In development mode, to ignore zone related error stack frames such as
  * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can
  * import the following file, but please comment it out in production mode
- * because it will have performance impact when throw error
+ * because it will have dockdddperformance impact when throw error
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
