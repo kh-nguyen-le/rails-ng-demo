@@ -16,8 +16,12 @@ To see this feature, 1. open two browsers with seperate cookie spaces (ie incogn
 
 Application modules are now in Docker containers for a consistent testing environment.
 
-To launch container network use `docker-compose up --build`
+To launch development container network use `docker-compose up --build`
 
-To run RSpec tests use `docker-compose run --rm backend rspec`
+To launch testing container network use `docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build`
+
+To run RSpec tests use `docker-compose -f run --rm api rspec`
 
 To run Jest test use `cd ./client && npx jest` or `docker-compose run --rm frontend npx jest`
+
+To run Capybara tests use `docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rspec ./spec/features`
