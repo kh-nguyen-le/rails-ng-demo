@@ -32,7 +32,7 @@
     "@angular/platform-browser-dynamic": "^10.2.4",
     "@angular/router": "^10.2.4",
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
-    "@swimlane/ngx-charts": "^13.0.1",
+    "@swimlane/ngx-charts": "^17.0.1",
     "@types/actioncable": "^5.2.3",
     "@types/node": "^12.20.4",
     "actioncable": "^5.2.4-5",
