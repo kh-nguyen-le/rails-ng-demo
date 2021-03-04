@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { GridComponent } from './grid.component';
 import { WidgetComponent } from '../widget/widget.component';
@@ -35,7 +35,7 @@ describe('GridComponent', () => {
     yAxisLabel: '',
     widgetType: 'line',
   };
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [GridComponent, WidgetComponent],
       imports: [
@@ -82,7 +82,7 @@ describe('GridComponent', () => {
     it('should be able to add a widget', () => {
       component.refresh(new_grid);
       component.widgets$.subscribe((widgets: Widget[]) => {
-        expect(widgets).toEqual(this.new_grid.widgets);
+        expect(widgets).toEqual(new_grid.widgets);
       });
       expect(component.grid).toEqual(new_grid);
     });

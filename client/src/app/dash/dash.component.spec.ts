@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DashComponent } from './dash.component';
 import { GridComponent } from '../grid/grid.component';
@@ -46,7 +46,7 @@ describe('DashComponent', () => {
     grids: [],
     layout_grids: [],
   };
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [DashComponent, GridComponent, WidgetComponent],
       imports: [

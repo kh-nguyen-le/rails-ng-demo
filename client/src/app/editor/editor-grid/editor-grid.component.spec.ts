@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EditorGridComponent } from './editor-grid.component';
 import { EditGridComponent } from '../edit-grid/edit-grid.component';
@@ -23,7 +23,7 @@ describe('EditorGridComponent', () => {
   let component: EditorGridComponent;
   let fixture: ComponentFixture<EditorGridComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [EditorGridComponent, EditGridComponent, NewGridComponent],
       imports: [
