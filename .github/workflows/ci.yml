@@ -32,4 +32,5 @@ jobs:
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm frontend npx jest
       
     - name: RSpec
+      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run api rails db:create
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rspec
