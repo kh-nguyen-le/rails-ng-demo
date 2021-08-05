@@ -31,7 +31,9 @@ jobs:
     - name: Jest
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm frontend npx jest
 
-    - run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run api rails db:create
-      
+    - run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:create
+    
+    - run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:migrate
+    
     - name: RSpec
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rspec
