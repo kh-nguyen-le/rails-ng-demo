@@ -29,7 +29,7 @@ jobs:
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d --build
       
     - name: Jest
-      run: docker-compose run --rm frontend npx jest
+      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm frontend npx jest
       
     - name: RSpec
-      run: docker-compose run --rm api rspec
+      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rspec
