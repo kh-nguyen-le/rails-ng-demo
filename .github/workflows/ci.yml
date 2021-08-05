@@ -42,7 +42,7 @@ jobs:
 
     - name: Create DB
 
-      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:setup RAILS_ENV=test
+      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:prepare RAILS_ENV=test
     
     - name: RSpec
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rspec
