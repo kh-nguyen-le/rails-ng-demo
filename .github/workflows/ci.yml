@@ -26,7 +26,7 @@ jobs:
       uses: ruby/setup-ruby@v1
 
     - name: Build containers
-      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build
+      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d --build
       
     - name: Jest
       run: docker-compose run --rm frontend npx jest
