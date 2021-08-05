@@ -73,7 +73,7 @@ RSpec.describe '/widgets', type: :request do
         post widgets_url,
              params: { widget: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including('application/json'))
+        expect(response.content_type).to match(a_string_including('application/json; charset=utf-8'))
       end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe '/widgets', type: :request do
         post widgets_url,
              params: { widget: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
   end
@@ -154,7 +154,7 @@ RSpec.describe '/widgets', type: :request do
         patch widget_url(widget),
               params: { widget: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
 
@@ -164,7 +164,7 @@ RSpec.describe '/widgets', type: :request do
         patch widget_url(widget),
               params: { widget: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
   end

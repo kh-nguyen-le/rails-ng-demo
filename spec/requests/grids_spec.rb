@@ -69,7 +69,7 @@ RSpec.describe '/grids', type: :request do
         post grids_url,
              params: { grid: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including('application/json'))
+        expect(response.content_type).to match(a_string_including('application/json; charset=utf-8'))
       end
     end
 
@@ -85,7 +85,7 @@ RSpec.describe '/grids', type: :request do
         post grids_url,
              params: { grid: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
   end
@@ -114,7 +114,7 @@ RSpec.describe '/grids', type: :request do
         patch grid_url(grid),
               params: { grid: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe '/grids', type: :request do
         patch grid_url(grid),
               params: { grid: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq('application/json; charset=utf-8')
       end
     end
   end
