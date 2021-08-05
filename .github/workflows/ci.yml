@@ -1,0 +1,32 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+    - uses: actions/checkout@v2
+    
+    - name: Build containers
+      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build
+      
+    - name: Jest
+      run: docker-compose run --rm frontend npx jest
+      
+    - name: RSpec
+      run: docker-compose run --rm api rspec
