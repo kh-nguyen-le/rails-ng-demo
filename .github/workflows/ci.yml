@@ -34,9 +34,9 @@ jobs:
     - name: Create DB
 
       run: |
-      docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:create
-      docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:migrate RAILS_ENV=test
-      docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:seed RAILS_ENV=test
+        docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:create
+        docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:migrate RAILS_ENV=test
+        docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:seed RAILS_ENV=test
     
     - name: RSpec
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rspec
