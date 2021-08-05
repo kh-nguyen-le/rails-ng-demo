@@ -31,7 +31,7 @@ jobs:
     - name: Cache layers
       uses: actions/cache@v2
       with:
-        path: /var/lib/docker/images
+        path: /var/lib/docker
         key: ${{ runner.os }}
 
     - name: Build containers
