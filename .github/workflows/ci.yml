@@ -22,6 +22,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+
     - name: Build containers
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build
       
