@@ -7,6 +7,7 @@ RSpec.feature 'Dashboards', js: true do
       visit '/'
       visit '/dash/1'
       expect(page).to have_content 'Dashboard'
+      save_screenshot
     end
 
     it 'should load by UI navigation' do
