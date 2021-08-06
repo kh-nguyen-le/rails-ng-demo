@@ -31,6 +31,7 @@ import { EditLayoutComponent } from './editor/edit-layout/edit-layout.component'
 import { EditGridComponent } from './editor/edit-grid/edit-grid.component';
 import { EditWidgetComponent } from './editor/edit-widget/edit-widget.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [],
   bootstrap: [AppComponent],
