@@ -3,61 +3,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
-export interface Widget {
-  id: number;
-  name: string;
-  results: unknown;
-  config: {
-    gradient: boolean;
-    autoscale: boolean;
-    showXAxis: boolean;
-    showYAxis: boolean;
-    showXAxisLabel: boolean;
-    showYAxisLabel: boolean;
-    showLegend: boolean;
-    xAxisLabel: string;
-    yAxisLabel: string;
-    widgetType: string;
-  };
-}
-
-export interface Grid {
-  id: number;
-  name: string;
-  title: string;
-  col: number;
-  size: string;
-  widgets: Widget[];
-  layouts: Layout[];
-  layout_grids: LayoutGrid[];
-  grid_widgets: GridWidget[];
-}
-
-export interface Layout {
-  id: number;
-  name: string;
-  background: string;
-  duration: number;
-  grids: Grid[];
-  layout_grids: LayoutGrid[];
-}
-
-export interface LayoutGrid {
-  id: number;
-  position: number;
-  layout_id: number;
-  grid_id: number;
-}
-
-export interface GridWidget {
-  id: number;
-  position: number;
-  length: number;
-  width: number;
-  grid_id: number;
-  widget_id: number;
-}
+import { Widget } from './models/widget.model';
+import { Grid } from './models/grid.model';
+import { GridWidget } from './models/gridwidget.model';
+import { Layout } from './models/layout.model';
+import { LayoutGrid } from './models/layoutgrid.model';
 
 @Injectable({
   providedIn: 'root',
