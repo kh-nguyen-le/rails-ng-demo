@@ -14,8 +14,8 @@ RSpec.feature 'Dashboards', js: true do
       dash_button = find_button('dashboard')
       expect(dash_button.text).to have_content 'dashboard'
       dash_button.click
-      #click_on 'dash-1'
-      #expect(page).to have_content 'Dashboard'
+      click_on 'dash-1'
+      expect(page).to have_content 'Dashboard'
     end
 
     it 'should load the editor' do 
