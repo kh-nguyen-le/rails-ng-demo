@@ -13,7 +13,7 @@ describe('WidgetComponent', () => {
   let fixture: ComponentFixture<WidgetComponent>;
   const config: Widget['config'] = {
     gradient: false,
-    autoscale: true,
+    autoScale: true,
     showXAxis: true,
     showYAxis: true,
     showXAxisLabel: true,

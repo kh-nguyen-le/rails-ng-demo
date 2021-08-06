@@ -4,7 +4,7 @@ export interface Widget {
     results: unknown;
     config: {
       gradient: boolean;
-      autoscale: boolean;
+      autoScale: boolean;
       showXAxis: boolean;
       showYAxis: boolean;
       showXAxisLabel: boolean;
@@ -13,5 +13,6 @@ export interface Widget {
       xAxisLabel: string;
       yAxisLabel: string;
       widgetType: string;
+      legendPosition: string;
     };
   }

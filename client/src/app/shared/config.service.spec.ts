@@ -16,7 +16,7 @@ describe('ConfigService', () => {
   let service: ConfigService;
   const config: Widget['config'] = {
     gradient: false,
-    autoscale: true,
+    autoScale: true,
     showXAxis: true,
     showYAxis: true,
     showXAxisLabel: true,

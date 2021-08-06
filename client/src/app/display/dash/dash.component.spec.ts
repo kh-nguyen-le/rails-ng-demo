@@ -19,7 +19,7 @@ describe('DashComponent', () => {
   let fixture: ComponentFixture<DashComponent>;
   const config: Widget['config'] = {
     gradient: false,
-    autoscale: true,
+    autoScale: true,
     showXAxis: true,
     showYAxis: true,
     showXAxisLabel: true,
