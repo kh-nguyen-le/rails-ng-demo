@@ -47,6 +47,7 @@ jobs:
 
     - name: Save failscreen
       uses: actions/upload-artifact@v2
+      if: failure()
       with:
         name: capybara-screens
         path: tmp/capybara
