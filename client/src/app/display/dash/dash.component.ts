@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ConfigService, Layout, Grid } from '../config.service';
+import { ConfigService, Layout, Grid } from '../../config.service';
 import { interval, Observable, of, Subscription } from 'rxjs';
-import { CableService } from '../cable.service';
+import { CableService } from '../../cable.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({

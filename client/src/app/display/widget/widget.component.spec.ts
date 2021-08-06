@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { Widget } from '../config.service';
+import { Widget } from '../../config.service';
 
 describe('WidgetComponent', () => {
   let component: WidgetComponent;

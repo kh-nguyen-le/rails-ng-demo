@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { ConfigService, Grid, Widget } from '../config.service';
+import { ConfigService, Grid, Widget } from '../../config.service';
 import { Observable, of } from 'rxjs';
-import { CableService } from '../cable.service';
+import { CableService } from '../../cable.service';
 
 @Component({
   selector: 'app-grid',

@@ -4,9 +4,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { DashComponent } from './dash/dash.component';
-import { GridComponent } from './grid/grid.component';
-import { WidgetComponent } from './widget/widget.component';
+import { DashComponent } from './display/dash/dash.component';
+import { GridComponent } from './display/grid/grid.component';
+import { WidgetComponent } from './display/widget/widget.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EditorLayoutComponent } from './editor/editor-layout/editor-layout.component';
 import { EditorGridComponent } from './editor/editor-grid/editor-grid.component';
