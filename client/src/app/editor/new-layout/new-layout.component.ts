@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfigService, Layout } from '../../config.service';
+import { ConfigService } from '../../shared/config.service';
 import { Router } from '@angular/router';
+import { Layout } from '../../shared/models/layout.model';
 
 @Component({
   selector: 'app-new-layout',

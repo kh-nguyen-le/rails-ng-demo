@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ConfigService, Layout, Grid } from '../../config.service';
+import { ConfigService } from '../../shared/config.service';
 import { interval, Observable, of, Subscription } from 'rxjs';
-import { CableService } from '../../cable.service';
+import { CableService } from '../../shared/cable.service';
 import { Title } from '@angular/platform-browser';
+import { Grid } from '../../shared/models/grid.model';
+import { Layout } from '../../shared/models/layout.model';
 
 @Component({
   selector: 'app-dash',

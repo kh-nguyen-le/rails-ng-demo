@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfigService, Grid, Widget, GridWidget } from '../../config.service';
+import { ConfigService } from '../../shared/config.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CableService } from '../../cable.service';
+import { CableService } from '../../shared/cable.service';
 import { Subscription } from 'rxjs';
+import { Grid } from '../../shared/models/grid.model';
+import { GridWidget } from '../../shared/models/gridwidget.model';
+import { Widget } from '../../shared/models/widget.model';
 @Component({
   selector: 'app-edit-grid',
   templateUrl: './edit-grid.component.html',

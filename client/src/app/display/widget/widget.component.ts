@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Widget } from '../../config.service';
-import { CableService } from '../../cable.service';
+import { Widget } from '../../shared/models/widget.model';
+import { CableService } from '../../shared/cable.service';
 
 @Component({
   selector: 'app-widget',

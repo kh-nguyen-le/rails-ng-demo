@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, Layout } from './config.service';
+import { ConfigService } from './shared/config.service';
 import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
+import { Layout } from './shared/models/layout.model';
 
 @Component({
   selector: 'app-root',

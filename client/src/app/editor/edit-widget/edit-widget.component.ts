@@ -5,11 +5,12 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { ConfigService, Widget } from '../../config.service';
+import { ConfigService } from '../../shared/config.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CableService } from 'src/app/cable.service';
+import { CableService } from '../../shared/cable.service';
 import { Subscription } from 'rxjs';
+import { Widget } from '../../shared/models/widget.model';
 
 @Component({
   selector: 'app-edit-widget',

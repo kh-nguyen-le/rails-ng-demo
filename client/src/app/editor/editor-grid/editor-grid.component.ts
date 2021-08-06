@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, Grid } from '../../config.service';
+import { ConfigService } from '../../shared/config.service';
 import { Title } from '@angular/platform-browser';
+import { Grid } from '../../shared/models/grid.model';
 
 @Component({
   selector: 'app-editor-grid',

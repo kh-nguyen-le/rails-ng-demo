@@ -7,7 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { Grid, Widget } from '../../config.service';
+import { Grid } from '../../shared/models/grid.model';
+import { Widget } from '../../shared/models/widget.model';
 
 describe('GridComponent', () => {
   let component: GridComponent;

@@ -10,7 +10,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Widget, Grid, Layout } from '../config.service';
+import { Widget } from '../../shared/models/widget.model';
+import { Grid } from '../../shared/models/grid.model';
+import { Layout } from '../../shared/models/layout.model';
 
 describe('DashComponent', () => {
   let component: DashComponent;

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfigService, Widget } from '../../config.service';
+import { ConfigService } from '../../shared/config.service';
 import { Router } from '@angular/router';
+import { Widget } from '../../shared/models/widget.model';
 
 @Component({
   selector: 'app-new-widget',

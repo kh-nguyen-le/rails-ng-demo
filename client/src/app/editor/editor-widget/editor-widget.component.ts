@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, Widget } from '../../config.service';
+import { ConfigService } from '../../shared/config.service';
 import { Title } from '@angular/platform-browser';
+import { Widget } from '../../shared/models/widget.model';
 
 @Component({
   selector: 'app-editor-widget',

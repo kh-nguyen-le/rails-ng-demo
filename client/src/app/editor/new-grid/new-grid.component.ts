@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfigService, Grid } from '../../config.service';
+import { ConfigService } from '../../shared/config.service';
 import { Router } from '@angular/router';
+import { Grid } from '../../shared/models/grid.model';
 
 @Component({
   selector: 'app-new-grid',

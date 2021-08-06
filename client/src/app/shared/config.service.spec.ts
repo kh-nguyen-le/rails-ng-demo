@@ -1,17 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  ConfigService,
-  Widget,
-  Layout,
-  Grid,
-  LayoutGrid,
-  GridWidget,
-} from './config.service';
+import { ConfigService } from './config.service';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { Grid } from './models/grid.model';
+import { GridWidget } from './models/gridwidget.model';
+import { Layout } from './models/layout.model';
+import { LayoutGrid } from './models/layoutgrid.model';
+import { Widget } from './models/widget.model';
 
 describe('ConfigService', () => {
   let httpTestingController: HttpTestingController;
