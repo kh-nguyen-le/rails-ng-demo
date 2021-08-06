@@ -32,6 +32,7 @@ import { EditGridComponent } from './editor/edit-grid/edit-grid.component';
 import { EditWidgetComponent } from './editor/edit-widget/edit-widget.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { StoreModule } from '@ngrx/store';
     ReactiveFormsModule,
     FormsModule,
     StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent],
