@@ -22,5 +22,9 @@ end
 
 Capybara.javascript_driver = :selenium_remote_chrome
 Capybara.app_host = 'http://frontend:4200'
-# Capybara.server_host = '0.0.0.0'
-# Capybara.server_port = 3000
+Capybara.asset_host = 'http://api:3000'
+Capybara.always_include_port = true
+
+Capybara::Screenshot.register_driver(:selenium_remote_chrome) do |driver, path|
+  driver.browser.save_screenshot(path)
+end
