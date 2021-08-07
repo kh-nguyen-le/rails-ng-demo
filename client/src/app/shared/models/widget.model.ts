@@ -1,7 +1,8 @@
 export interface Widget {
     id: number;
     name: string;
-    results: unknown;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    results: any;
     config: {
       gradient: boolean;
       autoScale: boolean;
