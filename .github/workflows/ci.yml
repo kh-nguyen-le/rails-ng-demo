@@ -36,7 +36,7 @@ jobs:
       run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d --build
       
     - name: Jest
-      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm frontend npx jest
+      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm frontend npx jest --runInBand
 
     - name: Create DB
 
