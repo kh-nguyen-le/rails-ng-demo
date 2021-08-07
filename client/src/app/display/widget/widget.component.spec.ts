@@ -22,21 +22,24 @@ describe('WidgetComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: '',
+    legendPosition: '',
   };
   const widget: Widget = { id: 1, name: 'Test', results: [], config: config };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [WidgetComponent],
-      imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatGridListModule,
-        NgxChartsModule,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [WidgetComponent],
+        imports: [
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          MatGridListModule,
+          NgxChartsModule,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WidgetComponent);
@@ -50,7 +53,7 @@ describe('WidgetComponent', () => {
   });
 
   it('should update upon receiving new data with #refresh', () => {
-    component.refresh({ name: 'Widget', id: 1, config: config, results: []});
+    component.refresh({ name: 'Widget', id: 1, config: config, results: [] });
     expect(component.widget.name).toBe('Widget');
   });
 });

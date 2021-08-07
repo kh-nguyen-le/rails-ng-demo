@@ -35,19 +35,22 @@ describe('GridComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: 'line',
+    legendPosition: '',
   };
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [GridComponent, WidgetComponent],
-      imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatGridListModule,
-        NgxChartsModule,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [GridComponent, WidgetComponent],
+        imports: [
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          MatGridListModule,
+          NgxChartsModule,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GridComponent);
@@ -61,17 +64,17 @@ describe('GridComponent', () => {
   });
 
   describe('when receiving new data', () => {
-      const new_grid = {
-        id: 1,
-        name: 'Grid',
-        title: 'Test',
-        col: 2,
-        size: '2:1',
-        widgets: [{ id: 1, name: 'Test', results: [], config: config }],
-        layouts: [],
-        layout_grids: [],
-        grid_widgets: [],
-      };
+    const new_grid = {
+      id: 1,
+      name: 'Grid',
+      title: 'Test',
+      col: 2,
+      size: '2:1',
+      widgets: [{ id: 1, name: 'Test', results: [], config: config }],
+      layouts: [],
+      layout_grids: [],
+      grid_widgets: [],
+    };
 
     it('should be able to update attributes', () => {
       component.refresh(new_grid);

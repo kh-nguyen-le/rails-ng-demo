@@ -28,6 +28,7 @@ describe('DashComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: 'line',
+    legendPosition: '',
   };
   const grid: Grid = {
     id: 1,
@@ -48,21 +49,23 @@ describe('DashComponent', () => {
     grids: [],
     layout_grids: [],
   };
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [DashComponent, GridComponent, WidgetComponent],
-      imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatGridListModule,
-        NgxChartsModule,
-        MatTabsModule,
-        RouterTestingModule,
-      ],
-      providers: [],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [DashComponent, GridComponent, WidgetComponent],
+        imports: [
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          MatGridListModule,
+          NgxChartsModule,
+          MatTabsModule,
+          RouterTestingModule,
+        ],
+        providers: [],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DashComponent);
