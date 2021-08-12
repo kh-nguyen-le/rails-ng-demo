@@ -31,8 +31,10 @@ import { NewLayoutComponent } from './editor/new-layout/new-layout.component';
 import { GridComponent } from './display/grid/grid.component';
 import { WidgetComponent } from './display/widget/widget.component';
 import { APP_BASE_HREF } from '@angular/common';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('AppComponent', () => {
+  let store: MockStore;
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -71,8 +73,12 @@ describe('AppComponent', () => {
         ReactiveFormsModule,
         FormsModule,
       ],
-      providers: [{provide: APP_BASE_HREF, useValue : '/' }],
+      providers: [
+        {provide: APP_BASE_HREF, useValue : '/' },
+        provideMockStore({}),
+      ],
     }).compileComponents();
+    store = TestBed.inject(MockStore);
   }));
   it('should create the app', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
