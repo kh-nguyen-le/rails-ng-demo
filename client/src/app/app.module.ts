@@ -33,6 +33,8 @@ import { EditWidgetComponent } from './editor/edit-widget/edit-widget.component'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { reducers } from './shared/state/app.reducer';
+import { RootEffects } from './shared/state/app.effects';
 
 @NgModule({
   declarations: [
@@ -70,8 +72,8 @@ import { EffectsModule } from '@ngrx/effects';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([RootEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

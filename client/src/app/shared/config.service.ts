@@ -19,8 +19,7 @@ export class ConfigService {
 
   getLayouts(): Observable<Layout[]> {
     return this.http
-      .get<Layout[]>(`${this.apiUrl}/layouts.json`)
-      .pipe(catchError(this.handleError));
+      .get<Layout[]>(`${this.apiUrl}/layouts.json`);
   }
 
   getLayoutById(id: number): Observable<Layout> {
