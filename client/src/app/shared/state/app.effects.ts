@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ConfigService } from '../config.service';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import * as fromActions from './app.actions';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,7 +14,7 @@ export class RootEffects {
       mergeMap(() =>
         this.conf.getLayouts().pipe(
           map((data) => fromActions.loadLayoutsSuccess({ layouts: data })),
-          catchError(() => of(fromActions.loadLayoutsFail))
+          catchError(() => of(fromActions.loadLayoutsFail()))
         )
       )
     )
@@ -24,15 +24,11 @@ export class RootEffects {
     () =>
       this.actions$.pipe(
         ofType(fromActions.loadLayoutsFail),
-        map(() => {
-          setTimeout(
-            () =>
-              this.snackbar.open('Failed to fetch layouts', 'Error', {
-                duration: 2500,
-              }),
-            0
-          );
-        })
+        tap(() =>
+          this.snackbar.open('Failed to fetch layouts', 'Error', {
+            duration: 2500,
+          })
+        )
       ),
     { dispatch: false }
   );
