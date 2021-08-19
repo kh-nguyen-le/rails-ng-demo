@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from './shared/config.service';
 import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 import { Layout } from './shared/models/layout.model';
 import { Store } from '@ngrx/store';
-import { State } from './shared/state/app.state';
+import { AppState } from './shared/state/app.state';
 import * as fromActions from './shared/state/app.actions';
 import * as fromReducer from './shared/state/app.reducer';
 import { Observable } from 'rxjs';
@@ -18,11 +17,7 @@ export class AppComponent implements OnInit {
   layouts$: Observable<Layout[]>;
   apiUrl = environment.apiUrl;
 
-  constructor(
-    private conf: ConfigService,
-    public titleService: Title,
-    private store: Store<State>,
-    ) {
+  constructor(public titleService: Title, private store: Store<AppState>) {
     this.titleService.setTitle('rails-ng demo');
   }
 
