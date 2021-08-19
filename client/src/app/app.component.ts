@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 import { Layout } from './shared/models/layout.model';
 import { Store } from '@ngrx/store';
-import { LayoutState } from './shared/state/app.state';
+import { State } from './shared/state/app.state';
 import * as fromActions from './shared/state/app.actions';
 import * as fromReducer from './shared/state/app.reducer';
 import { Observable } from 'rxjs';
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   constructor(
     private conf: ConfigService,
     public titleService: Title,
-    private store: Store<LayoutState>,
+    private store: Store<State>,
     ) {
     this.titleService.setTitle('rails-ng demo');
   }

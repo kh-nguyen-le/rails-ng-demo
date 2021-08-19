@@ -1,10 +1,10 @@
 import { EntityState } from '@ngrx/entity';
 import { Layout } from '../models/layout.model';
 
-export interface LayoutState extends EntityState<Layout> {
+export interface State extends EntityState<Layout> {
   selectedLayoutId: number | string | null;
 }
 
 export interface AppState {
-  layoutState: LayoutState;
+  layoutState: State;
 }

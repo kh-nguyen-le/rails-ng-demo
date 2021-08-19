@@ -13,7 +13,7 @@ import * as fromState from './app.state';
 
 export const adapter: EntityAdapter<Layout> = createEntityAdapter<Layout>();
 
-export const initialState: fromState.LayoutState = adapter.getInitialState({
+export const initialState: fromState.State = adapter.getInitialState({
   selectedLayoutId: null,
 });
 
@@ -25,21 +25,21 @@ const rootReducer = createReducer(
 );
 
 export function reducer(
-  state: fromState.LayoutState | undefined,
+  state: fromState.State | undefined,
   action: Action
-): fromState.LayoutState {
+): fromState.State {
   return rootReducer(state, action);
 }
 
 export const getSelectedLayoutId = (
-  state: fromState.LayoutState
+  state: fromState.State
 ): number | string => state.selectedLayoutId;
 
 export const reducers: ActionReducerMap<fromState.AppState> = {
   layoutState: reducer,
 };
 
-export const getLayoutState = createFeatureSelector<fromState.LayoutState>(
+export const getLayoutState = createFeatureSelector<fromState.State>(
   'layoutState'
 );
 
