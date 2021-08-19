@@ -7,3 +7,13 @@ export const loadLayoutsSuccess = createAction(
   props<{ layouts: Layout[] }>()
 );
 export const loadLayoutsFail = createAction('[Root/API] Load Layouts Fail');
+
+export const deleteLayout = createAction(
+  '[Editor] Delete Layout',
+  props<{ id: number }>()
+);
+export const deleteLayoutSuccess = createAction(
+  '[Editor] Delete Layout Success',
+  props<{ id: number }>()
+);
+export const deleteLayoutFail = createAction('[Editor] Delete Layout Fail');

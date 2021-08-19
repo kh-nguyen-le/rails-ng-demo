@@ -18,8 +18,7 @@ export class ConfigService {
   constructor(private http: HttpClient) {}
 
   getLayouts(): Observable<Layout[]> {
-    return this.http
-      .get<Layout[]>(`${this.apiUrl}/layouts.json`);
+    return this.http.get<Layout[]>(`${this.apiUrl}/layouts.json`);
   }
 
   getLayoutById(id: number): Observable<Layout> {
@@ -125,9 +124,7 @@ export class ConfigService {
   }
 
   deleteLayout(id: number): Observable<unknown> {
-    return this.http
-      .delete(`${this.apiUrl}/layouts/${id}`)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(`${this.apiUrl}/layouts/${id}`);
   }
 
   deleteLayoutGrid(id: number): Observable<unknown> {

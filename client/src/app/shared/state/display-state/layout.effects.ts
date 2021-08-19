@@ -33,6 +33,31 @@ export class LayoutEffects {
     { dispatch: false }
   );
 
+  deleteLayout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.deleteLayout),
+      mergeMap((action) =>
+        this.conf.deleteLayout(action.id).pipe(
+          map(() => fromActions.deleteLayoutSuccess({ id: action.id })),
+          catchError(() => of(fromActions.deleteLayoutFail()))
+        )
+      )
+    )
+  );
+
+  deleteLayoutsFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.deleteLayoutFail),
+        tap(() =>
+          this.snackbar.open('Failed to delete layout', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private conf: ConfigService,
