@@ -33,10 +33,10 @@ import { EditWidgetComponent } from './editor/edit-widget/edit-widget.component'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { reducers } from './shared/state/app.reducer';
-import { RootEffects } from './shared/state/app.effects';
+import { reducers } from './shared/state/';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { LayoutEffects } from './shared/state/display-state';
 
 @NgModule({
   declarations: [
@@ -75,7 +75,7 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     FormsModule,
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([RootEffects]),
+    EffectsModule.forRoot([LayoutEffects.LayoutEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,

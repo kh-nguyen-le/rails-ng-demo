@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Layout } from '../models/layout.model';
+import { Layout } from '../../models/layout.model';
 
 export const loadLayouts = createAction('[Root/API] Load Layouts');
 export const loadLayoutsSuccess = createAction(

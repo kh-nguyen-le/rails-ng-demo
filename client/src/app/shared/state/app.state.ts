@@ -1,10 +1,11 @@
-import { EntityState } from '@ngrx/entity';
-import { Layout } from '../models/layout.model';
+import { ActionReducerMap } from "@ngrx/store";
+import { LayoutState } from "./display-state";
+import { reducer } from "./display-state/layout.reducer";
 
-export interface State extends EntityState<Layout> {
-  selectedLayoutId: number | string | null;
-}
+export const reducers: ActionReducerMap<AppState> = {
+  layoutState: reducer,
+};
 
 export interface AppState {
-  layoutState: State;
+  layoutState: LayoutState.State;
 }

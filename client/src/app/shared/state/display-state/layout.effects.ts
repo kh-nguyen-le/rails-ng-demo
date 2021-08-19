@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ConfigService } from '../config.service';
+import { ConfigService } from '../../config.service';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import * as fromActions from './app.actions';
+import * as fromActions from './layout.actions';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
-export class RootEffects {
+export class LayoutEffects {
   loadLayouts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.loadLayouts),

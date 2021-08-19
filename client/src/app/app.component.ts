@@ -3,10 +3,9 @@ import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 import { Layout } from './shared/models/layout.model';
 import { Store } from '@ngrx/store';
-import { AppState } from './shared/state/app.state';
-import * as fromActions from './shared/state/app.actions';
-import * as fromReducer from './shared/state/app.reducer';
+import { AppState } from './shared/state/';
 import { Observable } from 'rxjs';
+import { LayoutActions, LayoutSelectors } from './shared/state/display-state';
 
 @Component({
   selector: 'app-root',
@@ -22,11 +21,11 @@ export class AppComponent implements OnInit {
   }
 
   getLayouts(): void {
-    this.store.dispatch(fromActions.loadLayouts());
+    this.store.dispatch(LayoutActions.loadLayouts());
   }
 
   ngOnInit(): void {
-    this.layouts$ = this.store.select(fromReducer.selectAllLayouts);
+    this.layouts$ = this.store.select(LayoutSelectors.selectAllLayouts);
     this.getLayouts();
   }
 }
