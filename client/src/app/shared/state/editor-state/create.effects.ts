@@ -41,6 +41,70 @@ export class CreateEffects {
     )
   );
 
+  createGrid$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.createGrid),
+      mergeMap((action) =>
+        this.conf.createGrid(action.grid).pipe(
+          map((grid) => fromActions.createGridSuccess({ grid: grid })),
+          catchError(() => of(fromActions.createGridFail()))
+        )
+      )
+    )
+  );
+
+  createGridSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.createGridSuccess),
+        tap((res) => this.router.navigate(['/grids', res.grid.id]))
+      ),
+    { dispatch: false }
+  );
+
+  createGridFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.createGridFail),
+      tap(() =>
+        this.snackbar.open('Failed to create grid', 'Error', {
+          duration: 2500,
+        })
+      )
+    )
+  );
+
+  createWidget$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.createWidget),
+      mergeMap((action) =>
+        this.conf.createWidget(action.widget).pipe(
+          map((widget) => fromActions.createWidgetSuccess({ widget: widget })),
+          catchError(() => of(fromActions.createWidgetFail()))
+        )
+      )
+    )
+  );
+
+  createWidgetSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.createWidgetSuccess),
+        tap((res) => this.router.navigate(['/widgets', res.widget.id]))
+      ),
+    { dispatch: false }
+  );
+
+  createWidgetFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.createWidgetFail),
+      tap(() =>
+        this.snackbar.open('Failed to create widget', 'Error', {
+          duration: 2500,
+        })
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private conf: ConfigService,

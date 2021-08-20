@@ -13,14 +13,20 @@ export const createLayoutSuccess = createAction(
 );
 export const createLayoutFail = createAction('[Editor] Create Layout Fail');
 
-export const createGrid = createAction('[Editor] Create Grid');
+export const createGrid = createAction(
+  '[Editor] Create Grid',
+  props<{ grid: Grid }>()
+);
 export const createGridSuccess = createAction(
   '[Editor] Create Grid Success',
   props<{ grid: Grid }>()
 );
 export const createGridFail = createAction('[Editor] Create Grid Fail');
 
-export const createWidget = createAction('[Editor] Create Widget');
+export const createWidget = createAction(
+  '[Editor] Create Widget',
+  props<{ widget: Widget }>()
+);
 export const createWidgetSuccess = createAction(
   '[Editor] Create Widget Success',
   props<{ widget: Widget }>()

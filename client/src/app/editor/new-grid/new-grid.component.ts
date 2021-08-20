@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfigService } from '../../shared/config.service';
-import { Router } from '@angular/router';
 import { Grid } from '../../shared/models/grid.model';
+import { Store } from '@ngrx/store';
+import { GridState } from 'src/app/shared/state/display-state';
+import { CreateActions } from 'src/app/shared/state/editor-state';
 
 @Component({
   selector: 'app-new-grid',
@@ -11,13 +12,9 @@ import { Grid } from '../../shared/models/grid.model';
 })
 export class NewGridComponent {
   form: FormGroup;
-  new_id: Grid;
+  grid: Grid;
 
-  constructor(
-    fb: FormBuilder,
-    private conf: ConfigService,
-    private router: Router
-  ) {
+  constructor(fb: FormBuilder, private store: Store<GridState.State>) {
     this.form = fb.group({
       name: ['', Validators.required],
       title: '',
@@ -27,9 +24,7 @@ export class NewGridComponent {
   }
 
   onSubmit(): void {
-    this.conf.createGrid(this.form.value).subscribe((res: Grid) => {
-      this.new_id = res;
-      this.router.navigate(['/grids', this.new_id.id]);
-    });
+    this.grid = this.form.value;
+    this.store.dispatch(CreateActions.createGrid({ grid: this.grid }));
   }
 }

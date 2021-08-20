@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfigService } from '../../shared/config.service';
-import { Router } from '@angular/router';
 import { Widget } from '../../shared/models/widget.model';
+import { Store } from '@ngrx/store';
+import { WidgetState } from 'src/app/shared/state/display-state';
+import { CreateActions } from 'src/app/shared/state/editor-state';
 
 @Component({
   selector: 'app-new-widget',
@@ -11,13 +12,9 @@ import { Widget } from '../../shared/models/widget.model';
 })
 export class NewWidgetComponent {
   form: FormGroup;
-  new_id: Widget;
+  widget: Widget;
 
-  constructor(
-    fb: FormBuilder,
-    private conf: ConfigService,
-    private router: Router
-  ) {
+  constructor(fb: FormBuilder, private store: Store<WidgetState.State>) {
     this.form = fb.group({
       name: ['', Validators.required],
       config: fb.group({
@@ -36,9 +33,7 @@ export class NewWidgetComponent {
   }
 
   onSubmit(): void {
-    this.conf.createWidget(this.form.value).subscribe((res: Widget) => {
-      this.new_id = res;
-      this.router.navigate(['/widgets', this.new_id.id]);
-    });
+    this.widget = this.form.value;
+    this.store.dispatch(CreateActions.createWidget({ widget: this.widget }));
   }
 }
