@@ -37,6 +37,7 @@ import { reducers } from './shared/state/';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { GridEffects, LayoutEffects, WidgetEffects } from './shared/state/display-state';
+import { EditorModule } from './shared/state/editor-state/editor.module';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { GridEffects, LayoutEffects, WidgetEffects } from './shared/state/displa
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    EditorModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([LayoutEffects.LayoutEffects, GridEffects.GridEffects, WidgetEffects.WidgetEffects]),
     StoreDevtoolsModule.instrument({

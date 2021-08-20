@@ -28,9 +28,7 @@ export class ConfigService {
   }
 
   getGrids(): Observable<Grid[]> {
-    return this.http
-      .get<Grid[]>(`${this.apiUrl}/grids.json`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<Grid[]>(`${this.apiUrl}/grids.json`);
   }
 
   getGridById(id: number): Observable<Grid> {
@@ -40,9 +38,7 @@ export class ConfigService {
   }
 
   getWidgets(): Observable<Widget[]> {
-    return this.http
-      .get<Widget[]>(`${this.apiUrl}/widgets.json`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<Widget[]>(`${this.apiUrl}/widgets.json`);
   }
 
   getWidgetById(id: number): Observable<Widget> {
@@ -63,10 +59,9 @@ export class ConfigService {
       .pipe(catchError(this.handleError));
   }
 
-  createLayout(formData: Layout): Observable<unknown> {
+  createLayout(formData: Layout): Observable<Layout> {
     return this.http
-      .post(`${this.apiUrl}/layouts`, formData)
-      .pipe(catchError(this.handleError));
+      .post<Layout>(`${this.apiUrl}/layouts`, formData);
   }
 
   createLayoutGrid(data: LayoutGrid): Observable<unknown> {
@@ -112,15 +107,11 @@ export class ConfigService {
   }
 
   deleteWidget(id: number): Observable<unknown> {
-    return this.http
-      .delete(`${this.apiUrl}/widgets/${id}`)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(`${this.apiUrl}/widgets/${id}`);
   }
 
   deleteGrid(id: number): Observable<unknown> {
-    return this.http
-      .delete(`${this.apiUrl}/grids/${id}`)
-      .pipe(catchError(this.handleError));
+    return this.http.delete(`${this.apiUrl}/grids/${id}`);
   }
 
   deleteLayout(id: number): Observable<unknown> {

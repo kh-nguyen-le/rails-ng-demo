@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfigService } from '../../shared/config.service';
-import { Router } from '@angular/router';
 import { Layout } from '../../shared/models/layout.model';
+import { Store } from '@ngrx/store';
+import { LayoutState } from 'src/app/shared/state/display-state';
+import { CreateActions } from 'src/app/shared/state/editor-state';
 
 @Component({
   selector: 'app-new-layout',
@@ -11,13 +12,9 @@ import { Layout } from '../../shared/models/layout.model';
 })
 export class NewLayoutComponent {
   form: FormGroup;
-  new_id: Layout;
+  layout: Layout;
 
-  constructor(
-    fb: FormBuilder,
-    private conf: ConfigService,
-    private router: Router
-  ) {
+  constructor(fb: FormBuilder, private store: Store<LayoutState.State>) {
     this.form = fb.group({
       name: ['', Validators.required],
       background: '',
@@ -26,9 +23,7 @@ export class NewLayoutComponent {
   }
 
   onSubmit(): void {
-    this.conf.createLayout(this.form.value).subscribe((res: Layout) => {
-      this.new_id = res;
-      this.router.navigate(['/layouts', this.new_id.id]);
-    });
+    this.layout = this.form.value;
+    this.store.dispatch(CreateActions.createLayout({ layout: this.layout }));
   }
 }
