@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Layout } from '../../shared/models/layout.model';
-import { AppState } from 'src/app/shared/state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
   LayoutActions,
   LayoutSelectors,
+  LayoutState,
 } from 'src/app/shared/state/display-state';
 
 @Component({
@@ -17,7 +17,7 @@ import {
 export class EditorLayoutComponent implements OnInit {
   layouts$: Observable<Layout[]>;
 
-  constructor(private titleService: Title, private store: Store<AppState>) {
+  constructor(private titleService: Title, private store: Store<LayoutState.State>) {
     this.titleService.setTitle('Editor - Layouts');
   }
 

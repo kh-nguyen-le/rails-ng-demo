@@ -4,7 +4,7 @@
       <mat-icon>fiber_new</mat-icon>
     </button>
   </mat-list-item>
-  <mat-list-item *ngFor="let grid of grids">
+  <mat-list-item *ngFor="let grid of ( grids$ | async )">
     <a matLine [routerLink]="[ '/grids/', grid.id]"> {{ grid.name }} </a>
     <button mat-icon-button (click)="deleteGrid(grid.id)">
       <mat-icon>delete_forever</mat-icon>

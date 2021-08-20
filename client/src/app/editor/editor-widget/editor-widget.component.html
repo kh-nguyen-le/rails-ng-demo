@@ -4,7 +4,7 @@
       <mat-icon>fiber_new</mat-icon>
     </button>
   </mat-list-item>
-  <mat-list-item *ngFor="let widget of widgets">
+  <mat-list-item *ngFor="let widget of ( widgets$ | async )">
     <a matLine [routerLink]="[ '/widgets/', widget.id]"> {{ widget.name }} </a>
     <button mat-icon-button (click)="deleteWidget(widget.id)">
       <mat-icon>delete_forever</mat-icon>
