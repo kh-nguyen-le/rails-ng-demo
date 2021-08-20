@@ -47,15 +47,15 @@ export class ConfigService {
       .pipe(catchError(this.handleError));
   }
 
-  createWidget(formData: Widget): Observable<unknown> {
+  createWidget(formData: Widget): Observable<Widget> {
     return this.http
-      .post(`${this.apiUrl}/widgets`, formData)
+      .post<Widget>(`${this.apiUrl}/widgets`, formData)
       .pipe(catchError(this.handleError));
   }
 
-  createGrid(formData: Grid): Observable<unknown> {
+  createGrid(formData: Grid): Observable<Grid> {
     return this.http
-      .post(`${this.apiUrl}/grids`, formData)
+      .post<Grid>(`${this.apiUrl}/grids`, formData)
       .pipe(catchError(this.handleError));
   }
 
@@ -64,69 +64,69 @@ export class ConfigService {
       .post<Layout>(`${this.apiUrl}/layouts`, formData);
   }
 
-  createLayoutGrid(data: LayoutGrid): Observable<unknown> {
+  createLayoutGrid(data: LayoutGrid): Observable<LayoutGrid> {
     return this.http
-      .post(`${this.apiUrl}/layout_grids`, data)
+      .post<LayoutGrid>(`${this.apiUrl}/layout_grids`, data)
       .pipe(catchError(this.handleError));
   }
 
-  createGridWidget(data: GridWidget): Observable<unknown> {
+  createGridWidget(data: GridWidget): Observable<GridWidget> {
     return this.http
-      .post(`${this.apiUrl}/grid_widgets`, data)
+      .post<GridWidget>(`${this.apiUrl}/grid_widgets`, data)
       .pipe(catchError(this.handleError));
   }
 
-  updateWidget(id: number, formData: Widget): Observable<unknown> {
+  updateWidget(id: number, formData: Widget): Observable<Widget> {
     return this.http
-      .put(`${this.apiUrl}/widgets/${id}`, formData)
+      .put<Widget>(`${this.apiUrl}/widgets/${id}`, formData)
       .pipe(catchError(this.handleError));
   }
 
-  updateGrid(id: number, formData: Grid): Observable<unknown> {
+  updateGrid(id: number, formData: Grid): Observable<Grid> {
     return this.http
-      .put(`${this.apiUrl}/grids/${id}`, formData)
+      .put<Grid>(`${this.apiUrl}/grids/${id}`, formData)
       .pipe(catchError(this.handleError));
   }
 
-  updateLayout(id: number, formData: Layout): Observable<unknown> {
+  updateLayout(id: number, formData: Layout): Observable<Layout> {
     return this.http
-      .put(`${this.apiUrl}/layouts/${id}`, formData)
+      .put<Layout>(`${this.apiUrl}/layouts/${id}`, formData)
       .pipe(catchError(this.handleError));
   }
 
-  updateLayoutGrid(data: LayoutGrid): Observable<unknown> {
+  updateLayoutGrid(data: LayoutGrid): Observable<LayoutGrid> {
     return this.http
-      .put(`${this.apiUrl}/layout_grids/${data.id}`, data)
+      .put<LayoutGrid>(`${this.apiUrl}/layout_grids/${data.id}`, data)
       .pipe(catchError(this.handleError));
   }
 
-  updateGridWidget(data: GridWidget): Observable<unknown> {
+  updateGridWidget(data: GridWidget): Observable<GridWidget> {
     return this.http
-      .put(`${this.apiUrl}/grid_widgets/${data.id}`, data)
+      .put<GridWidget>(`${this.apiUrl}/grid_widgets/${data.id}`, data)
       .pipe(catchError(this.handleError));
   }
 
-  deleteWidget(id: number): Observable<unknown> {
-    return this.http.delete(`${this.apiUrl}/widgets/${id}`);
+  deleteWidget(id: number): Observable<Widget> {
+    return this.http.delete<Widget>(`${this.apiUrl}/widgets/${id}`);
   }
 
-  deleteGrid(id: number): Observable<unknown> {
-    return this.http.delete(`${this.apiUrl}/grids/${id}`);
+  deleteGrid(id: number): Observable<Grid> {
+    return this.http.delete<Grid>(`${this.apiUrl}/grids/${id}`);
   }
 
-  deleteLayout(id: number): Observable<unknown> {
-    return this.http.delete(`${this.apiUrl}/layouts/${id}`);
+  deleteLayout(id: number): Observable<Layout> {
+    return this.http.delete<Layout>(`${this.apiUrl}/layouts/${id}`);
   }
 
-  deleteLayoutGrid(id: number): Observable<unknown> {
+  deleteLayoutGrid(id: number): Observable<LayoutGrid> {
     return this.http
-      .delete(`${this.apiUrl}/layout_grids/${id}`)
+      .delete<LayoutGrid>(`${this.apiUrl}/layout_grids/${id}`)
       .pipe(catchError(this.handleError));
   }
 
-  deleteGridWidget(id: number): Observable<unknown> {
+  deleteGridWidget(id: number): Observable<GridWidget> {
     return this.http
-      .delete(`${this.apiUrl}/grid_widgets/${id}`)
+      .delete<GridWidget>(`${this.apiUrl}/grid_widgets/${id}`)
       .pipe(catchError(this.handleError));
   }
 
