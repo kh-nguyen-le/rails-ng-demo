@@ -36,8 +36,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './shared/state/';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { GridEffects, LayoutEffects, WidgetEffects } from './shared/state/display-state';
 import { EditorModule } from './shared/state/editor-state/';
+import { DisplayModule } from './shared/state/display-state/display.module';
 
 @NgModule({
   declarations: [
@@ -75,9 +75,10 @@ import { EditorModule } from './shared/state/editor-state/';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    DisplayModule,
     EditorModule,
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([LayoutEffects.LayoutEffects, GridEffects.GridEffects, WidgetEffects.WidgetEffects]),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
