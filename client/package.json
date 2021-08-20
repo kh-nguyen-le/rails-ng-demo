@@ -31,7 +31,6 @@
     "@angular/platform-browser": "^11.2.4",
     "@angular/platform-browser-dynamic": "^11.2.4",
     "@angular/router": "^11.2.4",
-    "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "@ngrx/effects": "^12.3.0",
     "@ngrx/entity": "^12.3.0",
     "@ngrx/store": "^12.3.0",
