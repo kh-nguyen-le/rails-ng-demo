@@ -18,10 +18,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('EditorWidgetComponent', () => {
   let component: EditorWidgetComponent;
   let fixture: ComponentFixture<EditorWidgetComponent>;
+  let store: MockStore;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -48,8 +50,9 @@ describe('EditorWidgetComponent', () => {
         FormsModule,
         RouterTestingModule,
       ],
-      providers: [],
+      providers: [provideMockStore({})],
     }).compileComponents();
+    store = TestBed.inject(MockStore);
   }));
 
   beforeEach(() => {
