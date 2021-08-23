@@ -17,3 +17,8 @@ export const deleteLayoutSuccess = createAction(
   props<{ id: number }>()
 );
 export const deleteLayoutFail = createAction('[Editor] Delete Layout Fail');
+
+export const selectLayout = createAction(
+  '[Dashboard/Editor] Select Current Layout',
+  props<{ id: number }>()
+);

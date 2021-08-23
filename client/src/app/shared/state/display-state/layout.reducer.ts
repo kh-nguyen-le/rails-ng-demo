@@ -7,13 +7,16 @@ import * as fromState from './layout.state';
 const layoutReducer = createReducer(
   initialState,
   on(fromActions.loadLayoutsSuccess, (state, { layouts }) => {
-    return adapter.setAll(layouts, state);
+    return adapter.setAll(layouts, { ...state, selectedLayoutId: null });
   }),
   on(fromActions.deleteLayoutSuccess, (state, { id }) => {
-    return adapter.removeOne(id, state);
+    return adapter.removeOne(id, { ...state, selectedLayoutId: null });
   }),
   on(CreateActions.createLayoutSuccess, (state, { layout }) => {
-    return adapter.addOne(layout, state);
+    return adapter.addOne(layout, { ...state, selectedLayoutId: null });
+  }),
+  on(fromActions.selectLayout, (state, { id }) => {
+    return {...state, selectedLayoutId: id}
   }),
 );
 
