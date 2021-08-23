@@ -18,10 +18,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('NewGridComponent', () => {
   let component: NewGridComponent;
   let fixture: ComponentFixture<NewGridComponent>;
+  let store: MockStore;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -44,7 +46,9 @@ describe('NewGridComponent', () => {
         FormsModule,
         RouterTestingModule,
       ],
+      providers: [provideMockStore({})],
     }).compileComponents();
+    store = TestBed.inject(MockStore);
   }));
 
   beforeEach(() => {
