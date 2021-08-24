@@ -5,6 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { ConfigService } from '../../config.service';
+import { LayoutActions } from '../display-state';
 import * as fromActions from './create.actions';
 
 @Injectable()
@@ -30,15 +31,17 @@ export class CreateEffects {
     { dispatch: false }
   );
 
-  createLayoutFail$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fromActions.createLayoutFail),
-      tap(() =>
-        this.snackbar.open('Failed to create layout', 'Error', {
-          duration: 2500,
-        })
-      )
-    )
+  createLayoutFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.createLayoutFail),
+        tap(() =>
+          this.snackbar.open('Failed to create layout', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
   );
 
   createGrid$ = createEffect(() =>
@@ -62,15 +65,17 @@ export class CreateEffects {
     { dispatch: false }
   );
 
-  createGridFail$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fromActions.createGridFail),
-      tap(() =>
-        this.snackbar.open('Failed to create grid', 'Error', {
-          duration: 2500,
-        })
-      )
-    )
+  createGridFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.createGridFail),
+        tap(() =>
+          this.snackbar.open('Failed to create grid', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
   );
 
   createWidget$ = createEffect(() =>
@@ -94,21 +99,133 @@ export class CreateEffects {
     { dispatch: false }
   );
 
-  createWidgetFail$ = createEffect(() =>
+  createWidgetFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.createWidgetFail),
+        tap(() =>
+          this.snackbar.open('Failed to create widget', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
+  createLayoutGrid$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fromActions.createWidgetFail),
-      tap(() =>
-        this.snackbar.open('Failed to create widget', 'Error', {
-          duration: 2500,
-        })
+      ofType(fromActions.createLayoutGrid),
+      mergeMap((action) =>
+        this.conf.createLayoutGrid(action.layoutgrid).pipe(
+          map((layoutgrid) =>
+            fromActions.createLayoutGridSuccess({ layoutgrid: layoutgrid })
+          ),
+          catchError(() => of(fromActions.createLayoutGridFail()))
+        )
       )
     )
+  );
+
+  createLayoutGridSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.createLayoutGridSuccess),
+      map((action) =>
+        LayoutActions.fetchLayout({ id: action.layoutgrid.layout_id })
+      )
+    )
+  );
+
+  createLayoutGridFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.createLayoutGridFail),
+        tap(() =>
+          this.snackbar.open('Failed to add grid', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
+  deleteLayoutGrid$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.deleteLayoutGrid),
+      mergeMap((action) =>
+        this.conf.deleteLayoutGrid(action.layoutgrid.id).pipe(
+          map(() =>
+            fromActions.deleteLayoutGridSuccess({
+              layoutgrid: action.layoutgrid,
+            })
+          ),
+          catchError((error) => of(fromActions.deleteLayoutGridFail(error)))
+        )
+      )
+    )
+  );
+
+  deleteLayoutGridSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.deleteLayoutGridSuccess),
+      map((action) =>
+        LayoutActions.fetchLayout({ id: action.layoutgrid.layout_id })
+      )
+    )
+  );
+
+  deleteLayoutGridFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.deleteLayoutGridFail),
+        tap((error) =>
+          this.snackbar.open(error.error.message, 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
+  updateLayoutGrid$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.updateLayoutGrid),
+      mergeMap((action) =>
+        this.conf.updateLayoutGrid(action.layoutgrid).pipe(
+          map((layoutgrid) =>
+            fromActions.updateLayoutGridSuccess({ layoutgrid: layoutgrid })
+          ),
+          catchError(() => of(fromActions.updateLayoutGridFail()))
+        )
+      )
+    )
+  );
+
+  updateLayoutGridSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.updateLayoutGridSuccess),
+      map((action) =>
+        LayoutActions.fetchLayout({ id: action.layoutgrid.layout_id })
+      )
+    )
+  );
+
+  updateLayoutGridFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.updateLayoutGridFail),
+        tap(() =>
+          this.snackbar.open('Failed to move grid', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
   );
 
   constructor(
     private actions$: Actions,
     private conf: ConfigService,
     private router: Router,
-    private snackbar: MatSnackBar,
+    private snackbar: MatSnackBar
   ) {}
 }

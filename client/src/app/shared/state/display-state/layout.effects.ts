@@ -5,6 +5,7 @@ import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import * as fromActions from './layout.actions';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Layout } from '../../models/layout.model';
 
 @Injectable()
 export class LayoutEffects {
@@ -45,12 +46,63 @@ export class LayoutEffects {
     )
   );
 
-  deleteLayoutsFail$ = createEffect(
+  deleteLayoutFail$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(fromActions.deleteLayoutFail),
         tap(() =>
           this.snackbar.open('Failed to delete layout', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
+  fetchLayout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.fetchLayout),
+      mergeMap((action) =>
+        this.conf.getLayoutById(action.id).pipe(
+          map((layout) => fromActions.fetchLayoutSuccess({ layout: layout })),
+          catchError(() => of(fromActions.updateLayoutFail()))
+        )
+      )
+    )
+  );
+
+  fetchLayoutFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.fetchLayoutFail),
+        tap(() =>
+          this.snackbar.open('Failed to fetch layout', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
+  updateLayout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.updateLayout),
+      mergeMap((action) => {
+        const layout = action.update.changes as Layout;
+        return this.conf.updateLayout(+action.update.id, layout).pipe(
+          map(() => fromActions.updateLayoutSuccess({ update: action.update })),
+          catchError(() => of(fromActions.updateLayoutFail()))
+        );
+      })
+    )
+  );
+
+  updateLayoutFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.updateLayoutFail),
+        tap(() =>
+          this.snackbar.open('Failed to update layout', 'Error', {
             duration: 2500,
           })
         )

@@ -18,7 +18,6 @@ export const getSelectedLayoutId = createSelector(
   (state: fromState.State) => state.selectedLayoutId
 );
 
-
 export const {
   selectIds: selectLayoutIds,
   selectEntities: selectLayoutEntities,
@@ -26,9 +25,13 @@ export const {
   selectTotal: selectTotalLayouts,
 } = adapter.getSelectors(getLayoutState);
 
-
 export const selectCurrentLayout = createSelector(
   selectLayoutEntities,
   getSelectedLayoutId,
   (layoutEntities, layoutId) => layoutEntities[layoutId]
+);
+
+export const getSubGrids = createSelector(
+  selectCurrentLayout,
+  (layout) => layout.grids
 );
