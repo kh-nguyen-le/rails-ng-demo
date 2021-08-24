@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Grid } from '../../models/grid.model';
+import { GridWidget } from '../../models/gridwidget.model';
 import { Layout } from '../../models/layout.model';
 import { LayoutGrid } from '../../models/layoutgrid.model';
 import { Widget } from '../../models/widget.model';
@@ -74,3 +75,44 @@ export const updateLayoutGridSuccess = createAction(
 );
 
 export const updateLayoutGridFail = createAction('[Editor] Shift grids Fail');
+
+export const createGridWidget = createAction(
+  '[Editor] Add widget to grid',
+  props<{ gridwidget: GridWidget }>()
+);
+
+export const createGridWidgetSuccess = createAction(
+  '[Editor] Add widget to grid Success',
+  props<{ gridwidget: GridWidget }>()
+);
+
+export const createGridWidgetFail = createAction(
+  '[Editor] Add widget to grid Fail'
+);
+
+export const deleteGridWidget = createAction(
+  '[Editor] Remove widget from grid',
+  props<{ gridwidget: GridWidget }>()
+);
+
+export const deleteGridWidgetSuccess = createAction(
+  '[Editor] Remove widget from grid Success',
+  props<{ gridwidget: GridWidget }>()
+);
+
+export const deleteGridWidgetFail = createAction(
+  '[Editor] Remove widget from grid Fail',
+  props<{ error: Error }>()
+);
+
+export const updateGridWidget = createAction(
+  '[Editor] Shift widgets',
+  props<{ gridwidget: GridWidget }>()
+);
+
+export const updateGridWidgetSuccess = createAction(
+  '[Editor] Shift widgets Success',
+  props<{ gridwidget: GridWidget }>()
+);
+
+export const updateGridWidgetFail = createAction('[Editor] Shift widgets Fail');

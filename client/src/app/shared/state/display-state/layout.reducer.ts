@@ -43,6 +43,7 @@ const layoutReducer = createReducer(
       (lg: LayoutGrid) => lg.id !== layoutgrid.id
     );
     const newLayout = { ...layout, layout_grids: newLGs };
+
     return adapter.upsertOne(newLayout, {
       ...state,
       selectedLayoutId: layoutgrid.layout_id,
@@ -52,10 +53,12 @@ const layoutReducer = createReducer(
     const id = layoutgrid.layout_id;
     const layout = state.entities[id];
     const lgs: LayoutGrid[] = layout.layout_grids;
-    const newLGs: LayoutGrid[] = [...lgs]
-      .filter((lg: LayoutGrid) => lg.id != layoutgrid.id);
+    const newLGs: LayoutGrid[] = [...lgs].filter(
+      (lg: LayoutGrid) => lg.id != layoutgrid.id
+    );
     newLGs.push(layoutgrid);
     const newLayout = { ...layout, layout_grids: newLGs };
+    
     return adapter.upsertOne(newLayout, { ...state, selectedLayoutId: id });
   })
 );

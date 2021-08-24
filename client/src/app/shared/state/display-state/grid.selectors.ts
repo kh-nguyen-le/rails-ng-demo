@@ -23,8 +23,13 @@ export const {
   selectTotal: selectTotalGrids,
 } = adapter.getSelectors(getGridState);
 
-export const selectCurrentLayout = createSelector(
+export const selectCurrentGrid = createSelector(
   selectGridEntities,
   getSelectedGridId,
   (gridEntities, gridId) => gridEntities[gridId]
+);
+
+export const getSubWidgets = createSelector(
+  selectCurrentGrid,
+  (grid) => grid.widgets
 );

@@ -154,7 +154,6 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   }
 
   update(): void {
-    //this.store.dispatch(LayoutActions.fetchLayout({ id: this.id }));
     this.synchro.send(this.layout);
   }
 

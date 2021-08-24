@@ -26,7 +26,7 @@
   <h2 mat-h2>Widgets</h2>
   <mat-form-field>
     <mat-select placeholder="Add Widget" [(ngModel)]="new_widget">
-      <mat-option *ngFor="let widget of widgets" [value]="widget.id">
+      <mat-option *ngFor="let widget of (allWidgets$ | async)" [value]="widget.id">
         {{widget.name}}
       </mat-option>
     </mat-select>
@@ -34,14 +34,14 @@
   <button mat-icon-button (click)="addWidget()">
     <mat-icon>add_circle</mat-icon>
   </button>
-  <mat-list-item *ngFor="let widget of grid.widgets; let i = index">
+  <mat-list-item *ngFor="let widget of (widgets$ | async); let i = index">
     <a matLine [routerLink]="[ '/widgets', widget.id ]">{{widget.name}}</a>
     <button mat-icon-button (click)="shiftWidgetUp(i)"
-    [disabled]="widget === grid.widgets[0]">
+    [disabled]="widget === (widgets$ | async)[0]">
         <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
     <button mat-icon-button (click)="shiftWidgetDown(i)"
-    [disabled]="widget === grid.widgets[grid.widgets.length - 1]">
+    [disabled]="widget === (widgets$ | async)[(widgets$ | async).length - 1]">
           <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
     <button mat-icon-button (click)="removeWidget(i)">

@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { ConfigService } from '../../config.service';
-import { LayoutActions } from '../display-state';
+import { GridActions, LayoutActions } from '../display-state';
 import * as fromActions from './create.actions';
 
 @Injectable()
@@ -213,6 +213,110 @@ export class CreateEffects {
     () =>
       this.actions$.pipe(
         ofType(fromActions.updateLayoutGridFail),
+        tap(() =>
+          this.snackbar.open('Failed to move grid', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
+  createGridWidget$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.createGridWidget),
+      mergeMap((action) =>
+        this.conf.createGridWidget(action.gridwidget).pipe(
+          map((gridwidget) =>
+            fromActions.createGridWidgetSuccess({ gridwidget: gridwidget })
+          ),
+          catchError(() => of(fromActions.createLayoutGridFail()))
+        )
+      )
+    )
+  );
+
+  createGridWidgetSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.createGridWidgetSuccess),
+      map((action) => GridActions.fetchGrid({ id: action.gridwidget.grid_id }))
+    )
+  );
+
+  createGridWidgetFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.createGridWidgetFail),
+        tap(() =>
+          this.snackbar.open('Failed to add grid', 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
+  deleteGridWidget$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.deleteGridWidget),
+      mergeMap((action) =>
+        this.conf.deleteGridWidget(action.gridwidget.id).pipe(
+          map(() =>
+            fromActions.deleteGridWidgetSuccess({
+              gridwidget: action.gridwidget,
+            })
+          ),
+          catchError((error) => of(fromActions.deleteGridWidgetFail(error)))
+        )
+      )
+    )
+  );
+
+  deleteGridWidgetSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.deleteGridWidgetSuccess),
+      map((action) => GridActions.fetchGrid({ id: action.gridwidget.grid_id }))
+    )
+  );
+
+  deleteGridWidgetFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.deleteGridWidgetFail),
+        tap((error) =>
+          this.snackbar.open(error.error.message, 'Error', {
+            duration: 2500,
+          })
+        )
+      ),
+    { dispatch: false }
+  );
+
+  updateGridWidget$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.updateGridWidget),
+      mergeMap((action) =>
+        this.conf.updateGridWidget(action.gridwidget).pipe(
+          map((gridwidget) =>
+            fromActions.updateGridWidgetSuccess({ gridwidget: gridwidget })
+          ),
+          catchError(() => of(fromActions.updateGridWidgetFail()))
+        )
+      )
+    )
+  );
+
+  updateGridWidgetSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.updateGridWidgetSuccess),
+      map((action) => GridActions.fetchGrid({ id: action.gridwidget.grid_id }))
+    )
+  );
+
+  updateGridWidgetFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromActions.updateGridWidgetFail),
         tap(() =>
           this.snackbar.open('Failed to move grid', 'Error', {
             duration: 2500,
