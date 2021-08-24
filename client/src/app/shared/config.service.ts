@@ -30,9 +30,7 @@ export class ConfigService {
   }
 
   getGridById(id: number): Observable<Grid> {
-    return this.http
-      .get<Grid>(`${this.apiUrl}/grids/${id}.json`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<Grid>(`${this.apiUrl}/grids/${id}.json`);
   }
 
   getWidgets(): Observable<Widget[]> {
@@ -74,14 +72,11 @@ export class ConfigService {
   }
 
   updateGrid(id: number, formData: Grid): Observable<Grid> {
-    return this.http
-      .put<Grid>(`${this.apiUrl}/grids/${id}`, formData)
-      .pipe(catchError(this.handleError));
+    return this.http.put<Grid>(`${this.apiUrl}/grids/${id}`, formData);
   }
 
   updateLayout(id: number, formData: Layout): Observable<Layout> {
-    return this.http
-      .put<Layout>(`${this.apiUrl}/layouts/${id}`, formData);
+    return this.http.put<Layout>(`${this.apiUrl}/layouts/${id}`, formData);
   }
 
   updateLayoutGrid(data: LayoutGrid): Observable<LayoutGrid> {
@@ -114,9 +109,7 @@ export class ConfigService {
   }
 
   deleteGridWidget(id: number): Observable<GridWidget> {
-    return this.http
-      .delete<GridWidget>(`${this.apiUrl}/grid_widgets/${id}`)
-      .pipe(catchError(this.handleError));
+    return this.http.delete<GridWidget>(`${this.apiUrl}/grid_widgets/${id}`);
   }
 
   private handleError(error: HttpErrorResponse) {

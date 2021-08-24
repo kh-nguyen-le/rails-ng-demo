@@ -6,11 +6,20 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ConfigService } from '../../shared/config.service';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CableService } from '../../shared/cable.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Widget } from '../../shared/models/widget.model';
+import {
+  WidgetActions,
+  WidgetSelectors,
+} from 'src/app/shared/state/display-state';
+import { AppState } from 'src/app/shared/state';
+import { Store } from '@ngrx/store';
+import { map, takeWhile } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
+import { Update } from '@ngrx/entity';
 
 @Component({
   selector: 'app-edit-widget',
@@ -18,12 +27,12 @@ import { Widget } from '../../shared/models/widget.model';
   styleUrls: ['./edit-widget.component.css'],
 })
 export class EditWidgetComponent implements OnInit, OnDestroy {
-  widget: Widget;
+  widget$: Observable<Widget>;
   form: FormGroup;
   results: FormControl;
   id: number;
   private sub: Subscription;
-  private nav: Subscription;
+  private selector: Subscription;
   synchro: ActionCable.Channel;
 
   constructor(
@@ -31,6 +40,8 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     private conf: ConfigService,
     public snackBar: MatSnackBar,
     private router: Router,
+    private store: Store<AppState>,
+    private titleService: Title,
     private route: ActivatedRoute,
     private cs: CableService
   ) {
@@ -50,20 +61,24 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
       }),
     });
     this.results = fb.control('');
-    this.nav = this.router.events.subscribe((e: unknown) => {
-      if (e instanceof NavigationEnd) {
-        this.init();
-      }
-    });
+    this.sub = this.route.params
+      .pipe(
+        map((params) => {
+          this.id = params.id;
+          return WidgetActions.selectWidget({ id: this.id });
+        })
+      )
+      .subscribe((action) => this.store.dispatch(action));
+    this.titleService.setTitle('Editor - Widgets');
   }
 
   onSubmit(): void {
-    this.conf.updateWidget(this.id, this.form.value).subscribe(() => {
-      this.snackBar.open('Primary Attributes updated', '', {
-        duration: 2000,
-      });
-      this.sendUpdate();
-    });
+    const update: Update<Widget> = {
+      id: this.id,
+      changes: this.form.value,
+    };
+
+    this.store.dispatch(WidgetActions.updateWidget({ update: update }));
   }
 
   submitData(): void {
@@ -73,32 +88,17 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
       config: this.form.value.config,
       results: JSON.parse(this.results.value),
     };
-    this.conf.updateWidget(this.id, widget).subscribe(() => {
-      this.snackBar.open('Data Entered', '', {
-        duration: 2000,
-      });
-      this.sendUpdate();
-    });
-  }
-
-  init(): void {
-    this.sub = this.route.params.subscribe((params) => {
-      this.id = +params['id'];
-      this.conf.getWidgetById(this.id).subscribe((res) => {
-        this.widget = res;
-        this.form.patchValue({
-          name: this.widget.name,
-          config: this.widget.config,
-        });
-        this.results.patchValue(JSON.stringify(this.widget.results));
-      });
-    });
+    const update: Update<Widget> = {
+      id: widget.id,
+      changes: widget,
+    };
+    this.store.dispatch(WidgetActions.updateWidget({ update: update }));
   }
 
   sendUpdate(): void {
-    this.conf.getWidgetById(this.id).subscribe((res) => {
-      this.synchro.send(res);
-    });
+    // this.conf.getWidgetById(this.id).subscribe((res) => {
+    //   this.synchro.send(res);
+    // });
   }
 
   newSynchro(): void {
@@ -117,10 +117,18 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.newSynchro();
+    this.widget$ = this.store.select(WidgetSelectors.selectCurrentWidget);
+    this.store.dispatch(WidgetActions.fetchWidget({ id: this.id }));
+    this.selector = this.widget$
+      .pipe(takeWhile((widget) => widget !== null))
+      .subscribe((data) => {
+        this.form.patchValue({ name: data.name, config: data.config });
+        this.results.patchValue(JSON.stringify(data.results));
+      });
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-    this.nav.unsubscribe();
+    this.selector.unsubscribe();
   }
 }

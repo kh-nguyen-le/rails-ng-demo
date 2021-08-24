@@ -15,6 +15,15 @@ const widgetReducer = createReducer(
   on(CreateActions.createWidgetSuccess, (state, { widget }) => {
     return adapter.addOne(widget, state);
   }),
+  on(fromActions.selectWidget, (state, { id }) => {
+    return { ...state, selectedWidgetId: id };
+  }),
+  on(fromActions.fetchWidgetSuccess, (state, { widget }) => {
+    return adapter.upsertOne(widget, { ...state, selectedWidgetId: widget.id });
+  }),
+  on(fromActions.updateWidgetSuccess, (state, { update }) => {
+    return adapter.updateOne(update, { ...state, selectedWidgetId: update.id });
+  })
 );
 
 export function reducer(
