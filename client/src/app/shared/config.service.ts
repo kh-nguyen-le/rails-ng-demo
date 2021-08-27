@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { throwError, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Widget } from './models/widget.model';
 import { Grid } from './models/grid.model';
 import { GridWidget } from './models/gridwidget.model';
@@ -38,9 +37,7 @@ export class ConfigService {
   }
 
   getWidgetById(id: number): Observable<Widget> {
-    return this.http
-      .get<Widget>(`${this.apiUrl}/widgets/${id}.json`)
-      .pipe(catchError(this.handleError));
+    return this.http.get<Widget>(`${this.apiUrl}/widgets/${id}.json`);
   }
 
   createWidget(formData: Widget): Observable<Widget> {
@@ -60,15 +57,11 @@ export class ConfigService {
   }
 
   createGridWidget(data: GridWidget): Observable<GridWidget> {
-    return this.http
-      .post<GridWidget>(`${this.apiUrl}/grid_widgets`, data)
-      .pipe(catchError(this.handleError));
+    return this.http.post<GridWidget>(`${this.apiUrl}/grid_widgets`, data);
   }
 
   updateWidget(id: number, formData: Widget): Observable<Widget> {
-    return this.http
-      .put<Widget>(`${this.apiUrl}/widgets/${id}`, formData)
-      .pipe(catchError(this.handleError));
+    return this.http.put<Widget>(`${this.apiUrl}/widgets/${id}`, formData);
   }
 
   updateGrid(id: number, formData: Grid): Observable<Grid> {
@@ -87,9 +80,10 @@ export class ConfigService {
   }
 
   updateGridWidget(data: GridWidget): Observable<GridWidget> {
-    return this.http
-      .put<GridWidget>(`${this.apiUrl}/grid_widgets/${data.id}`, data)
-      .pipe(catchError(this.handleError));
+    return this.http.put<GridWidget>(
+      `${this.apiUrl}/grid_widgets/${data.id}`,
+      data
+    );
   }
 
   deleteWidget(id: number): Observable<Widget> {
@@ -110,20 +104,5 @@ export class ConfigService {
 
   deleteGridWidget(id: number): Observable<GridWidget> {
     return this.http.delete<GridWidget>(`${this.apiUrl}/grid_widgets/${id}`);
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
-      );
-    }
-    // return an observable with a user-facing error message
-    return throwError('Something bad happened; please try again later.');
   }
 }
