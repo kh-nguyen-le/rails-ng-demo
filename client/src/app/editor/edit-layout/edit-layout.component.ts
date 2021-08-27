@@ -57,7 +57,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.sub = this.route.params
       .pipe(
         map((params) => {
-          this.id = params.id;
+          this.id = +params.id;
           return LayoutActions.selectLayout({ id: params.id });
         })
       )

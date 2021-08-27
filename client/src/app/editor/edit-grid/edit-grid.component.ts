@@ -53,7 +53,7 @@ export class EditGridComponent implements OnInit, OnDestroy {
     this.sub = this.route.params
       .pipe(
         map((params) => {
-          this.id = params.id;
+          this.id = +params.id;
           return GridActions.selectGrid({ id: params.id });
         })
       )

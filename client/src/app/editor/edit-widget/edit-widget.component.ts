@@ -64,7 +64,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     this.sub = this.route.params
       .pipe(
         map((params) => {
-          this.id = params.id;
+          this.id = +params.id;
           return WidgetActions.selectWidget({ id: this.id });
         })
       )
