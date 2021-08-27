@@ -5,7 +5,11 @@ import { Layout } from './shared/models/layout.model';
 import { Store } from '@ngrx/store';
 import { AppState } from './shared/state/';
 import { Observable } from 'rxjs';
-import { LayoutActions, LayoutSelectors } from './shared/state/display-state';
+import {
+  GridActions,
+  LayoutActions,
+  LayoutSelectors,
+} from './shared/state/display-state';
 
 @Component({
   selector: 'app-root',
@@ -27,5 +31,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.layouts$ = this.store.select(LayoutSelectors.selectAllLayouts);
     this.getLayouts();
+    this.store.dispatch(GridActions.loadGrids());
   }
 }

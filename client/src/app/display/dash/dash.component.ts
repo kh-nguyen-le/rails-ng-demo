@@ -17,7 +17,7 @@ import {
   LayoutActions,
   LayoutSelectors,
 } from 'src/app/shared/state/display-state';
-import { map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dash',
@@ -45,14 +45,19 @@ export class DashComponent implements OnInit, OnDestroy {
   ) {
     this.titleService.setTitle('Dashboard');
     this.sub = this.route.params
-      .pipe(map((params) => LayoutActions.selectLayout({ id: params.id })))
+      .pipe(
+        map((params) => {
+          this.id = params.id;
+          return LayoutActions.selectLayout({ id: params.id });
+        })
+      )
       .subscribe((action) => this.store.dispatch(action));
     this.layout$ = this.store.select(LayoutSelectors.selectCurrentLayout);
   }
 
   getData(): void {
     this.newChannel();
-    this.grids$ = of(this.layout.grids);
+    this.grids$ = this.store.select(LayoutSelectors.getSubGrids);
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
     this.index = 0;
     if (this.layout.duration) {
@@ -87,7 +92,7 @@ export class DashComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.selector = this.layout$.subscribe(data => this.layout = data);
+    this.selector = this.layout$.subscribe((data) => (this.layout = data));
     this.getData();
   }
 

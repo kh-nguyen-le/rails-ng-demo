@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { ConfigService } from '../../shared/config.service';
 import { Observable, of } from 'rxjs';
 import { CableService } from '../../shared/cable.service';
 import { Grid } from '../../shared/models/grid.model';
 import { Widget } from '../../shared/models/widget.model';
+import { AppState } from 'src/app/shared/state';
+import { Store } from '@ngrx/store';
+import { GridActions, GridSelectors } from 'src/app/shared/state/display-state';
 
 @Component({
   selector: 'app-grid',
@@ -16,15 +18,13 @@ export class GridComponent implements OnInit {
   channel: ActionCable.Channel;
 
   constructor(
-    private conf: ConfigService,
+    private store: Store<AppState>,
     private cs: CableService,
     private cd: ChangeDetectorRef
   ) {}
 
   async getData(): Promise<void> {
     this.newChannel();
-    const data: Grid = await this.conf.getGridById(this.grid.id).toPromise();
-    this.widgets$ = of(data.widgets);
   }
 
   newChannel(): void {
@@ -50,6 +50,9 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(GridActions.selectGrid({ id: this.grid.id }));
+    this.store.dispatch(GridActions.fetchGrid({ id: this.grid.id }));
     this.getData();
+    this.widgets$ = this.store.select(GridSelectors.getSubWidgets);
   }
 }
