@@ -14,11 +14,12 @@ import { Widget } from '../../shared/models/widget.model';
 import { Grid } from '../../shared/models/grid.model';
 import { Layout } from '../../shared/models/layout.model';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { AppState } from 'src/app/shared/state';
 
 describe('DashComponent', () => {
   let component: DashComponent;
   let fixture: ComponentFixture<DashComponent>;
-  let store: MockStore;
+  let store: MockStore<AppState>;
   const config: Widget['config'] = {
     gradient: false,
     autoScale: true,
