@@ -5,8 +5,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { ConfigService } from '../../shared/config.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CableService } from '../../shared/cable.service';
 import { Observable, Subscription } from 'rxjs';
@@ -37,9 +36,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
 
   constructor(
     fb: FormBuilder,
-    private conf: ConfigService,
     public snackBar: MatSnackBar,
-    private router: Router,
     private store: Store<AppState>,
     private titleService: Title,
     private route: ActivatedRoute,
@@ -83,6 +80,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
 
   submitData(): void {
     const widget: Widget = {
+      kind : "widget",
       id: this.id,
       name: this.form.value.name,
       config: this.form.value.config,
