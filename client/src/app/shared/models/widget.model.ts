@@ -1,9 +1,10 @@
 export interface Widget {
+    kind: "widget";
     id: number;
     name: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    results: any;
-    config: {
+    results?: any;
+    config?: {
       gradient: boolean;
       autoScale: boolean;
       showXAxis: boolean;
