@@ -15,7 +15,7 @@ import { GridActions, GridSelectors } from 'src/app/shared/state/display-state';
 export class GridComponent implements OnInit {
   @Input() grid: Grid;
   widgets$: Observable<Widget[]>;
-  channel: ActionCable.Channel;
+  channel: ActionCable.Subscription;
 
   constructor(
     private store: Store<AppState>,

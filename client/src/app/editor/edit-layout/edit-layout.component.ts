@@ -36,7 +36,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   id: number;
   private sub: Subscription;
   private nav: Subscription;
-  synchro: ActionCable.Channel;
+  synchro: ActionCable.Subscription;
   selector: Subscription;
   allGrids$: Observable<Grid[]>;
   selector2: Subscription;

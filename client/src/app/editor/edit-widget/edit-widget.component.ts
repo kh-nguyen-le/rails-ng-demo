@@ -33,7 +33,7 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
   id: number;
   private sub: Subscription;
   private selector: Subscription;
-  synchro: ActionCable.Channel;
+  synchro: ActionCable.Subscription;
 
   constructor(
     fb: FormBuilder,

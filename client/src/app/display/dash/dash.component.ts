@@ -33,7 +33,7 @@ export class DashComponent implements OnInit, OnDestroy {
   private selector: Subscription;
   index: number;
   id: number;
-  channel: ActionCable.Channel;
+  channel: ActionCable.Subscription;
 
   constructor(
     private store: Store<AppState>,

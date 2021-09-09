@@ -9,7 +9,7 @@ import { CableService } from '../../shared/cable.service';
 })
 export class WidgetComponent implements OnInit {
   @Input() widget: Widget;
-  channel: ActionCable.Channel;
+  channel: ActionCable.Subscription;
 
   constructor(private cs: CableService) {}
 
