@@ -28,6 +28,7 @@ describe('EditGridComponent', () => {
   let fixture: ComponentFixture<EditGridComponent>;
   let store: MockStore<AppState>;
   const grid: Grid = {
+    kind: "grid",
     id: 1,
     name: 'Grid',
     title: '2',

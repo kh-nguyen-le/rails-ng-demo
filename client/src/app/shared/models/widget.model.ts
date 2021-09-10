@@ -1,3 +1,6 @@
+import { Grid } from "./grid.model";
+import { GridWidget } from "./gridwidget.model";
+
 export interface Widget {
     kind: "widget";
     id: number;
@@ -17,4 +20,6 @@ export interface Widget {
       widgetType: string;
       legendPosition: string;
     };
+    grids?: Grid[];
+    grid_widgets?: GridWidget[];
   }

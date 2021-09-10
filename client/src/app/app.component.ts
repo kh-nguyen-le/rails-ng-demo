@@ -8,7 +8,9 @@ import {
   GridActions,
   LayoutActions,
   LayoutSelectors,
+  WidgetActions,
 } from './shared/state/display-state';
+import { CableActions } from './shared/state/editor-state';
 
 @Component({
   selector: 'app-root',
@@ -30,5 +32,7 @@ export class AppComponent implements OnInit {
     this.layouts$ = this.store.select(LayoutSelectors.selectAllLayouts);
     this.getLayouts();
     this.store.dispatch(GridActions.loadGrids());
+    this.store.dispatch(WidgetActions.loadWidgets());
+    this.store.dispatch(CableActions.connect());
   }
 }

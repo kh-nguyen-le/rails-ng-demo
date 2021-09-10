@@ -58,7 +58,7 @@ const layoutReducer = createReducer(
     );
     newLGs.push(layoutgrid);
     const newLayout = { ...layout, layout_grids: newLGs };
-    
+
     return adapter.upsertOne(newLayout, { ...state, selectedLayoutId: id });
   })
 );

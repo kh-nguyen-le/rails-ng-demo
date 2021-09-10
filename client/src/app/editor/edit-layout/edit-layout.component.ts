@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CableService } from '../../shared/cable.service';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Grid } from '../../shared/models/grid.model';
 import { Layout } from '../../shared/models/layout.model';
@@ -16,7 +15,7 @@ import {
   LayoutActions,
   LayoutSelectors,
 } from 'src/app/shared/state/display-state';
-import { CreateActions } from 'src/app/shared/state/editor-state';
+import { CableActions, CreateActions } from 'src/app/shared/state/editor-state';
 import { Update } from '@ngrx/entity';
 
 @Component({
@@ -35,8 +34,6 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   form: FormGroup;
   id: number;
   private sub: Subscription;
-  private nav: Subscription;
-  synchro: ActionCable.Subscription;
   selector: Subscription;
   allGrids$: Observable<Grid[]>;
   selector2: Subscription;
@@ -45,9 +42,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private store: Store<AppState>,
     private route: ActivatedRoute,
-    private titleService: Title,
-    private router: Router,
-    private cs: CableService
+    private titleService: Title
   ) {
     this.form = fb.group({
       name: ['', Validators.required],
@@ -150,29 +145,23 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       changes: this.form.value,
     };
     this.store.dispatch(LayoutActions.updateLayout({ update: update }));
-    this.synchro.send(this.layout);
+    this.update();
   }
 
   update(): void {
-    this.synchro.send(this.layout);
-  }
-
-  newSynchro(): void {
-    if (this.synchro != null) {
-      this.synchro.unsubscribe();
-    }
-    this.synchro = this.cs.joinSynchroChannel('layout', this.id, {
-      connected() {
-        return console.log(`layout: Connected.`);
-      },
-      disconnected() {
-        return console.log(`layout: Disconnected.`);
-      },
-    });
+    const layout: Layout = {
+      kind: 'layout',
+      id: this.layout.id,
+      name: this.layout.name,
+      background: this.layout.background,
+      duration: this.layout.duration,
+      grids: this.layout.grids,
+      layout_grids: this.layout.layout_grids,
+    };
+    this.store.dispatch(CableActions.sendLayout({ layout: layout }));
   }
 
   ngOnInit(): void {
-    this.newSynchro();
     this.layout$ = this.store.select(LayoutSelectors.selectCurrentLayout);
     this.store.dispatch(LayoutActions.fetchLayout({ id: this.id }));
     this.selector = this.layout$

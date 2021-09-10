@@ -1,5 +1,7 @@
 import * as CreateActions from './create.actions';
 import * as CreateEffects from './create.effects';
+import * as CableActions from './cable.actions';
+import * as CableEffects from './cable.effects';
 
 export {
     EditorModule,
@@ -8,4 +10,6 @@ export {
 export {
     CreateActions,
     CreateEffects,
+    CableActions,
+    CableEffects,
 }

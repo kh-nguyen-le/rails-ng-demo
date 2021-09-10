@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CableService } from '../../shared/cable.service';
 import { Observable, Subscription } from 'rxjs';
 import { Grid } from '../../shared/models/grid.model';
 import { GridWidget } from '../../shared/models/gridwidget.model';
@@ -16,8 +15,9 @@ import {
 import { AppState } from 'src/app/shared/state';
 import { Store } from '@ngrx/store';
 import { map, takeWhile } from 'rxjs/operators';
-import { CreateActions } from 'src/app/shared/state/editor-state';
+import { CableActions, CreateActions } from 'src/app/shared/state/editor-state';
 import { Update } from '@ngrx/entity';
+
 @Component({
   selector: 'app-edit-grid',
   templateUrl: './edit-grid.component.html',
@@ -32,8 +32,6 @@ export class EditGridComponent implements OnInit, OnDestroy {
   form: FormGroup;
   id: number;
   private sub: Subscription;
-  private nav: Subscription;
-  synchro: ActionCable.Subscription;
   grid$: Observable<Grid>;
   selector: Subscription;
 
@@ -41,8 +39,7 @@ export class EditGridComponent implements OnInit, OnDestroy {
     fb: FormBuilder,
     private route: ActivatedRoute,
     private store: Store<AppState>,
-    private titleService: Title,
-    private cs: CableService
+    private titleService: Title
   ) {
     this.form = fb.group({
       name: ['', Validators.required],
@@ -154,29 +151,26 @@ export class EditGridComponent implements OnInit, OnDestroy {
       changes: this.form.value,
     };
     this.store.dispatch(GridActions.updateGrid({ update: update }));
-    this.synchro.send(this.grid);
+    this.update();
   }
 
   update(): void {
-    this.synchro.send(this.grid);
-  }
-
-  newSynchro(): void {
-    if (this.synchro != null) {
-      this.synchro.unsubscribe();
-    }
-    this.synchro = this.cs.joinSynchroChannel('grid', this.id, {
-      connected() {
-        return console.log(`grid: Connected.`);
-      },
-      disconnected() {
-        return console.log(`grid: Disconnected.`);
-      },
-    });
+    const grid: Grid = {
+      kind: 'grid',
+      id: this.grid.id,
+      name: this.grid.name,
+      size: this.grid.size,
+      col: this.grid.col,
+      title: this.grid.title,
+      widgets: this.grid.widgets,
+      layouts: this.grid.layouts,
+      layout_grids: this.grid.layout_grids,
+      grid_widgets: this.grid.grid_widgets,
+    };
+    this.store.dispatch(CableActions.sendGrid({ grid: grid }));
   }
 
   ngOnInit(): void {
-    this.newSynchro();
     this.grid$ = this.store.select(GridSelectors.selectCurrentGrid);
     this.store.dispatch(GridActions.fetchGrid({ id: this.id }));
     this.selector = this.grid$

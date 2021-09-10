@@ -28,6 +28,7 @@ describe('EditLayoutComponent', () => {
   let fixture: ComponentFixture<EditLayoutComponent>;
   let store: MockStore<AppState>;
   const layout: Layout = {
+    kind: "layout",
     id: 1,
     name: 'Test',
     background: 'white',

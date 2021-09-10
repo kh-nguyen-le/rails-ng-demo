@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CableService } from '../../shared/cable.service';
 import { Observable, Subscription } from 'rxjs';
 import { Widget } from '../../shared/models/widget.model';
 import {
@@ -19,6 +18,7 @@ import { Store } from '@ngrx/store';
 import { map, takeWhile } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 import { Update } from '@ngrx/entity';
+import { CableActions } from 'src/app/shared/state/editor-state';
 
 @Component({
   selector: 'app-edit-widget',
@@ -32,15 +32,13 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
   id: number;
   private sub: Subscription;
   private selector: Subscription;
-  synchro: ActionCable.Subscription;
 
   constructor(
     fb: FormBuilder,
     public snackBar: MatSnackBar,
     private store: Store<AppState>,
     private titleService: Title,
-    private route: ActivatedRoute,
-    private cs: CableService
+    private route: ActivatedRoute
   ) {
     this.form = fb.group({
       name: ['', Validators.required],
@@ -70,17 +68,25 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    const widget: Widget = {
+      kind: 'widget',
+      id: this.id,
+      name: this.form.value.name,
+      config: this.form.value.config,
+      results: JSON.parse(this.results.value),
+    };
     const update: Update<Widget> = {
       id: this.id,
       changes: this.form.value,
     };
 
     this.store.dispatch(WidgetActions.updateWidget({ update: update }));
+    this.sendUpdate(widget);
   }
 
   submitData(): void {
     const widget: Widget = {
-      kind : "widget",
+      kind: 'widget',
       id: this.id,
       name: this.form.value.name,
       config: this.form.value.config,
@@ -91,30 +97,14 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
       changes: widget,
     };
     this.store.dispatch(WidgetActions.updateWidget({ update: update }));
+    this.sendUpdate(widget);
   }
 
-  sendUpdate(): void {
-    // this.conf.getWidgetById(this.id).subscribe((res) => {
-    //   this.synchro.send(res);
-    // });
-  }
-
-  newSynchro(): void {
-    if (this.synchro != null) {
-      this.synchro.unsubscribe();
-    }
-    this.synchro = this.cs.joinSynchroChannel('widget', this.id, {
-      connected() {
-        return console.log(`widget: Connected.`);
-      },
-      disconnected() {
-        return console.log(`widget: Disconnected.`);
-      },
-    });
+  sendUpdate(widget: Widget): void {
+    this.store.dispatch(CableActions.sendWidget({ widget: widget }));
   }
 
   ngOnInit(): void {
-    this.newSynchro();
     this.widget$ = this.store.select(WidgetSelectors.selectCurrentWidget);
     this.store.dispatch(WidgetActions.fetchWidget({ id: this.id }));
     this.selector = this.widget$

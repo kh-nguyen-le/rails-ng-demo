@@ -1,13 +1,6 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { interval, Observable, of, Subscription } from 'rxjs';
-import { CableService } from '../../shared/cable.service';
+import { interval, Observable, Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { Grid } from '../../shared/models/grid.model';
 import { Layout } from '../../shared/models/layout.model';
@@ -33,15 +26,12 @@ export class DashComponent implements OnInit, OnDestroy {
   private selector: Subscription;
   index: number;
   id: number;
-  channel: ActionCable.Subscription;
 
   constructor(
     private store: Store<AppState>,
     private titleService: Title,
     private elementRef: ElementRef,
-    private route: ActivatedRoute,
-    private cs: CableService,
-    private cd: ChangeDetectorRef
+    private route: ActivatedRoute
   ) {
     this.titleService.setTitle('Dashboard');
     this.sub = this.route.params
@@ -56,7 +46,6 @@ export class DashComponent implements OnInit, OnDestroy {
   }
 
   getData(): void {
-    this.newChannel();
     this.grids$ = this.store.select(LayoutSelectors.getSubGrids);
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
     this.index = 0;
@@ -70,27 +59,6 @@ export class DashComponent implements OnInit, OnDestroy {
     }
   }
 
-  newChannel(): void {
-    if (this.channel != null) {
-      this.channel.unsubscribe();
-    }
-    this.channel = this.cs.joinSynchroChannel('layout', this.id, {
-      connected() {
-        return console.log(`layout: Connected.`);
-      },
-      disconnected() {
-        return console.log(`layout: Disconnected.`);
-      },
-      received: (data: Layout) => this.refresh(data),
-    });
-  }
-
-  refresh(data: Layout): void {
-    console.log('New layout received. Updating.');
-    this.grids$ = of(data.grids);
-    this.cd.detectChanges();
-  }
-
   ngOnInit(): void {
     this.selector = this.layout$.subscribe((data) => (this.layout = data));
     this.getData();
@@ -98,7 +66,6 @@ export class DashComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-    this.channel.unsubscribe();
     this.selector.unsubscribe();
   }
 }

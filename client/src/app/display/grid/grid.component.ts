@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { CableService } from '../../shared/cable.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Grid } from '../../shared/models/grid.model';
 import { Widget } from '../../shared/models/widget.model';
 import { AppState } from 'src/app/shared/state';
@@ -17,42 +16,11 @@ export class GridComponent implements OnInit {
   widgets$: Observable<Widget[]>;
   channel: ActionCable.Subscription;
 
-  constructor(
-    private store: Store<AppState>,
-    private cs: CableService,
-    private cd: ChangeDetectorRef
-  ) {}
-
-  async getData(): Promise<void> {
-    this.newChannel();
-  }
-
-  newChannel(): void {
-    if (this.channel != null) {
-      this.channel.unsubscribe();
-    }
-    this.channel = this.cs.joinSynchroChannel('grid', this.grid.id, {
-      connected() {
-        return console.log(`grid: Connected.`);
-      },
-      disconnected() {
-        return console.log(`grid: Disconnected.`);
-      },
-      received: (data: Grid) => this.refresh(data),
-    });
-  }
-
-  refresh(data: Grid): void {
-    console.log('New grid received. Updating.');
-    this.grid = data;
-    this.widgets$ = of(data.widgets);
-    this.cd.detectChanges();
-  }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.store.dispatch(GridActions.selectGrid({ id: this.grid.id }));
     this.store.dispatch(GridActions.fetchGrid({ id: this.grid.id }));
-    this.getData();
     this.widgets$ = this.store.select(GridSelectors.getSubWidgets);
   }
 }

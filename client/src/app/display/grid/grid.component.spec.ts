@@ -17,6 +17,7 @@ describe('GridComponent', () => {
   let fixture: ComponentFixture<GridComponent>;
   let store: MockStore<AppState>;
   const grid: Grid = {
+    kind: 'grid',
     id: 1,
     name: '1',
     title: '2',
@@ -69,31 +70,19 @@ describe('GridComponent', () => {
   });
 
   describe('when receiving new data', () => {
-    const new_grid = {
+    const new_grid: Grid = {
+      kind: 'grid',
       id: 1,
       name: 'Grid',
       title: 'Test',
       col: 2,
       size: '2:1',
-      widgets: [{ id: 1, name: 'Test', results: [], config: config }],
+      widgets: [
+        { kind: 'widget', id: 1, name: 'Test', results: [], config: config },
+      ],
       layouts: [],
       layout_grids: [],
       grid_widgets: [],
     };
-
-    xit('should be able to update attributes', () => {
-      component.refresh(new_grid);
-      expect(component.grid.name).toEqual('Grid');
-      expect(component.grid.title).toEqual('Test');
-      expect(component.grid.col).toEqual(2);
-    });
-
-    xit('should be able to add a widget', () => {
-      component.refresh(new_grid);
-      component.widgets$.subscribe((widgets: Widget[]) => {
-        expect(widgets).toEqual(new_grid.widgets);
-      });
-      expect(component.grid).toEqual(new_grid);
-    });
   });
 });

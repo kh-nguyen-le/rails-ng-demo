@@ -34,17 +34,21 @@ describe('DashComponent', () => {
     legendPosition: '',
   };
   const grid: Grid = {
+    kind: 'grid',
     id: 1,
     name: 'Grid',
     title: '2',
     col: 5,
     size: '2:1',
-    widgets: [{ id: 1, name: 'Test', results: [], config: config }],
+    widgets: [
+      { kind: 'widget', id: 1, name: 'Test', results: [], config: config },
+    ],
     layouts: [],
     layout_grids: [],
     grid_widgets: [],
   };
   const layout: Layout = {
+    kind: 'layout',
     id: 1,
     name: 'Test',
     background: 'white',
@@ -84,6 +88,7 @@ describe('DashComponent', () => {
 
   describe('when receiving new data', () => {
     const new_layout: Layout = {
+      kind: 'layout',
       id: 1,
       name: 'Layout',
       background: 'grey',
@@ -91,20 +96,5 @@ describe('DashComponent', () => {
       grids: [grid],
       layout_grids: [],
     };
-
-    xit('should be able to update attributes', () => {
-      component.refresh(new_layout);
-      expect(component.layout.name).toEqual(new_layout.name);
-      expect(component.layout.background).toEqual(new_layout.background);
-      expect(component.layout.duration).toEqual(new_layout.duration);
-    });
-
-    xit('should be able to add a grid', () => {
-      component.refresh(new_layout);
-      component.grids$.subscribe((grids: Grid[]) => {
-        expect(grids).toEqual(new_layout.grids);
-      });
-      expect(component.layout).toEqual(new_layout);
-    });
   });
 });

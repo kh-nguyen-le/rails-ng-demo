@@ -24,7 +24,13 @@ describe('WidgetComponent', () => {
     widgetType: '',
     legendPosition: '',
   };
-  const widget: Widget = { id: 1, name: 'Test', results: [], config: config };
+  const widget: Widget = {
+    kind: 'widget',
+    id: 1,
+    name: 'Test',
+    results: [],
+    config: config,
+  };
 
   beforeEach(
     waitForAsync(() => {
@@ -50,10 +56,5 @@ describe('WidgetComponent', () => {
 
   it('should create', () => {
     expect(component).toBeDefined();
-  });
-
-  it('should update upon receiving new data with #refresh', () => {
-    component.refresh({ name: 'Widget', id: 1, config: config, results: [] });
-    expect(component.widget.name).toBe('Widget');
   });
 });
