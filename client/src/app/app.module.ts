@@ -4,9 +4,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { DashComponent } from './dash/dash.component';
-import { GridComponent } from './grid/grid.component';
-import { WidgetComponent } from './widget/widget.component';
+import { DashComponent } from './display/dash/dash.component';
+import { GridComponent } from './display/grid/grid.component';
+import { WidgetComponent } from './display/widget/widget.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EditorLayoutComponent } from './editor/editor-layout/editor-layout.component';
 import { EditorGridComponent } from './editor/editor-grid/editor-grid.component';
@@ -31,6 +31,13 @@ import { EditLayoutComponent } from './editor/edit-layout/edit-layout.component'
 import { EditGridComponent } from './editor/edit-grid/edit-grid.component';
 import { EditWidgetComponent } from './editor/edit-widget/edit-widget.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from './shared/state/';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EditorModule } from './shared/state/editor-state/';
+import { DisplayModule } from './shared/state/display-state/display.module';
 
 @NgModule({
   declarations: [
@@ -68,6 +75,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    DisplayModule,
+    EditorModule,
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

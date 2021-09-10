@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, Layout } from '../../config.service';
 import { Title } from '@angular/platform-browser';
+import { Layout } from '../../shared/models/layout.model';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {
+  LayoutActions,
+  LayoutSelectors,
+  LayoutState,
+} from 'src/app/shared/state/display-state';
 
 @Component({
   selector: 'app-editor-layout',
@@ -8,21 +15,22 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./editor-layout.component.css'],
 })
 export class EditorLayoutComponent implements OnInit {
-  layouts: Layout[];
+  layouts$: Observable<Layout[]>;
 
-  constructor(private titleService: Title, private conf: ConfigService) {
+  constructor(private titleService: Title, private store: Store<LayoutState.State>) {
     this.titleService.setTitle('Editor - Layouts');
   }
 
   deleteLayout(id: number): void {
-    this.conf.deleteLayout(id).subscribe(() => this.getLayouts());
+    this.store.dispatch(LayoutActions.deleteLayout({ id }));
   }
 
   getLayouts(): void {
-    this.conf.getLayouts().subscribe((res) => (this.layouts = res));
+    this.store.dispatch(LayoutActions.loadLayouts());
   }
 
   ngOnInit(): void {
+    this.layouts$ = this.store.select(LayoutSelectors.selectAllLayouts);
     this.getLayouts();
   }
 }

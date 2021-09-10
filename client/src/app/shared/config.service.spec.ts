@@ -1,24 +1,22 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  ConfigService,
-  Widget,
-  Layout,
-  Grid,
-  LayoutGrid,
-  GridWidget,
-} from './config.service';
+import { ConfigService } from './config.service';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { Grid } from './models/grid.model';
+import { GridWidget } from './models/gridwidget.model';
+import { Layout } from './models/layout.model';
+import { LayoutGrid } from './models/layoutgrid.model';
+import { Widget } from './models/widget.model';
 
 describe('ConfigService', () => {
   let httpTestingController: HttpTestingController;
   let service: ConfigService;
   const config: Widget['config'] = {
     gradient: false,
-    autoscale: true,
+    autoScale: true,
     showXAxis: true,
     showYAxis: true,
     showXAxisLabel: true,
@@ -27,6 +25,7 @@ describe('ConfigService', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: 'line',
+    legendPosition: 'right',
   };
 
   beforeEach(() => {
@@ -50,6 +49,7 @@ describe('ConfigService', () => {
     it('should return all available layouts', () => {
       const mockLayouts = [
         {
+          kind: 'layout',
           id: 1,
           name: 'Test',
           background: 'white',
@@ -58,6 +58,7 @@ describe('ConfigService', () => {
           layout_grids: [],
         },
         {
+          kind: 'layout',
           id: 2,
           name: 'Layout',
           background: 'white',
@@ -81,6 +82,7 @@ describe('ConfigService', () => {
     it('should return all available grids', () => {
       const mockGrids = [
         {
+          kind: 'grid',
           id: 1,
           name: 'Grid',
           title: 'Test',
@@ -92,6 +94,7 @@ describe('ConfigService', () => {
           grid_widgets: [],
         },
         {
+          kind: 'grid',
           id: 2,
           name: 'Test',
           title: 'Grid',
@@ -226,7 +229,8 @@ describe('ConfigService', () => {
 
   describe('#createLayout', () => {
     it('should create correct layout', () => {
-      const mockLayout = {
+      const mockLayout: Layout = {
+        kind: 'layout',
         id: 1,
         name: 'Test',
         background: 'white',
@@ -249,7 +253,8 @@ describe('ConfigService', () => {
 
   describe('#createGrid', () => {
     it('should create correct grid', () => {
-      const mockGrid = {
+      const mockGrid: Grid = {
+        kind: 'grid',
         id: 1,
         name: 'Grid',
         title: 'Test',
@@ -276,7 +281,13 @@ describe('ConfigService', () => {
 
   describe('#createWidget', () => {
     it('should create correct widget', () => {
-      const mockWidget = { id: 1, name: 'Widget', results: [], config: config };
+      const mockWidget: Widget = {
+        kind: 'widget',
+        id: 1,
+        name: 'Widget',
+        results: [],
+        config: config,
+      };
       service.createWidget(mockWidget).subscribe((data: Widget) => {
         expect(data.name).toEqual('Widget');
         expect(data.config.widgetType).toEqual('line');
@@ -334,8 +345,9 @@ describe('ConfigService', () => {
 
   describe('#updateLayout', () => {
     it('should update specified layout', () => {
-      const mockLayouts = [
+      const mockLayouts: Layout[] = [
         {
+          kind: 'layout',
           id: 1,
           name: 'Test',
           background: 'white',
@@ -344,6 +356,7 @@ describe('ConfigService', () => {
           layout_grids: [],
         },
         {
+          kind: 'layout',
           id: 2,
           name: 'Layout',
           background: 'white',
@@ -370,8 +383,9 @@ describe('ConfigService', () => {
 
   describe('#updateGrid', () => {
     it('should update specified grid', () => {
-      const mockGrids = [
+      const mockGrids: Grid[] = [
         {
+          kind: 'grid',
           id: 1,
           name: 'Grid',
           title: 'Test',
@@ -383,6 +397,7 @@ describe('ConfigService', () => {
           grid_widgets: [],
         },
         {
+          kind: 'grid',
           id: 2,
           name: 'Test',
           title: 'Grid',
@@ -413,9 +428,9 @@ describe('ConfigService', () => {
 
   describe('#updateWidget', () => {
     it('should update specified widget', () => {
-      const mockWidgets = [
-        { id: 1, name: 'Widget', results: [], config: config },
-        { id: 2, name: 'Test', results: [], config: config },
+      const mockWidgets: Widget[] = [
+        { kind: 'widget', id: 1, name: 'Widget', results: [], config: config },
+        { kind: 'widget', id: 2, name: 'Test', results: [], config: config },
       ];
       const id = 1;
       service.updateWidget(id, mockWidgets[id]).subscribe((data: Widget) => {

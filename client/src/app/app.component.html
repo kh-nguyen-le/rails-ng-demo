@@ -6,7 +6,7 @@
         <mat-icon>dashboard</mat-icon>
     </button>
     <mat-menu id="dash-menu" #dashboard="matMenu" xPosition="before">
-        <div *ngFor="let layout of layouts">
+        <div *ngFor="let layout of (layouts$ | async )">
             <button id="dash-{{layout.id}}" mat-menu-item  [routerLink]="[ '/dash', layout.id ]">
                 {{ layout.name }}
             </button>

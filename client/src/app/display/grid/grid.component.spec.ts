@@ -7,12 +7,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { Grid, Widget } from '../config.service';
+import { Grid } from '../../shared/models/grid.model';
+import { Widget } from '../../shared/models/widget.model';
+import { AppState } from 'src/app/shared/state';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('GridComponent', () => {
   let component: GridComponent;
   let fixture: ComponentFixture<GridComponent>;
+  let store: MockStore<AppState>;
   const grid: Grid = {
+    kind: 'grid',
     id: 1,
     name: '1',
     title: '2',
@@ -25,7 +30,7 @@ describe('GridComponent', () => {
   };
   const config: Widget['config'] = {
     gradient: false,
-    autoscale: true,
+    autoScale: true,
     showXAxis: true,
     showYAxis: true,
     showXAxisLabel: true,
@@ -34,19 +39,24 @@ describe('GridComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: 'line',
+    legendPosition: '',
   };
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [GridComponent, WidgetComponent],
-      imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatGridListModule,
-        NgxChartsModule,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [GridComponent, WidgetComponent],
+        imports: [
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          MatGridListModule,
+          NgxChartsModule,
+        ],
+        providers: [provideMockStore({})],
+      }).compileComponents();
+      store = TestBed.inject(MockStore);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GridComponent);
@@ -60,31 +70,19 @@ describe('GridComponent', () => {
   });
 
   describe('when receiving new data', () => {
-      const new_grid = {
-        id: 1,
-        name: 'Grid',
-        title: 'Test',
-        col: 2,
-        size: '2:1',
-        widgets: [{ id: 1, name: 'Test', results: [], config: config }],
-        layouts: [],
-        layout_grids: [],
-        grid_widgets: [],
-      };
-
-    it('should be able to update attributes', () => {
-      component.refresh(new_grid);
-      expect(component.grid.name).toEqual('Grid');
-      expect(component.grid.title).toEqual('Test');
-      expect(component.grid.col).toEqual(2);
-    });
-
-    it('should be able to add a widget', () => {
-      component.refresh(new_grid);
-      component.widgets$.subscribe((widgets: Widget[]) => {
-        expect(widgets).toEqual(new_grid.widgets);
-      });
-      expect(component.grid).toEqual(new_grid);
-    });
+    const new_grid: Grid = {
+      kind: 'grid',
+      id: 1,
+      name: 'Grid',
+      title: 'Test',
+      col: 2,
+      size: '2:1',
+      widgets: [
+        { kind: 'widget', id: 1, name: 'Test', results: [], config: config },
+      ],
+      layouts: [],
+      layout_grids: [],
+      grid_widgets: [],
+    };
   });
 });

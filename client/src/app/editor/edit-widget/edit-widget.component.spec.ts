@@ -18,10 +18,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppState } from 'src/app/shared/state';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { Widget } from 'src/app/shared/models/widget.model';
+import { WidgetSelectors } from 'src/app/shared/state/display-state';
 
 describe('EditWidgetComponent', () => {
   let component: EditWidgetComponent;
   let fixture: ComponentFixture<EditWidgetComponent>;
+  let store: MockStore<AppState>;
+  let widget: Widget;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -48,13 +54,15 @@ describe('EditWidgetComponent', () => {
         FormsModule,
         RouterTestingModule,
       ],
-      providers: [],
+      providers: [provideMockStore({})],
     }).compileComponents();
+    store = TestBed.inject(MockStore);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EditWidgetComponent);
     component = fixture.componentInstance;
+    store.overrideSelector(WidgetSelectors.selectCurrentWidget, widget);
     fixture.detectChanges();
   });
 

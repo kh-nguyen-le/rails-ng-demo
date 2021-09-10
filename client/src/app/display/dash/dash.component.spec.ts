@@ -10,14 +10,19 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Widget, Grid, Layout } from '../config.service';
+import { Widget } from '../../shared/models/widget.model';
+import { Grid } from '../../shared/models/grid.model';
+import { Layout } from '../../shared/models/layout.model';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { AppState } from 'src/app/shared/state';
 
 describe('DashComponent', () => {
   let component: DashComponent;
   let fixture: ComponentFixture<DashComponent>;
+  let store: MockStore<AppState>;
   const config: Widget['config'] = {
     gradient: false,
-    autoscale: true,
+    autoScale: true,
     showXAxis: true,
     showYAxis: true,
     showXAxisLabel: true,
@@ -26,19 +31,24 @@ describe('DashComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: 'line',
+    legendPosition: '',
   };
   const grid: Grid = {
+    kind: 'grid',
     id: 1,
     name: 'Grid',
     title: '2',
     col: 5,
     size: '2:1',
-    widgets: [{ id: 1, name: 'Test', results: [], config: config }],
+    widgets: [
+      { kind: 'widget', id: 1, name: 'Test', results: [], config: config },
+    ],
     layouts: [],
     layout_grids: [],
     grid_widgets: [],
   };
   const layout: Layout = {
+    kind: 'layout',
     id: 1,
     name: 'Test',
     background: 'white',
@@ -46,21 +56,24 @@ describe('DashComponent', () => {
     grids: [],
     layout_grids: [],
   };
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [DashComponent, GridComponent, WidgetComponent],
-      imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatGridListModule,
-        NgxChartsModule,
-        MatTabsModule,
-        RouterTestingModule,
-      ],
-      providers: [],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [DashComponent, GridComponent, WidgetComponent],
+        imports: [
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          MatGridListModule,
+          NgxChartsModule,
+          MatTabsModule,
+          RouterTestingModule,
+        ],
+        providers: [provideMockStore({})],
+      }).compileComponents();
+      store = TestBed.inject(MockStore);
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DashComponent);
@@ -75,6 +88,7 @@ describe('DashComponent', () => {
 
   describe('when receiving new data', () => {
     const new_layout: Layout = {
+      kind: 'layout',
       id: 1,
       name: 'Layout',
       background: 'grey',
@@ -82,20 +96,5 @@ describe('DashComponent', () => {
       grids: [grid],
       layout_grids: [],
     };
-
-    it('should be able to update attributes', () => {
-      component.refresh(new_layout);
-      expect(component.layout.name).toEqual(new_layout.name);
-      expect(component.layout.background).toEqual(new_layout.background);
-      expect(component.layout.duration).toEqual(new_layout.duration);
-    });
-
-    it('should be able to add a grid', () => {
-      component.refresh(new_layout);
-      component.grids$.subscribe((grids: Grid[]) => {
-        expect(grids).toEqual(new_layout.grids);
-      });
-      expect(component.layout).toEqual(new_layout);
-    });
   });
 });

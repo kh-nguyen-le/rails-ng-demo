@@ -21,7 +21,7 @@
   <h2 mat-h2>Grids</h2>
   <mat-form-field>
     <mat-select placeholder="Add Grid" [(ngModel)]="new_grid">
-      <mat-option *ngFor="let grid of grids" [value]="grid.id">
+      <mat-option *ngFor="let grid of (allGrids$ | async)" [value]="grid.id">
         {{grid.name}}
       </mat-option>
     </mat-select>
@@ -29,14 +29,14 @@
   <button mat-icon-button (click)="addGrid()">
     <mat-icon>add_circle</mat-icon>
   </button>
-  <mat-list-item *ngFor="let grid of layout.grids; let i = index">
+  <mat-list-item *ngFor="let grid of (grids$ | async); let i = index">
     <a matLine [routerLink]="[ '/grids', grid.id ]">{{grid.name}}</a>
     <button mat-icon-button (click)="shiftGridUp(i)"
-    [disabled]="grid === layout.grids[0]">
+    [disabled]="grid === (grids$ | async)[0]">
         <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
     <button mat-icon-button (click)="shiftGridDown(i)"
-    [disabled]="grid === layout.grids[layout.grids.length - 1]">
+    [disabled]="grid === (grids$ | async)[(grids$ | async).length - 1]">
           <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
     <button mat-icon-button (click)="removeGrid(i)">

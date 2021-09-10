@@ -1,10 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ConfigService, Layout, Grid, LayoutGrid } from '../../config.service';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CableService } from '../../cable.service';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { Grid } from '../../shared/models/grid.model';
+import { Layout } from '../../shared/models/layout.model';
+import { LayoutGrid } from '../../shared/models/layoutgrid.model';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/shared/state';
+import { Title } from '@angular/platform-browser';
+import { map, takeWhile } from 'rxjs/operators';
+import {
+  GridActions,
+  GridSelectors,
+  LayoutActions,
+  LayoutSelectors,
+} from 'src/app/shared/state/display-state';
+import { CableActions, CreateActions } from 'src/app/shared/state/editor-state';
+import { Update } from '@ngrx/entity';
 
 @Component({
   selector: 'app-edit-layout',
@@ -12,34 +24,40 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./edit-layout.component.css'],
 })
 export class EditLayoutComponent implements OnInit, OnDestroy {
+  @Input()
+  layout$: Observable<Layout>;
+  @Input()
+  grids$: Observable<Grid[]>;
   layout: Layout;
   new_grid: number;
-  grids: Grid[];
   targetLG: LayoutGrid;
   form: FormGroup;
   id: number;
   private sub: Subscription;
-  private nav: Subscription;
-  synchro: ActionCable.Channel;
+  selector: Subscription;
+  allGrids$: Observable<Grid[]>;
+  selector2: Subscription;
 
   constructor(
     private fb: FormBuilder,
-    private conf: ConfigService,
+    private store: Store<AppState>,
     private route: ActivatedRoute,
-    public snackBar: MatSnackBar,
-    private router: Router,
-    private cs: CableService
+    private titleService: Title
   ) {
     this.form = fb.group({
       name: ['', Validators.required],
       background: '',
       duration: [0, Validators.min(0)],
     });
-    this.nav = this.router.events.subscribe((e: unknown) => {
-      if (e instanceof NavigationEnd) {
-        this.init();
-      }
-    });
+    this.sub = this.route.params
+      .pipe(
+        map((params) => {
+          this.id = +params.id;
+          return LayoutActions.selectLayout({ id: params.id });
+        })
+      )
+      .subscribe((action) => this.store.dispatch(action));
+    this.titleService.setTitle('Editor - Layouts');
   }
 
   addGrid(): void {
@@ -52,15 +70,16 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       grid_id: this.new_grid,
       id: null,
     };
-    this.conf.createLayoutGrid(this.targetLG).subscribe(() => {
-      this.update();
-    });
+    this.store.dispatch(
+      CreateActions.createLayoutGrid({ layoutgrid: this.targetLG })
+    );
+    this.update();
   }
 
-  async removeGrid(index: number): Promise<void> {
+  removeGrid(index: number): void {
     for (const lg of this.layout.layout_grids) {
       if (lg.position === index) {
-        await this.conf.deleteLayoutGrid(lg.id).toPromise();
+        this.store.dispatch(CreateActions.deleteLayoutGrid({ layoutgrid: lg }));
       } else if (lg.position > index) {
         this.targetLG = {
           position: lg.position - 1,
@@ -68,13 +87,15 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
           grid_id: lg.grid_id,
           id: lg.id,
         };
-        await this.conf.updateLayoutGrid(this.targetLG).toPromise();
+        this.store.dispatch(
+          CreateActions.updateLayoutGrid({ layoutgrid: this.targetLG })
+        );
       }
     }
     this.update();
   }
 
-  async shiftGridUp(index: number): Promise<void> {
+  shiftGridUp(index: number): void {
     for (const lg of this.layout.layout_grids) {
       this.targetLG = {
         position: lg.position,
@@ -86,13 +107,17 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
         this.targetLG.position -= 1;
       } else if (lg.position === index - 1) {
         this.targetLG.position += 1;
+      } else {
+        continue;
       }
-      await this.conf.updateLayoutGrid(this.targetLG).toPromise();
+      this.store.dispatch(
+        CreateActions.updateLayoutGrid({ layoutgrid: this.targetLG })
+      );
     }
     this.update();
   }
 
-  async shiftGridDown(index: number): Promise<void> {
+  shiftGridDown(index: number): void {
     for (const lg of this.layout.layout_grids) {
       this.targetLG = {
         position: lg.position,
@@ -104,67 +129,58 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
         this.targetLG.position += 1;
       } else if (lg.position === index + 1) {
         this.targetLG.position -= 1;
+      } else {
+        continue;
       }
-      await this.conf.updateLayoutGrid(this.targetLG).toPromise();
+      this.store.dispatch(
+        CreateActions.updateLayoutGrid({ layoutgrid: this.targetLG })
+      );
     }
     this.update();
   }
 
   onSubmit(): void {
-    this.conf.updateLayout(this.layout.id, this.form.value).subscribe(() => {
-      this.snackBar.open('Primary Attributes updated', '', {
-        duration: 2000,
-      });
-      this.layout.name = this.form.value.name;
-      this.layout.background = this.form.value.background;
-      this.layout.duration = this.form.value.duration;
-      this.synchro.send(this.layout);
-    });
-  }
-
-  init(): void {
-    this.sub = this.route.params.subscribe((params) => {
-      this.id = +params['id'];
-      this.conf.getLayoutById(this.id).subscribe((res) => {
-        this.layout = res;
-        this.form.patchValue({
-          name: this.layout.name,
-          background: this.layout.background,
-          duration: this.layout.duration,
-        });
-      });
-    });
-    this.conf.getGrids().subscribe((res) => (this.grids = res));
+    const update: Update<Layout> = {
+      id: this.layout.id,
+      changes: this.form.value,
+    };
+    this.store.dispatch(LayoutActions.updateLayout({ update: update }));
+    this.update();
   }
 
   update(): void {
-    this.conf.getLayoutById(this.id).subscribe((res) => {
-      this.layout = res;
-      this.synchro.send(res);
-    });
-    this.router.navigate(['/layouts', this.id]);
-  }
-
-  newSynchro(): void {
-    if (this.synchro != null) {
-      this.synchro.unsubscribe();
-    }
-    this.synchro = this.cs.joinSynchroChannel('layout', this.id, {
-      connected() {
-        return console.log(`layout: Connected.`);
-      },
-      disconnected() {
-        return console.log(`layout: Disconnected.`);
-      },
-    });
+    const layout: Layout = {
+      kind: 'layout',
+      id: this.layout.id,
+      name: this.layout.name,
+      background: this.layout.background,
+      duration: this.layout.duration,
+      grids: this.layout.grids,
+      layout_grids: this.layout.layout_grids,
+    };
+    this.store.dispatch(CableActions.sendLayout({ layout: layout }));
   }
 
   ngOnInit(): void {
-    this.newSynchro();
+    this.layout$ = this.store.select(LayoutSelectors.selectCurrentLayout);
+    this.store.dispatch(LayoutActions.fetchLayout({ id: this.id }));
+    this.selector = this.layout$
+      .pipe(takeWhile((layout) => layout !== null))
+      .subscribe((data) => (this.layout = data));
+
+    this.form.patchValue({
+      name: this.layout.name,
+      background: this.layout.background,
+      duration: this.layout.duration,
+    });
+
+    this.grids$ = this.store.select(LayoutSelectors.getSubGrids);
+    this.allGrids$ = this.store.select(GridSelectors.selectAllGrids);
+    this.store.dispatch(GridActions.loadGrids());
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-    this.nav.unsubscribe();
+    this.selector.unsubscribe();
   }
 }

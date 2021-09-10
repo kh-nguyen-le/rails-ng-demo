@@ -6,14 +6,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { Widget } from '../config.service';
+import { Widget } from '../../shared/models/widget.model';
 
 describe('WidgetComponent', () => {
   let component: WidgetComponent;
   let fixture: ComponentFixture<WidgetComponent>;
   const config: Widget['config'] = {
     gradient: false,
-    autoscale: true,
+    autoScale: true,
     showXAxis: true,
     showYAxis: true,
     showXAxisLabel: true,
@@ -22,21 +22,30 @@ describe('WidgetComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: '',
+    legendPosition: '',
   };
-  const widget: Widget = { id: 1, name: 'Test', results: [], config: config };
+  const widget: Widget = {
+    kind: 'widget',
+    id: 1,
+    name: 'Test',
+    results: [],
+    config: config,
+  };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [WidgetComponent],
-      imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatGridListModule,
-        NgxChartsModule,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [WidgetComponent],
+        imports: [
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          MatGridListModule,
+          NgxChartsModule,
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WidgetComponent);
@@ -47,10 +56,5 @@ describe('WidgetComponent', () => {
 
   it('should create', () => {
     expect(component).toBeDefined();
-  });
-
-  it('should update upon receiving new data with #refresh', () => {
-    component.refresh({ name: 'Widget', id: 1, config: config, results: []});
-    expect(component.widget.name).toBe('Widget');
   });
 });
