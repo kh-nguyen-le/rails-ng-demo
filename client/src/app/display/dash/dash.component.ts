@@ -1,6 +1,12 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  DoCheck,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { interval, Observable, Subscription } from 'rxjs';
+import { iif, interval, Observable, Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { Grid } from '../../shared/models/grid.model';
 import { Layout } from '../../shared/models/layout.model';
@@ -17,10 +23,11 @@ import { map } from 'rxjs/operators';
   templateUrl: './dash.component.html',
   styleUrls: ['./dash.component.css'],
 })
-export class DashComponent implements OnInit, OnDestroy {
+export class DashComponent implements OnInit, OnDestroy, DoCheck {
   layout: Layout;
   layout$: Observable<Layout>;
   grids$: Observable<Grid[]>;
+  stop$: Observable<boolean>;
   private sub: Subscription;
   private timer: Subscription;
   private selector: Subscription;
@@ -43,25 +50,36 @@ export class DashComponent implements OnInit, OnDestroy {
       )
       .subscribe((action) => this.store.dispatch(action));
     this.layout$ = this.store.select(LayoutSelectors.selectCurrentLayout);
+    if (!this.index) this.index = 0;
   }
 
   getData(): void {
     this.grids$ = this.store.select(LayoutSelectors.getSubGrids);
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.layout.background;
-    this.index = 0;
-    if (this.layout.duration) {
-      const source = interval(this.layout.duration);
-      this.timer = source.subscribe(
-        () => (this.index = (this.index + 1) % this.layout.grids.length)
-      );
-    } else if (this.timer != null) {
+  }
+
+  setCycle(): void {
+    const source = iif(
+      () => this.layout.duration > 0,
+      interval(this.layout.duration)
+    );
+    this.timer = source.subscribe(
+      () => (this.index = (this.index + 1) % this.layout.grids.length)
+    );
+  }
+
+  ngDoCheck(): void {
+    if (this.timer) {
       this.timer.unsubscribe();
+      this.getData();
+      this.setCycle();
     }
   }
 
   ngOnInit(): void {
     this.selector = this.layout$.subscribe((data) => (this.layout = data));
     this.getData();
+    this.setCycle();
   }
 
   ngOnDestroy(): void {
