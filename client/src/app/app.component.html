@@ -12,19 +12,24 @@
             </button>
         </div>
     </mat-menu>
-    <button name="editor" mat-icon-button [matMenuTriggerFor]="editor">
-        <mat-icon>create</mat-icon>
+    <button name="drawer" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>view_sidebar</mat-icon>
     </button>
-    <mat-menu #editor="matMenu">
-        <button mat-menu-item routerLink="/widgets">
+</mat-toolbar>
+<mat-drawer-container>
+    <mat-drawer-content>
+        <router-outlet ></router-outlet>
+    </mat-drawer-content>
+    <mat-drawer #drawer position="end">
+        <button [routerLink]="[{ outlets: { drawer: ['widgets'] } }]">
             <span>Widgets</span>
         </button>
-        <button mat-menu-item routerLink="/grids">
+        <button [routerLink]="[{ outlets: { drawer: ['grids'] } }]">
             <span>Grids</span>
         </button>
-        <button mat-menu-item routerLink="/layouts">
+        <button [routerLink]="[{ outlets: { drawer: ['layouts'] } }]">
             <span>Layouts</span>
         </button>
-    </mat-menu>
-</mat-toolbar>
-<router-outlet ></router-outlet>
+        <router-outlet name="drawer"></router-outlet>
+    </mat-drawer>
+</mat-drawer-container>

@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { AppRoutingModule } from './app-routing.module';
 import { NewLayoutComponent } from './editor/new-layout/new-layout.component';
 import { NewGridComponent } from './editor/new-grid/new-grid.component';
@@ -72,6 +73,7 @@ import { DisplayModule } from './shared/state/display-state/display.module';
     MatSelectModule,
     MatCheckboxModule,
     MatTabsModule,
+    MatSidenavModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
