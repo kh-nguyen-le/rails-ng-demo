@@ -15,7 +15,7 @@ import { EditLayoutComponent } from './editor/edit-layout/edit-layout.component'
 const appRoutes: Routes = [
   { path: 'dash/:id', component: DashComponent },
   { path: 'widgets', component: EditorWidgetComponent, outlet: 'drawer' },
-  { path: 'widgets/new', component: NewWidgetComponent, outlet: 'drawer' },
+  { path: 'new_widget', component: NewWidgetComponent, outlet: 'drawer' },
   {
     path: 'widgets/:id',
     component: EditWidgetComponent,
@@ -23,7 +23,7 @@ const appRoutes: Routes = [
     outlet: 'drawer',
   },
   { path: 'grids', component: EditorGridComponent, outlet: 'drawer' },
-  { path: 'grids/new', component: NewGridComponent, outlet: 'drawer' },
+  { path: 'new_grid', component: NewGridComponent, outlet: 'drawer' },
   {
     path: 'grids/:id',
     component: EditGridComponent,
@@ -31,7 +31,7 @@ const appRoutes: Routes = [
     outlet: 'drawer',
   },
   { path: 'layouts', component: EditorLayoutComponent, outlet: 'drawer' },
-  { path: 'layouts/new', component: NewLayoutComponent, outlet: 'drawer' },
+  { path: 'new_layout', component: NewLayoutComponent, outlet: 'drawer' },
   {
     path: 'layouts/:id',
     component: EditLayoutComponent,
