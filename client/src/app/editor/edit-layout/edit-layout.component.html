@@ -30,7 +30,7 @@
     <mat-icon>add_circle</mat-icon>
   </button>
   <mat-list-item *ngFor="let grid of (grids$ | async); let i = index">
-    <a matLine [routerLink]="[ '/grids', grid.id ]">{{grid.name}}</a>
+    <a matLine [routerLink]="['', { outlets: { drawer: [ 'grids', grid.id] } }]">{{grid.name}}</a>
     <button mat-icon-button (click)="shiftGridUp(i)"
     [disabled]="grid === (grids$ | async)[0]">
         <mat-icon>keyboard_arrow_up</mat-icon>

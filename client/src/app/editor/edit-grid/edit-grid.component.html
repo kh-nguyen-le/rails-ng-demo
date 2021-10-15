@@ -35,7 +35,7 @@
     <mat-icon>add_circle</mat-icon>
   </button>
   <mat-list-item *ngFor="let widget of (widgets$ | async); let i = index">
-    <a matLine [routerLink]="[ '/widgets', widget.id ]">{{widget.name}}</a>
+    <a matLine [routerLink]="['', { outlets: { drawer: [ 'widgets', widget.id] } }]">{{widget.name}}</a>
     <button mat-icon-button (click)="shiftWidgetUp(i)"
     [disabled]="widget === (widgets$ | async)[0]">
         <mat-icon>keyboard_arrow_up</mat-icon>
