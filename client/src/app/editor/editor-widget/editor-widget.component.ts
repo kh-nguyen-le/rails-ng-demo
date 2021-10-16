@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { Widget } from '../../shared/models/widget.model';
 import { Store } from '@ngrx/store';
 import {
@@ -17,12 +16,7 @@ import { Observable } from 'rxjs';
 export class EditorWidgetComponent implements OnInit {
   widgets$: Observable<Widget[]>;
 
-  constructor(
-    private titleService: Title,
-    private store: Store<WidgetState.State>
-  ) {
-    this.titleService.setTitle('Editor - Widgets');
-  }
+  constructor(private store: Store<WidgetState.State>) {}
 
   deleteWidget(id: number): void {
     this.store.dispatch(WidgetActions.deleteWidget({ id }));

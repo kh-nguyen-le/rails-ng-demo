@@ -5,7 +5,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Grid } from '../../shared/models/grid.model';
 import { GridWidget } from '../../shared/models/gridwidget.model';
 import { Widget } from '../../shared/models/widget.model';
-import { Title } from '@angular/platform-browser';
 import {
   GridActions,
   GridSelectors,
@@ -38,8 +37,7 @@ export class EditGridComponent implements OnInit, OnDestroy {
   constructor(
     fb: FormBuilder,
     private route: ActivatedRoute,
-    private store: Store<AppState>,
-    private titleService: Title
+    private store: Store<AppState>
   ) {
     this.form = fb.group({
       name: ['', Validators.required],
@@ -55,7 +53,6 @@ export class EditGridComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((action) => this.store.dispatch(action));
-    this.titleService.setTitle('Editor - Grids');
   }
 
   addWidget(): void {

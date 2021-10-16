@@ -16,7 +16,6 @@ import {
 import { AppState } from 'src/app/shared/state';
 import { Store } from '@ngrx/store';
 import { map, takeWhile } from 'rxjs/operators';
-import { Title } from '@angular/platform-browser';
 import { Update } from '@ngrx/entity';
 import { CableActions } from 'src/app/shared/state/editor-state';
 
@@ -37,7 +36,6 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
     fb: FormBuilder,
     public snackBar: MatSnackBar,
     private store: Store<AppState>,
-    private titleService: Title,
     private route: ActivatedRoute
   ) {
     this.form = fb.group({
@@ -64,7 +62,6 @@ export class EditWidgetComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((action) => this.store.dispatch(action));
-    this.titleService.setTitle('Editor - Widgets');
   }
 
   onSubmit(): void {

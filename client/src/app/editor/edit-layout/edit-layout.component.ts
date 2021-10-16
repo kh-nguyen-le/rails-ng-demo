@@ -7,7 +7,6 @@ import { Layout } from '../../shared/models/layout.model';
 import { LayoutGrid } from '../../shared/models/layoutgrid.model';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/shared/state';
-import { Title } from '@angular/platform-browser';
 import { map, takeWhile } from 'rxjs/operators';
 import {
   GridActions,
@@ -41,8 +40,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
-    private route: ActivatedRoute,
-    private titleService: Title
+    private route: ActivatedRoute
   ) {
     this.form = fb.group({
       name: ['', Validators.required],
@@ -57,7 +55,6 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((action) => this.store.dispatch(action));
-    this.titleService.setTitle('Editor - Layouts');
   }
 
   addGrid(): void {
