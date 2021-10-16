@@ -8,7 +8,7 @@ import * as fromState from './grid.state';
 const gridReducer = createReducer(
   initialState,
   on(fromActions.loadGridsSuccess, (state, { grids }) => {
-    return adapter.setAll(grids, { ...state });
+    return adapter.upsertMany(grids, { ...state });
   }),
   on(fromActions.deleteGridSuccess, (state, { id }) => {
     return adapter.removeOne(id, { ...state, selectedGridId: null });

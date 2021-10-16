@@ -7,7 +7,7 @@ import * as fromState from './widget.state';
 const widgetReducer = createReducer(
   initialState,
   on(fromActions.loadWidgetsSuccess, (state, { widgets }) => {
-    return adapter.setAll(widgets, state);
+    return adapter.upsertMany(widgets, state);
   }),
   on(fromActions.deleteWidgetSuccess, (state, { id }) => {
     return adapter.removeOne(id, state);

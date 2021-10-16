@@ -8,7 +8,7 @@ import * as fromState from './layout.state';
 const layoutReducer = createReducer(
   initialState,
   on(fromActions.loadLayoutsSuccess, (state, { layouts }) => {
-    return adapter.setAll(layouts, { ...state });
+    return adapter.upsertMany(layouts, { ...state });
   }),
   on(fromActions.deleteLayoutSuccess, (state, { id }) => {
     return adapter.removeOne(id, { ...state, selectedLayoutId: null });
