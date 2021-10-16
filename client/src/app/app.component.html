@@ -20,7 +20,7 @@
     <mat-drawer-content>
         <router-outlet ></router-outlet>
     </mat-drawer-content>
-    <mat-drawer #drawer position="end">
+    <mat-drawer #drawer mode="side" position="end">
         <button [routerLink]="[{ outlets: { drawer: ['widgets'] } }]">
             <span>Widgets</span>
         </button>
