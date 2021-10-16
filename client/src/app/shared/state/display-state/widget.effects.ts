@@ -65,7 +65,7 @@ export class WidgetEffects {
       mergeMap((action) =>
         this.conf.getWidgetById(action.id).pipe(
           map((widget) => fromActions.fetchWidgetSuccess({ widget: widget })),
-          catchError(() => of(fromActions.updateWidgetFail()))
+          catchError(() => of(fromActions.fetchWidgetFail()))
         )
       )
     )
