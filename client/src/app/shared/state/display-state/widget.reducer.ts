@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { Widget } from '../../models/widget.model';
 import { CreateActions } from '../editor-state';
 import * as fromActions from './widget.actions';
 import { initialState, adapter } from './widget.selectors';
@@ -7,7 +8,17 @@ import * as fromState from './widget.state';
 const widgetReducer = createReducer(
   initialState,
   on(fromActions.loadWidgetsSuccess, (state, { widgets }) => {
-    return adapter.upsertMany(widgets, state);
+    const copy: Widget[] = [];
+    for (const key in state.entities) {
+      copy.push(state.entities[key]);
+    }
+    const data = JSON.stringify(widgets);
+    const current = JSON.stringify(copy);
+    if (data.length > current.length) {
+      return adapter.upsertMany(widgets, { ...state });
+    } else {
+      return state;
+    }
   }),
   on(fromActions.deleteWidgetSuccess, (state, { id }) => {
     return adapter.removeOne(id, state);

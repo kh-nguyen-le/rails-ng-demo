@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { LayoutGrid } from '../../models/layoutgrid.model';
+import { Layout } from '../../models/layout.model';
 import { CreateActions } from '../editor-state';
 import * as fromActions from './layout.actions';
 import { initialState, adapter } from './layout.selectors';
@@ -8,7 +9,17 @@ import * as fromState from './layout.state';
 const layoutReducer = createReducer(
   initialState,
   on(fromActions.loadLayoutsSuccess, (state, { layouts }) => {
-    return adapter.upsertMany(layouts, { ...state });
+    const copy: Layout[] = [];
+    for (const key in state.entities) {
+      copy.push(state.entities[key]);
+    }
+    const data = JSON.stringify(layouts);
+    const current = JSON.stringify(copy);
+    if (data.length > current.length) {
+      return adapter.upsertMany(layouts, { ...state });
+    } else {
+      return state;
+    }
   }),
   on(fromActions.deleteLayoutSuccess, (state, { id }) => {
     return adapter.removeOne(id, { ...state, selectedLayoutId: null });
