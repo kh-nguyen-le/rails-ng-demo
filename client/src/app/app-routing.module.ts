@@ -11,8 +11,10 @@ import { NewGridComponent } from './editor/new-grid/new-grid.component';
 import { EditGridComponent } from './editor/edit-grid/edit-grid.component';
 import { NewLayoutComponent } from './editor/new-layout/new-layout.component';
 import { EditLayoutComponent } from './editor/edit-layout/edit-layout.component';
+import { HomeComponent } from './display/home/home.component';
 
 const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'dash/:id', component: DashComponent },
   { path: 'widgets', component: EditorWidgetComponent, outlet: 'drawer' },
   { path: 'new_widget', component: NewWidgetComponent, outlet: 'drawer' },

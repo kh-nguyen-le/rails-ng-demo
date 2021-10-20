@@ -39,6 +39,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EditorModule } from './shared/state/editor-state/';
 import { DisplayModule } from './shared/state/display-state/display.module';
+import { HomeComponent } from './display/home/home.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { DisplayModule } from './shared/state/display-state/display.module';
     EditLayoutComponent,
     EditGridComponent,
     EditWidgetComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
