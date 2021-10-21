@@ -17,11 +17,11 @@
             <mat-icon>view_sidebar</mat-icon>
         </button>
     </mat-toolbar>
-    <mat-drawer-container>
-        <mat-drawer-content>
+    <mat-sidenav-container>
+        <mat-sidenav-content>
             <router-outlet ></router-outlet>
-        </mat-drawer-content>
-        <mat-drawer #drawer mode="side" position="end">
+        </mat-sidenav-content>
+        <mat-sidenav #drawer mode="side" position="end">
             <button [routerLink]="[{ outlets: { drawer: ['widgets'] } }]">
                 <span>Widgets</span>
             </button>
@@ -32,6 +32,6 @@
                 <span>Layouts</span>
             </button>
             <router-outlet name="drawer"></router-outlet>
-        </mat-drawer>
-    </mat-drawer-container>
+        </mat-sidenav>
+    </mat-sidenav-container>
 </div>
