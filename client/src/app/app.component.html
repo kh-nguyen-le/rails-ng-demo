@@ -3,6 +3,9 @@
     <mat-toolbar color="primary">
     <span>{{ titleService.getTitle() }}</span>
         <span class="spacer"></span>
+        <button name="home" mat-icon-button [routerLink]="['']">
+            <mat-icon>home</mat-icon>
+        </button>
         <button name="dashboard" mat-icon-button [matMenuTriggerFor]="dashboard" (click)="getLayouts()">
             <mat-icon>dashboard</mat-icon>
         </button>
