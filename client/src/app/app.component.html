@@ -1,33 +1,37 @@
 <!-- src/app/app.component.html -->
-<mat-toolbar color="primary">
-   <span>{{ titleService.getTitle() }}</span>
-    <span class="spacer"></span>
-    <button name="dashboard" mat-icon-button [matMenuTriggerFor]="dashboard" (click)="getLayouts()">
-        <mat-icon>dashboard</mat-icon>
-    </button>
-    <mat-menu id="dash-menu" #dashboard="matMenu" xPosition="before">
-        <div *ngFor="let layout of (layouts$ | async )">
-            <button id="dash-{{layout.id}}" mat-menu-item  [routerLink]="[ '/dash', layout.id ]">
-                {{ layout.name }}
+<div #container>
+    <mat-toolbar color="primary">
+    <span>{{ titleService.getTitle() }}</span>
+        <span class="spacer"></span>
+        <button name="dashboard" mat-icon-button [matMenuTriggerFor]="dashboard" (click)="getLayouts()">
+            <mat-icon>dashboard</mat-icon>
+        </button>
+        <mat-menu id="dash-menu" #dashboard="matMenu" xPosition="before">
+            <div *ngFor="let layout of (layouts$ | async )">
+                <button id="dash-{{layout.id}}" mat-menu-item  [routerLink]="[ '/dash', layout.id ]">
+                    {{ layout.name }}
+                </button>
+            </div>
+        </mat-menu>
+        <button name="drawer" mat-icon-button (click)="drawer.toggle()">
+            <mat-icon>view_sidebar</mat-icon>
+        </button>
+    </mat-toolbar>
+    <mat-drawer-container>
+        <mat-drawer-content>
+            <router-outlet ></router-outlet>
+        </mat-drawer-content>
+        <mat-drawer #drawer mode="side" position="end">
+            <button [routerLink]="[{ outlets: { drawer: ['widgets'] } }]">
+                <span>Widgets</span>
             </button>
-        </div>
-    </mat-menu>
-    <button name="drawer" mat-icon-button (click)="drawer.toggle()">
-        <mat-icon>view_sidebar</mat-icon>
-    </button>
-</mat-toolbar>
-<mat-drawer-container fxLayout="column" style="height 100%;">
-    <mat-drawer #drawer mode="side" position="end">
-        <button [routerLink]="[{ outlets: { drawer: ['widgets'] } }]">
-            <span>Widgets</span>
-        </button>
-        <button [routerLink]="[{ outlets: { drawer: ['grids'] } }]">
-            <span>Grids</span>
-        </button>
-        <button [routerLink]="[{ outlets: { drawer: ['layouts'] } }]">
-            <span>Layouts</span>
-        </button>
-        <router-outlet name="drawer"></router-outlet>
-    </mat-drawer>
-    <router-outlet ></router-outlet>
-</mat-drawer-container>
+            <button [routerLink]="[{ outlets: { drawer: ['grids'] } }]">
+                <span>Grids</span>
+            </button>
+            <button [routerLink]="[{ outlets: { drawer: ['layouts'] } }]">
+                <span>Layouts</span>
+            </button>
+            <router-outlet name="drawer"></router-outlet>
+        </mat-drawer>
+    </mat-drawer-container>
+</div>

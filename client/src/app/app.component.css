@@ -1,3 +1,17 @@
 .spacer {
+  flex: 1 1 auto;
+}
+.container { display: flex; }
+
+mat-drawer-container {
     flex: 1 1 auto;
+    position: relative;
+    height: 100vh;
+}
+
+mat-drawer {
+    position: absolute;
+    top: 0;
+    width: 20%;
+    bottom: 0;
 }
