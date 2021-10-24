@@ -1,3 +1,24 @@
 .spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+.container {
+  display: flex;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+mat-sidenav-container {
+  flex: 1 1 auto;
+  position: relative;
+  min-height: calc(100vh - 64px);
+}
+
+mat-sidenav {
+  position: absolute;
+  top: 0;
+  width: 15%;
+  bottom: 0;
 }

@@ -65,7 +65,7 @@ export class GridEffects {
       mergeMap((action) =>
         this.conf.getGridById(action.id).pipe(
           map((grid) => fromActions.fetchGridSuccess({ grid: grid })),
-          catchError(() => of(fromActions.updateGridFail()))
+          catchError(() => of(fromActions.fetchGridFail()))
         )
       )
     )

@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { AppRoutingModule } from './app-routing.module';
 import { NewLayoutComponent } from './editor/new-layout/new-layout.component';
 import { NewGridComponent } from './editor/new-grid/new-grid.component';
@@ -38,6 +39,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EditorModule } from './shared/state/editor-state/';
 import { DisplayModule } from './shared/state/display-state/display.module';
+import { HomeComponent } from './display/home/home.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,7 @@ import { DisplayModule } from './shared/state/display-state/display.module';
     EditLayoutComponent,
     EditGridComponent,
     EditWidgetComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,11 +76,13 @@ import { DisplayModule } from './shared/state/display-state/display.module';
     MatSelectModule,
     MatCheckboxModule,
     MatTabsModule,
+    MatSidenavModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     DisplayModule,
     EditorModule,
+    FlexLayoutModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({

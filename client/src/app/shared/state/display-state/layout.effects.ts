@@ -65,7 +65,7 @@ export class LayoutEffects {
       mergeMap((action) =>
         this.conf.getLayoutById(action.id).pipe(
           map((layout) => fromActions.fetchLayoutSuccess({ layout: layout })),
-          catchError(() => of(fromActions.updateLayoutFail()))
+          catchError(() => of(fromActions.fetchLayoutFail()))
         )
       )
     )

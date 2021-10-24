@@ -1,11 +1,11 @@
 <mat-nav-list>
   <mat-list-item>
-    <button mat-icon-button routerLink="/widgets/new">
+    <button mat-icon-button [routerLink]="['', { outlets: { drawer: ['new_widget'] } }]">
       <mat-icon>fiber_new</mat-icon>
     </button>
   </mat-list-item>
   <mat-list-item *ngFor="let widget of ( widgets$ | async )">
-    <a matLine [routerLink]="[ '/widgets/', widget.id]"> {{ widget.name }} </a>
+    <a matLine [routerLink]="['', { outlets: { drawer: [ 'widgets', widget.id] } }]"> {{ widget.name }} </a>
     <button mat-icon-button (click)="deleteWidget(widget.id)">
       <mat-icon>delete_forever</mat-icon>
     </button>

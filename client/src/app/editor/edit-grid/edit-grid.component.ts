@@ -5,7 +5,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Grid } from '../../shared/models/grid.model';
 import { GridWidget } from '../../shared/models/gridwidget.model';
 import { Widget } from '../../shared/models/widget.model';
-import { Title } from '@angular/platform-browser';
 import {
   GridActions,
   GridSelectors,
@@ -38,8 +37,7 @@ export class EditGridComponent implements OnInit, OnDestroy {
   constructor(
     fb: FormBuilder,
     private route: ActivatedRoute,
-    private store: Store<AppState>,
-    private titleService: Title
+    private store: Store<AppState>
   ) {
     this.form = fb.group({
       name: ['', Validators.required],
@@ -55,7 +53,6 @@ export class EditGridComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((action) => this.store.dispatch(action));
-    this.titleService.setTitle('Editor - Grids');
   }
 
   addWidget(): void {
@@ -175,14 +172,15 @@ export class EditGridComponent implements OnInit, OnDestroy {
     this.store.dispatch(GridActions.fetchGrid({ id: this.id }));
     this.selector = this.grid$
       .pipe(takeWhile((grid) => grid !== null))
-      .subscribe((data) => (this.grid = data));
-
-    this.form.patchValue({
-      name: this.grid.name,
-      title: this.grid.title,
-      col: this.grid.col,
-      size: this.grid.size,
-    });
+      .subscribe((data) => {
+        this.form.patchValue({
+          name: data.name,
+          title: data.title,
+          col: data.col,
+          size: data.size,
+        });
+        this.grid = data;
+      });
 
     this.widgets$ = this.store.select(GridSelectors.getSubWidgets);
     this.allWidgets$ = this.store.select(WidgetSelectors.selectAllWidgets);

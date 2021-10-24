@@ -26,7 +26,12 @@ export class CreateEffects {
     () =>
       this.actions$.pipe(
         ofType(fromActions.createLayoutSuccess),
-        tap((res) => this.router.navigate(['/layouts', res.layout.id]))
+        tap((res) =>
+          this.router.navigate([
+            '',
+            { outlets: { drawer: ['layouts', res.layout.id] } },
+          ])
+        )
       ),
     { dispatch: false }
   );
@@ -60,7 +65,12 @@ export class CreateEffects {
     () =>
       this.actions$.pipe(
         ofType(fromActions.createGridSuccess),
-        tap((res) => this.router.navigate(['/grids', res.grid.id]))
+        tap((res) =>
+          this.router.navigate([
+            '',
+            { outlets: { drawer: ['grids', res.grid.id] } },
+          ])
+        )
       ),
     { dispatch: false }
   );
@@ -94,7 +104,12 @@ export class CreateEffects {
     () =>
       this.actions$.pipe(
         ofType(fromActions.createWidgetSuccess),
-        tap((res) => this.router.navigate(['/widgets', res.widget.id]))
+        tap((res) =>
+          this.router.navigate([
+            '',
+            { outlets: { drawer: ['widgets', res.widget.id] } },
+          ])
+        )
       ),
     { dispatch: false }
   );

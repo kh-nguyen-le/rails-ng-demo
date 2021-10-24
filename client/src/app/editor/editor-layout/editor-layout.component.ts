@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { Layout } from '../../shared/models/layout.model';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -17,9 +16,7 @@ import {
 export class EditorLayoutComponent implements OnInit {
   layouts$: Observable<Layout[]>;
 
-  constructor(private titleService: Title, private store: Store<LayoutState.State>) {
-    this.titleService.setTitle('Editor - Layouts');
-  }
+  constructor(private store: Store<LayoutState.State>) {}
 
   deleteLayout(id: number): void {
     this.store.dispatch(LayoutActions.deleteLayout({ id }));

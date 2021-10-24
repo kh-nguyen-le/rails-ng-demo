@@ -17,14 +17,5 @@ RSpec.feature 'Dashboards', js: true do
       click_on 'dash-1'
       expect(page).to have_content 'Dashboard'
     end
-
-    it 'should load the editor' do 
-      visit '/'
-      editor_button = find_button('editor')
-      editor_button.click
-      expect(editor_button.text).to have_content 'create'
-      click_on 'Layouts'
-      expect(page).to have_content 'Editor - Layouts'      
-    end
   end
 end

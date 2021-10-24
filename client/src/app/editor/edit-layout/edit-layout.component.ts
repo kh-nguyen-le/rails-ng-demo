@@ -7,7 +7,6 @@ import { Layout } from '../../shared/models/layout.model';
 import { LayoutGrid } from '../../shared/models/layoutgrid.model';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/shared/state';
-import { Title } from '@angular/platform-browser';
 import { map, takeWhile } from 'rxjs/operators';
 import {
   GridActions,
@@ -36,13 +35,11 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   private sub: Subscription;
   selector: Subscription;
   allGrids$: Observable<Grid[]>;
-  selector2: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
-    private route: ActivatedRoute,
-    private titleService: Title
+    private route: ActivatedRoute
   ) {
     this.form = fb.group({
       name: ['', Validators.required],
@@ -57,7 +54,6 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((action) => this.store.dispatch(action));
-    this.titleService.setTitle('Editor - Layouts');
   }
 
   addGrid(): void {
@@ -166,13 +162,15 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.store.dispatch(LayoutActions.fetchLayout({ id: this.id }));
     this.selector = this.layout$
       .pipe(takeWhile((layout) => layout !== null))
-      .subscribe((data) => (this.layout = data));
-
-    this.form.patchValue({
-      name: this.layout.name,
-      background: this.layout.background,
-      duration: this.layout.duration,
-    });
+      .subscribe((data) => {
+        this.form.patchValue({
+          name: data.name,
+          background: data.background,
+          duration: data.duration,
+        })
+        this.layout = data
+        }
+      );
 
     this.grids$ = this.store.select(LayoutSelectors.getSubGrids);
     this.allGrids$ = this.store.select(GridSelectors.selectAllGrids);

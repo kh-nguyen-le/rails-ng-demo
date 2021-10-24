@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { Grid } from '../../models/grid.model';
 import { GridWidget } from '../../models/gridwidget.model';
 import { CreateActions } from '../editor-state';
 import * as fromActions from './grid.actions';
@@ -8,7 +9,17 @@ import * as fromState from './grid.state';
 const gridReducer = createReducer(
   initialState,
   on(fromActions.loadGridsSuccess, (state, { grids }) => {
-    return adapter.setAll(grids, { ...state });
+    const copy: Grid[] = [];
+    for (const key in state.entities) {
+      copy.push(state.entities[key]);
+    }
+    const data = JSON.stringify(grids);
+    const current = JSON.stringify(copy);
+    if (data.length > current.length) {
+      return adapter.upsertMany(grids, { ...state });
+    } else {
+      return state;
+    }
   }),
   on(fromActions.deleteGridSuccess, (state, { id }) => {
     return adapter.removeOne(id, { ...state, selectedGridId: null });
@@ -58,9 +69,9 @@ const gridReducer = createReducer(
     );
     newGWs.push(gridwidget);
     const newGrid = { ...grid, grid_widgets: newGWs };
-    
-    return adapter.upsertOne(newGrid, { ...state, selectedGridId: id});
-  }),
+
+    return adapter.upsertOne(newGrid, { ...state, selectedGridId: id });
+  })
 );
 
 export function reducer(

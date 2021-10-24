@@ -11,35 +11,43 @@ import { NewGridComponent } from './editor/new-grid/new-grid.component';
 import { EditGridComponent } from './editor/edit-grid/edit-grid.component';
 import { NewLayoutComponent } from './editor/new-layout/new-layout.component';
 import { EditLayoutComponent } from './editor/edit-layout/edit-layout.component';
+import { HomeComponent } from './display/home/home.component';
 
 const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'dash/:id', component: DashComponent },
-  { path: 'widgets', component: EditorWidgetComponent },
-  { path: 'widgets/new', component: NewWidgetComponent },
+  { path: 'widgets', component: EditorWidgetComponent, outlet: 'drawer' },
+  { path: 'new_widget', component: NewWidgetComponent, outlet: 'drawer' },
   {
     path: 'widgets/:id',
     component: EditWidgetComponent,
     runGuardsAndResolvers: 'always',
+    outlet: 'drawer',
   },
-  { path: 'grids', component: EditorGridComponent },
-  { path: 'grids/new', component: NewGridComponent },
+  { path: 'grids', component: EditorGridComponent, outlet: 'drawer' },
+  { path: 'new_grid', component: NewGridComponent, outlet: 'drawer' },
   {
     path: 'grids/:id',
     component: EditGridComponent,
     runGuardsAndResolvers: 'always',
+    outlet: 'drawer',
   },
-  { path: 'layouts', component: EditorLayoutComponent },
-  { path: 'layouts/new', component: NewLayoutComponent },
+  { path: 'layouts', component: EditorLayoutComponent, outlet: 'drawer' },
+  { path: 'new_layout', component: NewLayoutComponent, outlet: 'drawer' },
   {
     path: 'layouts/:id',
     component: EditLayoutComponent,
     runGuardsAndResolvers: 'always',
+    outlet: 'drawer',
   },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload', relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(appRoutes, {
+      onSameUrlNavigation: 'reload',
+      relativeLinkResolution: 'legacy',
+    }),
     CommonModule,
   ],
   exports: [RouterModule],

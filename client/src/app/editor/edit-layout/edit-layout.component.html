@@ -1,18 +1,15 @@
 <form [formGroup]="form" class="form-container" (submit)="onSubmit()">
-  <mat-form-field
-    floatLabel="auto">
-      <mat-label>Name</mat-label>
-      <input formControlName="name" matInput>
+  <mat-form-field floatLabel="auto">
+    <mat-label>Name</mat-label>
+    <input formControlName="name" matInput />
   </mat-form-field>
-  <mat-form-field
-    floatLabel="auto">
-      <mat-label>Background Colour</mat-label>
-      <input formControlName="background" matInput>
+  <mat-form-field floatLabel="auto">
+    <mat-label>Background Colour</mat-label>
+    <input formControlName="background" matInput />
   </mat-form-field>
-  <mat-form-field
-    floatLabel="auto">
-      <mat-label>Cycle Duration (Milliseconds)</mat-label>
-      <input formControlName="duration" matInput>
+  <mat-form-field floatLabel="auto">
+    <mat-label>Cycle Duration (Milliseconds)</mat-label>
+    <input formControlName="duration" matInput />
   </mat-form-field>
   <button mat-raised-button color="primary" type="submit">Update</button>
 </form>
@@ -21,26 +18,40 @@
   <h2 mat-h2>Grids</h2>
   <mat-form-field>
     <mat-select placeholder="Add Grid" [(ngModel)]="new_grid">
-      <mat-option *ngFor="let grid of (allGrids$ | async)" [value]="grid.id">
-        {{grid.name}}
+      <mat-option *ngFor="let grid of allGrids$ | async" [value]="grid.id">
+        {{ grid.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
   <button mat-icon-button (click)="addGrid()">
     <mat-icon>add_circle</mat-icon>
   </button>
-  <mat-list-item *ngFor="let grid of (grids$ | async); let i = index">
-    <a matLine [routerLink]="[ '/grids', grid.id ]">{{grid.name}}</a>
-    <button mat-icon-button (click)="shiftGridUp(i)"
-    [disabled]="grid === (grids$ | async)[0]">
-        <mat-icon>keyboard_arrow_up</mat-icon>
+  <mat-list-item *ngFor="let grid of grids$ | async; let i = index">
+    <a
+      matLine
+      [routerLink]="[
+        '',
+        { outlets: { drawer: ['grids', grid.id] }, primary: ['dash', this.id] }
+      ]"
+      [queryParams]="{ index: i }"
+      >{{ grid.name }}</a
+    >
+    <button
+      mat-icon-button
+      (click)="shiftGridUp(i)"
+      [disabled]="grid === (grids$ | async)[0]"
+    >
+      <mat-icon>keyboard_arrow_up</mat-icon>
     </button>
-    <button mat-icon-button (click)="shiftGridDown(i)"
-    [disabled]="grid === (grids$ | async)[(grids$ | async).length - 1]">
-          <mat-icon>keyboard_arrow_down</mat-icon>
+    <button
+      mat-icon-button
+      (click)="shiftGridDown(i)"
+      [disabled]="grid === (grids$ | async)[(grids$ | async).length - 1]"
+    >
+      <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
     <button mat-icon-button (click)="removeGrid(i)">
-        <mat-icon>remove_circle</mat-icon>
+      <mat-icon>remove_circle</mat-icon>
     </button>
   </mat-list-item>
 </mat-nav-list>
