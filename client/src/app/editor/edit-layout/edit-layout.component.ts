@@ -35,7 +35,6 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   private sub: Subscription;
   selector: Subscription;
   allGrids$: Observable<Grid[]>;
-  selector2: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -163,13 +162,15 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
     this.store.dispatch(LayoutActions.fetchLayout({ id: this.id }));
     this.selector = this.layout$
       .pipe(takeWhile((layout) => layout !== null))
-      .subscribe((data) => (this.layout = data));
-
-    this.form.patchValue({
-      name: this.layout.name,
-      background: this.layout.background,
-      duration: this.layout.duration,
-    });
+      .subscribe((data) => {
+        this.form.patchValue({
+          name: data.name,
+          background: data.background,
+          duration: data.duration,
+        })
+        this.layout = data
+        }
+      );
 
     this.grids$ = this.store.select(LayoutSelectors.getSubGrids);
     this.allGrids$ = this.store.select(GridSelectors.selectAllGrids);

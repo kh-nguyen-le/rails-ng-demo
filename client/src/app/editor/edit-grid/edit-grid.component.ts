@@ -172,14 +172,15 @@ export class EditGridComponent implements OnInit, OnDestroy {
     this.store.dispatch(GridActions.fetchGrid({ id: this.id }));
     this.selector = this.grid$
       .pipe(takeWhile((grid) => grid !== null))
-      .subscribe((data) => (this.grid = data));
-
-    this.form.patchValue({
-      name: this.grid.name,
-      title: this.grid.title,
-      col: this.grid.col,
-      size: this.grid.size,
-    });
+      .subscribe((data) => {
+        this.form.patchValue({
+          name: data.name,
+          title: data.title,
+          col: data.col,
+          size: data.size,
+        });
+        this.grid = data;
+      });
 
     this.widgets$ = this.store.select(GridSelectors.getSubWidgets);
     this.allWidgets$ = this.store.select(WidgetSelectors.selectAllWidgets);
