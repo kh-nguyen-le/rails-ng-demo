@@ -32,62 +32,75 @@ import { GridComponent } from './display/grid/grid.component';
 import { WidgetComponent } from './display/widget/widget.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { Component } from '@angular/core';
 
 describe('AppComponent', () => {
   let store: MockStore;
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        DashComponent,
-        GridComponent,
-        WidgetComponent,
-        EditorWidgetComponent,
-        EditorGridComponent,
-        EditorLayoutComponent,
-        EditGridComponent,
-        EditWidgetComponent,
-        EditLayoutComponent,
-        NewLayoutComponent,
-        NewGridComponent,
-        NewWidgetComponent,
-      ],
-      imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatGridListModule,
-        NgxChartsModule,
-        MatMenuModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatIconModule,
-        MatListModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSnackBarModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatTabsModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        FormsModule,
-      ],
-      providers: [
-        {provide: APP_BASE_HREF, useValue : '/' },
-        provideMockStore({}),
-      ],
-    }).compileComponents();
-    store = TestBed.inject(MockStore);
-  }));
-  it('should create the app', waitForAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
-  it(`should have as title 'rails-ng demo'`, waitForAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.titleService.getTitle()).toEqual('rails-ng demo');
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          AppComponent,
+          DashComponent,
+          GridComponent,
+          WidgetComponent,
+          EditorWidgetComponent,
+          EditorGridComponent,
+          EditorLayoutComponent,
+          EditGridComponent,
+          EditWidgetComponent,
+          EditLayoutComponent,
+          NewLayoutComponent,
+          NewGridComponent,
+          NewWidgetComponent,
+          SidenavContainerStubComponent,
+        ],
+        imports: [
+          BrowserModule,
+          BrowserAnimationsModule,
+          HttpClientModule,
+          MatGridListModule,
+          NgxChartsModule,
+          MatMenuModule,
+          MatToolbarModule,
+          MatButtonModule,
+          MatIconModule,
+          MatListModule,
+          MatFormFieldModule,
+          MatInputModule,
+          MatSnackBarModule,
+          MatSelectModule,
+          MatCheckboxModule,
+          MatTabsModule,
+          AppRoutingModule,
+          ReactiveFormsModule,
+          FormsModule,
+        ],
+        providers: [
+          { provide: APP_BASE_HREF, useValue: '/' },
+          provideMockStore({}),
+        ],
+      }).compileComponents();
+      store = TestBed.inject(MockStore);
+    })
+  );
+  it(
+    'should create the app',
+    waitForAsync(() => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      expect(app).toBeTruthy();
+    })
+  );
+  it(
+    `should have as title 'rails-ng demo'`,
+    waitForAsync(() => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      expect(app.titleService.getTitle()).toEqual('rails-ng demo');
+    })
+  );
 });
+
+@Component({ selector: 'mat-sidenav-container', template: '' })
+class SidenavContainerStubComponent {}
