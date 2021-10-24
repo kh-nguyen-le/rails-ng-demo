@@ -31,6 +31,7 @@ export class DashComponent implements OnInit, OnDestroy, DoCheck {
   private sub: Subscription;
   private timer: Subscription;
   private selector: Subscription;
+  private query: Subscription;
   index: number;
   id: number;
 
@@ -41,16 +42,6 @@ export class DashComponent implements OnInit, OnDestroy, DoCheck {
     private route: ActivatedRoute
   ) {
     this.titleService.setTitle('Dashboard');
-    this.sub = this.route.params
-      .pipe(
-        map((params) => {
-          this.id = +params.id;
-          return LayoutActions.selectLayout({ id: params.id });
-        })
-      )
-      .subscribe((action) => this.store.dispatch(action));
-    this.layout$ = this.store.select(LayoutSelectors.selectCurrentLayout);
-    if (!this.index) this.index = 0;
   }
 
   getData(): void {
@@ -77,6 +68,18 @@ export class DashComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnInit(): void {
+    this.sub = this.route.paramMap
+      .pipe(
+        map((params) => {
+          this.id = Number(params.get('id'));
+          return LayoutActions.selectLayout({ id: this.id });
+        })
+      )
+      .subscribe((action) => this.store.dispatch(action));
+    this.query = this.route.queryParamMap.subscribe(
+      (params) => (this.index = Number(params.get('index')))
+    );
+    this.layout$ = this.store.select(LayoutSelectors.selectCurrentLayout);
     this.selector = this.layout$.subscribe((data) => (this.layout = data));
     this.getData();
     this.setCycle();
