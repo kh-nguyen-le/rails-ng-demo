@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Layout } from '../../shared/models/layout.model';
 import { Store } from '@ngrx/store';
-import { LayoutState } from 'src/app/shared/state/display-state';
-import { CreateActions } from 'src/app/shared/state/editor-state';
+import { LayoutState } from '../../shared/state/display-state';
+import { CreateActions } from '../../shared/state/editor-state';
 
 @Component({
   selector: 'app-new-layout',

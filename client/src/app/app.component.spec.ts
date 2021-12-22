@@ -54,6 +54,8 @@ describe('AppComponent', () => {
           NewGridComponent,
           NewWidgetComponent,
           SidenavContainerStubComponent,
+          SidenavContentStubComponent,
+          SidenavStubComponent,
         ],
         imports: [
           BrowserModule,
@@ -104,3 +106,9 @@ describe('AppComponent', () => {
 
 @Component({ selector: 'mat-sidenav-container', template: '' })
 class SidenavContainerStubComponent {}
+
+@Component({ selector: 'mat-sidenav-content', template: '' })
+class SidenavContentStubComponent {}
+
+@Component({ selector: 'mat-sidenav', template: '' })
+class SidenavStubComponent {}

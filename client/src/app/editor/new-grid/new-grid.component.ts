@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Grid } from '../../shared/models/grid.model';
 import { Store } from '@ngrx/store';
-import { GridState } from 'src/app/shared/state/display-state';
-import { CreateActions } from 'src/app/shared/state/editor-state';
+import { GridState } from '../../shared/state/display-state';
+import { CreateActions } from '../../shared/state/editor-state';
 
 @Component({
   selector: 'app-new-grid',

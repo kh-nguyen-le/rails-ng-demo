@@ -19,9 +19,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { AppState } from 'src/app/shared/state';
-import { Layout } from 'src/app/shared/models/layout.model';
-import { LayoutSelectors } from 'src/app/shared/state/display-state';
+import { AppState } from '../../shared/state';
+import { Layout } from '../../shared/models/layout.model';
+import { LayoutSelectors } from '../../shared/state/display-state';
 
 describe('EditLayoutComponent', () => {
   let component: EditLayoutComponent;

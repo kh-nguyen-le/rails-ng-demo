@@ -18,10 +18,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppState } from 'src/app/shared/state';
+import { AppState } from '../../shared/state';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Widget } from 'src/app/shared/models/widget.model';
-import { WidgetSelectors } from 'src/app/shared/state/display-state';
+import { Widget } from '../../shared/models/widget.model';
+import { WidgetSelectors } from '../../shared/state/display-state';
 
 describe('EditWidgetComponent', () => {
   let component: EditWidgetComponent;

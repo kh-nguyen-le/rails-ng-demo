@@ -6,7 +6,7 @@ import {
   LayoutActions,
   LayoutSelectors,
   LayoutState,
-} from 'src/app/shared/state/display-state';
+} from '../../shared/state/display-state';
 
 @Component({
   selector: 'app-editor-layout',

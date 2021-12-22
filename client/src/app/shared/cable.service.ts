@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import * as ActionCable from '@rails/actioncable';
 import { DisplayObject } from './models/displayobject.model';
 import { Store } from '@ngrx/store';

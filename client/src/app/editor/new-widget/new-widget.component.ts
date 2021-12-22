@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Widget } from '../../shared/models/widget.model';
 import { Store } from '@ngrx/store';
-import { WidgetState } from 'src/app/shared/state/display-state';
-import { CreateActions } from 'src/app/shared/state/editor-state';
+import { WidgetState } from '../../shared/state/display-state';
+import { CreateActions } from '../../shared/state/editor-state';
 
 @Component({
   selector: 'app-new-widget',

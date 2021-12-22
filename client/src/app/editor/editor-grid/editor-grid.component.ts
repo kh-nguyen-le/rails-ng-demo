@@ -5,7 +5,7 @@ import {
   GridActions,
   GridSelectors,
   GridState,
-} from 'src/app/shared/state/display-state';
+} from '../../shared/state/display-state';
 import { Observable } from 'rxjs';
 
 @Component({

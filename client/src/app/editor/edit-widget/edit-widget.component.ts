@@ -12,12 +12,12 @@ import { Widget } from '../../shared/models/widget.model';
 import {
   WidgetActions,
   WidgetSelectors,
-} from 'src/app/shared/state/display-state';
+} from '../../shared/state/display-state';
 import { AppState } from 'src/app/shared/state';
 import { Store } from '@ngrx/store';
 import { map, takeWhile } from 'rxjs/operators';
 import { Update } from '@ngrx/entity';
-import { CableActions } from 'src/app/shared/state/editor-state';
+import { CableActions } from '../../shared/state/editor-state';
 
 @Component({
   selector: 'app-edit-widget',

@@ -10,11 +10,11 @@ import {
   GridSelectors,
   WidgetActions,
   WidgetSelectors,
-} from 'src/app/shared/state/display-state';
-import { AppState } from 'src/app/shared/state';
+} from '../../shared/state/display-state';
+import { AppState } from '../../shared/state';
 import { Store } from '@ngrx/store';
 import { map, takeWhile } from 'rxjs/operators';
-import { CableActions, CreateActions } from 'src/app/shared/state/editor-state';
+import { CableActions, CreateActions } from '../../shared/state/editor-state';
 import { Update } from '@ngrx/entity';
 
 @Component({

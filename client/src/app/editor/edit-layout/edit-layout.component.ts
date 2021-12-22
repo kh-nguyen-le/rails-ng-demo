@@ -6,15 +6,15 @@ import { Grid } from '../../shared/models/grid.model';
 import { Layout } from '../../shared/models/layout.model';
 import { LayoutGrid } from '../../shared/models/layoutgrid.model';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/shared/state';
+import { AppState } from '../../shared/state';
 import { map, takeWhile } from 'rxjs/operators';
 import {
   GridActions,
   GridSelectors,
   LayoutActions,
   LayoutSelectors,
-} from 'src/app/shared/state/display-state';
-import { CableActions, CreateActions } from 'src/app/shared/state/editor-state';
+} from '../../shared/state/display-state';
+import { CableActions, CreateActions } from '../../shared/state/editor-state';
 import { Update } from '@ngrx/entity';
 
 @Component({

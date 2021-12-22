@@ -19,9 +19,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { AppState } from 'src/app/shared/state';
-import { GridSelectors } from 'src/app/shared/state/display-state';
-import { Grid } from 'src/app/shared/models/grid.model';
+import { AppState } from '../../shared/state';
+import { GridSelectors } from '../../shared/state/display-state';
+import { Grid } from '../../shared/models/grid.model';
 
 describe('EditGridComponent', () => {
   let component: EditGridComponent;

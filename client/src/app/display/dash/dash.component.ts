@@ -11,11 +11,11 @@ import { Title } from '@angular/platform-browser';
 import { Grid } from '../../shared/models/grid.model';
 import { Layout } from '../../shared/models/layout.model';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/shared/state';
+import { AppState } from '../../shared/state';
 import {
   LayoutActions,
   LayoutSelectors,
-} from 'src/app/shared/state/display-state';
+} from '../../shared/state/display-state';
 import { map } from 'rxjs/operators';
 
 @Component({

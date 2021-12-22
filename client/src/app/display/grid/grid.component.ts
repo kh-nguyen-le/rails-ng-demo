@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Grid } from '../../shared/models/grid.model';
 import { Widget } from '../../shared/models/widget.model';
-import { AppState } from 'src/app/shared/state';
+import { AppState } from '../../shared/state';
 import { Store } from '@ngrx/store';
-import { GridActions, GridSelectors } from 'src/app/shared/state/display-state';
+import { GridActions, GridSelectors } from '../../shared/state/display-state';
 
 @Component({
   selector: 'app-grid',
