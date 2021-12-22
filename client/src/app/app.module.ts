@@ -40,7 +40,6 @@ import { environment } from '../environments/environment';
 import { EditorModule } from './shared/state/editor-state/';
 import { DisplayModule } from './shared/state/display-state/display.module';
 import { HomeComponent } from './display/home/home.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -82,7 +81,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     DisplayModule,
     EditorModule,
-    FlexLayoutModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
