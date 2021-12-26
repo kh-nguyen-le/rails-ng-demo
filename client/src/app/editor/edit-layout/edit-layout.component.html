@@ -31,7 +31,7 @@
       matLine
       [routerLink]="[
         '',
-        { outlets: { drawer: ['grids', grid.id] }, primary: ['dash', this.id] }
+        { outlets: { drawer: ['grid', grid.id] }, primary: ['dash', this.id] }
       ]"
       [queryParams]="{ index: i }"
       >{{ grid.name }}</a

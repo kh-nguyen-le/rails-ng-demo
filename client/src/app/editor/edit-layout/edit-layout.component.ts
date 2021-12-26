@@ -7,7 +7,7 @@ import { Layout } from '../../shared/models/layout.model';
 import { LayoutGrid } from '../../shared/models/layoutgrid.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../shared/state';
-import { map, takeWhile } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
 import {
   GridActions,
   GridSelectors,
@@ -32,7 +32,6 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   targetLG: LayoutGrid;
   form: FormGroup;
   id: number;
-  private sub: Subscription;
   selector: Subscription;
   allGrids$: Observable<Grid[]>;
 
@@ -46,14 +45,6 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
       background: '',
       duration: [0, Validators.min(0)],
     });
-    this.sub = this.route.params
-      .pipe(
-        map((params) => {
-          this.id = +params.id;
-          return LayoutActions.selectLayout({ id: params.id });
-        })
-      )
-      .subscribe((action) => this.store.dispatch(action));
   }
 
   addGrid(): void {
@@ -158,8 +149,7 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.layout$ = this.store.select(LayoutSelectors.selectCurrentLayout);
-    this.store.dispatch(LayoutActions.fetchLayout({ id: this.id }));
+    this.layout$ = this.store.select(LayoutSelectors.selectLayout);
     this.selector = this.layout$
       .pipe(takeWhile((layout) => layout !== null))
       .subscribe((data) => {
@@ -167,18 +157,15 @@ export class EditLayoutComponent implements OnInit, OnDestroy {
           name: data.name,
           background: data.background,
           duration: data.duration,
-        })
-        this.layout = data
-        }
-      );
-
+        });
+        this.layout = data;
+      });
     this.grids$ = this.store.select(LayoutSelectors.getSubGrids);
     this.allGrids$ = this.store.select(GridSelectors.selectAllGrids);
     this.store.dispatch(GridActions.loadGrids());
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
     this.selector.unsubscribe();
   }
 }

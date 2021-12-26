@@ -12,14 +12,19 @@ import { EditGridComponent } from './editor/edit-grid/edit-grid.component';
 import { NewLayoutComponent } from './editor/new-layout/new-layout.component';
 import { EditLayoutComponent } from './editor/edit-layout/edit-layout.component';
 import { HomeComponent } from './display/home/home.component';
+import { LayoutResolver } from './layout.resolver';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'dash/:id', component: DashComponent },
+  {
+    path: 'dash/:id',
+    component: DashComponent,
+    resolve: { resolver: LayoutResolver },
+  },
   { path: 'widgets', component: EditorWidgetComponent, outlet: 'drawer' },
   { path: 'new_widget', component: NewWidgetComponent, outlet: 'drawer' },
   {
-    path: 'widgets/:id',
+    path: 'widget/:id',
     component: EditWidgetComponent,
     runGuardsAndResolvers: 'always',
     outlet: 'drawer',
@@ -27,7 +32,7 @@ const appRoutes: Routes = [
   { path: 'grids', component: EditorGridComponent, outlet: 'drawer' },
   { path: 'new_grid', component: NewGridComponent, outlet: 'drawer' },
   {
-    path: 'grids/:id',
+    path: 'grid/:id',
     component: EditGridComponent,
     runGuardsAndResolvers: 'always',
     outlet: 'drawer',
@@ -35,8 +40,9 @@ const appRoutes: Routes = [
   { path: 'layouts', component: EditorLayoutComponent, outlet: 'drawer' },
   { path: 'new_layout', component: NewLayoutComponent, outlet: 'drawer' },
   {
-    path: 'layouts/:id',
+    path: 'layout/:id',
     component: EditLayoutComponent,
+    resolve: { resolver: LayoutResolver },
     runGuardsAndResolvers: 'always',
     outlet: 'drawer',
   },
@@ -46,7 +52,6 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(appRoutes, {
       onSameUrlNavigation: 'reload',
-      relativeLinkResolution: 'legacy',
     }),
     CommonModule,
   ],

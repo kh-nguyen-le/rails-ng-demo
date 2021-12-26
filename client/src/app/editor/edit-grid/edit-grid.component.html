@@ -36,7 +36,7 @@
   <mat-list-item *ngFor="let widget of widgets$ | async; let i = index">
     <a
       matLine
-      [routerLink]="['', { outlets: { drawer: ['widgets', widget.id] } }]"
+      [routerLink]="['', { outlets: { drawer: ['widget', widget.id] } }]"
       queryParamsHandling="preserve"
       >{{ widget.name }}</a
     >

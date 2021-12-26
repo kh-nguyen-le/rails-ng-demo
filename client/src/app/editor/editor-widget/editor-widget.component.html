@@ -5,7 +5,7 @@
     </button>
   </mat-list-item>
   <mat-list-item *ngFor="let widget of ( widgets$ | async )">
-    <a matLine [routerLink]="['', { outlets: { drawer: [ 'widgets', widget.id] } }]"> {{ widget.name }} </a>
+    <a matLine [routerLink]="['', { outlets: { drawer: [ 'widget', widget.id] } }]"> {{ widget.name }} </a>
     <button mat-icon-button (click)="deleteWidget(widget.id)">
       <mat-icon>delete_forever</mat-icon>
     </button>

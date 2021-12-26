@@ -5,7 +5,7 @@
     </button>
   </mat-list-item>
   <mat-list-item *ngFor="let grid of ( grids$ | async )">
-    <a matLine [routerLink]="['', { outlets: { drawer: [ 'grids', grid.id] } }]"> {{ grid.name }} </a>
+    <a matLine [routerLink]="['', { outlets: { drawer: [ 'grid', grid.id] } }]"> {{ grid.name }} </a>
     <button mat-icon-button (click)="deleteGrid(grid.id)">
       <mat-icon>delete_forever</mat-icon>
     </button>

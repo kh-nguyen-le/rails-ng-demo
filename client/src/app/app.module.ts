@@ -40,6 +40,7 @@ import { environment } from '../environments/environment';
 import { EditorModule } from './shared/state/editor-state/';
 import { DisplayModule } from './shared/state/display-state/display.module';
 import { HomeComponent } from './display/home/home.component';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { HomeComponent } from './display/home/home.component';
       maxAge: 25,
       logOnly: environment.production,
     }),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

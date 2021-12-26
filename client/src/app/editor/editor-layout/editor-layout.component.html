@@ -9,12 +9,13 @@
   </mat-list-item>
   <mat-list-item *ngFor="let layout of layouts$ | async">
     <a
+      id="drawer-{{ layout.id }}"
       matLine
       [routerLink]="[
         '',
         {
           outlets: {
-            drawer: ['layouts', layout.id],
+            drawer: ['layout', layout.id],
             primary: ['dash', layout.id]
           }
         }
