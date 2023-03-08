@@ -1,22 +1,22 @@
 Capybara.register_driver :selenium_remote_ff do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox
+  options = Selenium::WebDriver::Options.firefox
 
   Capybara::Selenium::Driver.new(
     app,
     browser: :remote,
-    desired_capabilities: capabilities,
-    url: 'http://selenium-hub:4444/wd/hub'
+    options: options,
+    url: "http://#{ENV['HUB']}:4444/wd/hub"
   )
 end
 
 Capybara.register_driver :selenium_remote_chrome do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome
+  options = Selenium::WebDriver::Options.chrome
 
   Capybara::Selenium::Driver.new(
     app,
     browser: :remote,
-    desired_capabilities: capabilities,
-    url: 'http://selenium-hub:4444/wd/hub'
+    options: options,
+    url: "http://#{ENV['HUB']}:4444/wd/hub"
   )
 end
 
