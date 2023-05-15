@@ -51,6 +51,11 @@
               "vendorChunk": false,
               "buildOptimizer": true
             },
+            "docker": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false
+            },
             "test": {
               "budgets": [
                 {
