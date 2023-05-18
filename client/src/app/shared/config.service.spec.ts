@@ -25,7 +25,6 @@ describe('ConfigService', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: 'line',
-    legendPosition: 'right',
   };
 
   beforeEach(() => {

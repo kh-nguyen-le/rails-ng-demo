@@ -18,7 +18,6 @@ export interface Widget {
       xAxisLabel: string;
       yAxisLabel: string;
       widgetType: string;
-      legendPosition: string;
     };
     grids?: Grid[];
     grid_widgets?: GridWidget[];

@@ -31,7 +31,6 @@ describe('DashComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: 'line',
-    legendPosition: '',
   };
   const grid: Grid = {
     kind: 'grid',

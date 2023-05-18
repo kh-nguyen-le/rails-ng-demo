@@ -22,7 +22,6 @@ describe('WidgetComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: '',
-    legendPosition: '',
   };
   const widget: Widget = {
     kind: 'widget',

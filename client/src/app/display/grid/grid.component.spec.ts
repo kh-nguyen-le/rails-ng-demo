@@ -39,7 +39,6 @@ describe('GridComponent', () => {
     xAxisLabel: '',
     yAxisLabel: '',
     widgetType: 'line',
-    legendPosition: '',
   };
   beforeEach(
     waitForAsync(() => {
