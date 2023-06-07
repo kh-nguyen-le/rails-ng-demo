@@ -27,7 +27,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
   traefik:
-    image: traefik:v2.4.5
+    image: traefik:v2.10.1
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=true"
