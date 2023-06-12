@@ -85,7 +85,7 @@ test:
 #
 production:
   <<: *default
-  host: localhost
-  database: backend_production
-  username: postgres
-  password: <%= ENV['BACKEND_DATABASE_PASSWORD'] %>
+  host: "127.0.0.1"
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>

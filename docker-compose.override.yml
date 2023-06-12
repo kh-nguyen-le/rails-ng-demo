@@ -10,6 +10,7 @@ services:
       - .:/app
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - RAILS_ENV=development
     labels: 
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.localhost`)"

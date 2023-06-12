@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rng-gke-sql
+spec:
+  selector:
+    matchLabels:
+      app: rng-gke-sql-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: rng-gke-sql-app
+        tier: backend
+    spec:
+      serviceAccountName: ksa-cloud-sql
+      containers:
+      - name: rails
+        image: us-east1-docker.pkg.dev/rails-ng-demo/rng-gke-cloud-sql-repo/gke-sql:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        env:
+        - name: PORT
+          value: "3000"
+        - name: INSTANCE_HOST
+          value: "127.0.0.1"
+        - name: DB_PORT
+          value: "5432"
+        - name: RAILS_ENV
+          value: production
+        - name: RACK_ENV
+          value: production
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: rng-gke-cloud-sql-secrets
+              key: username
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: rng-gke-cloud-sql-secrets
+              key: password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: rng-gke-cloud-sql-secrets
+              key: database
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: rng-gke-cloud-sql-secrets
+              key: secret-key-base
+      - name: cloud-sql-proxy
+        # This uses the latest version of the Cloud SQL proxy
+        # It is recommended to use a specific version for production environments.
+        # See: https://github.com/GoogleCloudPlatform/cloudsql-proxy 
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        args:
+          # If connecting from a VPC-native GKE cluster, you can use the
+          # following flag to have the proxy connect over private IP
+          - "--private-ip"
+          - "--structured-logs"
+
+          # tcp should be set to the port the proxy should listen on
+          # and should match the DB_PORT value set above.
+          # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
+          - "--port=5432"
+          - "rails-ng-demo:northamerica-northeast2:rails-ng-demo-db"
+        securityContext:
+          # The default Cloud SQL proxy image runs as the
+          # "nonroot" user and group (uid: 65532) by default.
+          runAsNonRoot: true

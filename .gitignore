@@ -24,3 +24,4 @@
 client/.vs/
 spec/examples.txt
 .vscode/workspace.code-workspace
+secrets.cfg
