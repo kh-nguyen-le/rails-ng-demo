@@ -1,0 +1,10 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: redis-config
+spec:
+  timeoutSec: 3600
+  connectionDraining:
+    drainingTimeoutSec: 3600
+  sessionAffinity:
+    affinityType: "CLIENT_IP"

@@ -17,8 +17,12 @@ services:
   frontend:
     build:
       context: ./client
+      target: build
     ports:
       - "4200:4200"
+    command: ng serve --host "0.0.0.0" --disable-host-check
+    environment:
+      - ENV=development
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`frontend.localhost`)"
