@@ -1,0 +1,9 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: managed-cert
+  namespace: rng-widgets
+spec:
+  domains:
+    - api.rngwidgets.com
+    - www.rngwidgets.com

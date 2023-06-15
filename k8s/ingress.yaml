@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rng-ingress
+  namespace: rng-widgets
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.allow-http: "false"
+    networking.gke.io/v1beta1.FrontendConfig: rng-frontend
+    kubernetes.io/ingress.global-static-ip-name: rng-widgets
+    networking.gke.io/managed-certificates: managed-cert
+    nginx.org/websocket-services: redis
+    nginx.ingress.kubernetes.io/connection-proxy-header: keep-alive
+spec:
+  rules:
+  - host: api.rngwidgets.com
+    http:
+      paths:
+      - path: /cable
+        pathType: Prefix
+        backend:
+          service:
+            name: redis
+            port:
+              number: 6379
+  - host: api.rngwidgets.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 3000
+  - host: www.rngwidgets.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80

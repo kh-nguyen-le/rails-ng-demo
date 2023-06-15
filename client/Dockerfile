@@ -1,15 +1,19 @@
-FROM node:18
+FROM node:18-alpine as build
 
 WORKDIR /app/frontend
 
 ENV PATH /app/frontend/node_modules/.bin:$PATH
 
-COPY package.json package.json
+COPY package.json package-lock.json ./
 
 RUN npm i
 
-RUN ngcc
+COPY . /app/frontend/
 
-COPY . .
+RUN ng build --configuration production
 
-CMD ["ng", "serve", "--host", "0.0.0.0", "--disable-host-check"]
+FROM nginx:1-alpine
+
+COPY --from=build /app/frontend/dist/frontend /usr/share/nginx/html
+
+EXPOSE 80

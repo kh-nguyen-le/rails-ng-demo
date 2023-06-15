@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: rng-widgets
+spec:
+  selector:
+    matchLabels:
+      app: rng-gke-sql-app
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: rng-gke-sql-app
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: us-east1-docker.pkg.dev/rails-ng-demo/rng-gke-cloud-sql-repo/frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
