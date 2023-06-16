@@ -5,21 +5,23 @@ services:
       context: .
     ports:
       - "3000:3000"
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0' -e test"
+    entrypoint: entrypoint.sh
     volumes:
       - .:/app
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - HUB=selenium-hub
+      - RAILS_ENV=test
     networks:
       - app
       - rails
   frontend:
     build:
       context: ./client
+      target: build
     ports:
       - "4200:4200"
-    command: bash -c "ng serve --host 0.0.0.0 --disable-host-check --configuration=test"
+    command: ng serve --host "0.0.0.0" --disable-host-check --configuration=test
   chrome:
     image: selenium/node-chrome:4.8.1-20230306
     volumes:

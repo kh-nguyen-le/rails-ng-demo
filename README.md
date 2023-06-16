@@ -1,6 +1,6 @@
 # README
 
-<a href="https://rails-ng-demo.herokuapp.com/">demo</a>
+<a href="https://rngwidgets.com/">demo</a>
 
 A content management app for widget creation and display.
 

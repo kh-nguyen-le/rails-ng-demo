@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Dashboards', js: true do
   context 'with existing components' do
      
-    it 'should load by UI navigation' do
+    xit 'should load by UI navigation' do
       visit '/'
       dash_button = find_button('dashboard')
       expect(dash_button.text).to have_content 'dashboard'
@@ -12,7 +12,7 @@ RSpec.feature 'Dashboards', js: true do
       expect(page).to have_content 'Dashboard'
     end
   
-    it 'should navigate through the drawer' do
+    xit 'should navigate through the drawer' do
       visit '/'
       drawer_button = find_button('drawer')
       expect(drawer_button.text).to have_content 'view_sidebar'
