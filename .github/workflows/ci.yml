@@ -26,24 +26,20 @@ jobs:
       uses: ruby/setup-ruby@v1
 
     - name: Docker pull
-      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml pull
+      run: docker compose -f docker-compose.yml -f docker-compose.test.yml pull
 
     - name: Cache layers
       uses: jpribyl/action-docker-layer-caching@v0.1.1
       continue-on-error: true
 
     - name: Build containers
-      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d --build
+      run: docker compose -f docker-compose.yml -f docker-compose.test.yml up -d --build
       
     - name: Jest
-      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm frontend npx jest --runInBand
-
-    - name: Create DB
-
-      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rails db:prepare RAILS_ENV=test
+      run: docker compose -f docker-compose.yml -f docker-compose.test.yml run --rm frontend npx jest --runInBand
     
     - name: RSpec
-      run: docker-compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rspec
+      run: docker compose -f docker-compose.yml -f docker-compose.test.yml run --rm api rspec
 
     - name: Save failscreen
       uses: actions/upload-artifact@v2
