@@ -22,7 +22,7 @@ spec:
           service:
             name: redis
             port:
-              number: 6379
+              number: 80
   - host: api.rngwidgets.com
     http:
       paths:
@@ -32,7 +32,7 @@ spec:
           service:
             name: backend
             port:
-              number: 3000
+              number: 80
   - host: www.rngwidgets.com
     http:
       paths:

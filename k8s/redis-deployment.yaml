@@ -12,10 +12,14 @@ spec:
       labels:
         app: redis
     spec:
+      securityContext:
+        runAsUser: 1000
       containers:
       - name: redis
         image: redis:7-alpine
         imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
         ports:
         - containerPort: 6379
           protocol: TCP

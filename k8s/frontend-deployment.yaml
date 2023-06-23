@@ -18,6 +18,9 @@ spec:
       - name: nginx
         image: us-east1-docker.pkg.dev/rails-ng-demo/rng-gke-cloud-sql-repo/frontend:latest
         imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
         ports:
         - containerPort: 80
           protocol: TCP
+      

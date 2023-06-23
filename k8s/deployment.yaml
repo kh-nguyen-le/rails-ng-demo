@@ -19,6 +19,8 @@ spec:
       - name: rails
         image: us-east1-docker.pkg.dev/rails-ng-demo/rng-gke-cloud-sql-repo/gke-sql:latest
         imagePullPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
         ports:
         - containerPort: 3000
           protocol: TCP
@@ -68,6 +70,8 @@ spec:
         # It is recommended to use a specific version for production environments.
         # See: https://github.com/GoogleCloudPlatform/cloudsql-proxy 
         image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
+        securityContext:
+          allowPrivilegeEscalation: false
         ports:
         - containerPort: 5432
           protocol: TCP
@@ -82,7 +86,3 @@ spec:
           # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
           - "--port=5432"
           - "rails-ng-demo:northamerica-northeast2:rails-ng-demo-db"
-        securityContext:
-          # The default Cloud SQL proxy image runs as the
-          # "nonroot" user and group (uid: 65532) by default.
-          runAsNonRoot: true
