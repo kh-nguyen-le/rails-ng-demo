@@ -18,7 +18,13 @@ spec:
       containers:
       - name: rails
         image: us-east1-docker.pkg.dev/rails-ng-demo/rng-gke-cloud-sql-repo/gke-sql:latest
-        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "2m"
+          limits:
+            memory: "128Mi"
+            cpu: "5m"
         securityContext:
           allowPrivilegeEscalation: false
         ports:
@@ -70,6 +76,13 @@ spec:
         # It is recommended to use a specific version for production environments.
         # See: https://github.com/GoogleCloudPlatform/cloudsql-proxy 
         image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
+        resources:
+          requests:
+            memory: "28Mi"
+            cpu: "2m"
+          limits:
+            memory: "32Mi"
+            cpu: "5m"
         securityContext:
           allowPrivilegeEscalation: false
         ports:

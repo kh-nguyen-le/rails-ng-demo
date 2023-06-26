@@ -17,7 +17,13 @@ spec:
       containers:
       - name: redis
         image: redis:7-alpine
-        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "16Mi"
+            cpu: "2m"
+          limits:
+            memory: "32Mi"
+            cpu: "5m"
         securityContext:
           allowPrivilegeEscalation: false
         ports:
