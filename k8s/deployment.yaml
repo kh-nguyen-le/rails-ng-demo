@@ -20,11 +20,11 @@ spec:
         image: us-east1-docker.pkg.dev/rails-ng-demo/rng-gke-cloud-sql-repo/gke-sql:latest
         resources:
           requests:
-            memory: "100Mi"
-            cpu: "2m"
+            memory: "50Mi"
+            cpu: "0.25m"
           limits:
-            memory: "128Mi"
-            cpu: "5m"
+            memory: "64Mi"
+            cpu: "0.5m"
         securityContext:
           allowPrivilegeEscalation: false
         ports:
@@ -78,11 +78,11 @@ spec:
         image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
         resources:
           requests:
-            memory: "28Mi"
-            cpu: "2m"
+            memory: "10Mi"
+            cpu: "0.25m"
           limits:
-            memory: "32Mi"
-            cpu: "5m"
+            memory: "16Mi"
+            cpu: "0.5m"
         securityContext:
           allowPrivilegeEscalation: false
         ports:

@@ -19,11 +19,11 @@ spec:
         image: redis:7-alpine
         resources:
           requests:
-            memory: "16Mi"
-            cpu: "2m"
+            memory: "10Mi"
+            cpu: "0.25m"
           limits:
-            memory: "32Mi"
-            cpu: "5m"
+            memory: "16Mi"
+            cpu: "0.5m"
         securityContext:
           allowPrivilegeEscalation: false
         ports:
