@@ -8,7 +8,7 @@ globalThis.ngJest = {
 module.exports = {
   preset: 'jest-preset-angular',
   globalSetup: 'jest-preset-angular/global-setup',
-  transformIgnorePatterns: ['node_modules/(?!@angular|@ngrx|@swimlane|d3)'],
+  transformIgnorePatterns: ['node_modules/(?!@angular|@ngrx|@swimlane|d3|internmap)'],
   testMatch: ['**/+(*.)+(spec).+(ts)'],
   setupFilesAfterEnv: ['<rootDir>/setupJest.ts'],
   collectCoverage: true,
