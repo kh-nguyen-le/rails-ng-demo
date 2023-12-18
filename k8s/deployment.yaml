@@ -20,11 +20,11 @@ spec:
         image: us-east1-docker.pkg.dev/rails-ng-demo/rng-gke-cloud-sql-repo/gke-sql:latest
         resources:
           requests:
-            memory: "50Mi"
-            cpu: "0.25m"
-          limits:
-            memory: "64Mi"
+            memory: "100Mi"
             cpu: "0.5m"
+          limits:
+            memory: "200Mi"
+            cpu: "1m"
         securityContext:
           allowPrivilegeEscalation: false
         ports:
@@ -34,7 +34,7 @@ spec:
           httpGet:
             path: /health
             port: 3000
-          initialDelaySeconds: 5
+          initialDelaySeconds: 25
           periodSeconds: 10
         env:
         - name: PORT
@@ -75,16 +75,16 @@ spec:
         # This uses the latest version of the Cloud SQL proxy
         # It is recommended to use a specific version for production environments.
         # See: https://github.com/GoogleCloudPlatform/cloudsql-proxy 
-        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
         resources:
           requests:
-            memory: "10Mi"
-            cpu: "0.25m"
-          limits:
-            memory: "16Mi"
+            memory: "100Mi"
             cpu: "0.5m"
+          limits:
+            memory: "200Mi"
+            cpu: "1m"
         securityContext:
-          allowPrivilegeEscalation: false
+          runAsNonRoot: True
         ports:
         - containerPort: 5432
           protocol: TCP
