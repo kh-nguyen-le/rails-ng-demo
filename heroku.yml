@@ -4,7 +4,7 @@ setup:
       as: DATABASE
 build:
   docker:
-    api: Dockerfile
+    web: Dockerfile
     frontend: client/Dockerfile
   config:
     RAILS_ENV: production
@@ -12,5 +12,5 @@ build:
     ENV: production
       
 run:
-  api: bundle exec puma -C config/puma.rb
+  web: bundle exec puma -C config/puma.rb
   frontend: ng build --configuration production
