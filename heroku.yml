@@ -5,10 +5,14 @@ setup:
 build:
   docker:
     web: Dockerfile
-    worker: client/Dockerfile
   config:
     RAILS_ENV: production
     RACK_ENV: production
     ENV: production
 run:
+  worker:
+    image: node:20-alpine
+    command:
+    - cp /app/frontend/dist/frontend/ /app/public/
+    
   web: bundle exec puma -C config/puma.rb

@@ -12,7 +12,7 @@ COPY . .
 
 RUN ng build --configuration production
 
-ADD dist/frontend /app/public
+COPY . .
 
 FROM nginx:1-alpine
 
