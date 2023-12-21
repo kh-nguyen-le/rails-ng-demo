@@ -9,10 +9,6 @@ bundle exec rails db:prepare
 bundle exec rails db:seed
 
 if [ "$RAILS_ENV" = "production" ]; then
-  (cd client && npm install)
-
-  (cd client && ng build --configuration=production)
-
   bundle exec rails s -e production;
 fi
 
