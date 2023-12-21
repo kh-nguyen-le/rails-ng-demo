@@ -8,9 +8,9 @@ COPY package.json package-lock.json ./
 
 RUN npm i
 
-COPY . /app/frontend/
-
 RUN ng build --configuration production
+
+COPY . .
 
 FROM nginx:1-alpine
 
