@@ -12,7 +12,7 @@ services:
     networks:
       - app
   db:
-    image: postgres:13
+    image: postgres:15
     networks:
       - rails
 networks:
