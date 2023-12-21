@@ -4,6 +4,7 @@ setup:
       as: DATABASE
 build:
   docker:
+    worker: client/Dockerfile
     web: Dockerfile
   config:
     RAILS_ENV: production
@@ -13,5 +14,5 @@ run:
   worker:
     command:
       - cp /app/frontend/dist/frontend/ /app/public/
-    image: node
+    image: worker
   web: bundle exec puma -C config/puma.rb
