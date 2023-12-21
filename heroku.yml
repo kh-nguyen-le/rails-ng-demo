@@ -13,5 +13,5 @@ run:
   worker:
     command:
       - cp /app/frontend/dist/frontend/ /app/public/
-    image: node:20-alpine
+    image: node
   web: bundle exec puma -C config/puma.rb
