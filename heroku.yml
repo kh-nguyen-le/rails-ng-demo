@@ -10,9 +10,5 @@ build:
     RAILS_ENV: production
     RACK_ENV: production
     ENV: production
-release:
-  image: worker
-  command:
-    - npm install && ng build --configuration=production
 run:
   web: bundle exec puma -C config/puma.rb
