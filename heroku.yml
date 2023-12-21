@@ -5,12 +5,13 @@ setup:
 build:
   docker:
     web: Dockerfile
-    frontend: client/Dockerfile
   config:
     RAILS_ENV: production
     RACK_ENV: production
     ENV: production
-      
+release:
+  image: web
+  command:
+  - ./release-phase.sh
 run:
   web: bundle exec puma -C config/puma.rb
-  frontend: ng build --configuration production
