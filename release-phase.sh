@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-cd client
+(cd client && npm i)
 
-npm i
-
-ng build --configuration=production
+(cd client && ng build --configuration=production)
