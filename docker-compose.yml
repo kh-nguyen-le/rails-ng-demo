@@ -2,13 +2,13 @@ version: "3"
 services:
   api:
     depends_on:
-      - db
+      - frontend
     networks:
       - app
       - rails
   frontend:
     depends_on:
-      - api
+      - db
     networks:
       - app
   db:
