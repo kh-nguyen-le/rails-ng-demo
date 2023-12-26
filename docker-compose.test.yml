@@ -6,8 +6,6 @@ services:
     ports:
       - "3000:3000"
     entrypoint: entrypoint.sh
-    volumes:
-      - .:/app
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - HUB=selenium-hub
