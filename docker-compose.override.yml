@@ -2,12 +2,10 @@ version: "3"
 services:
   api:
     build:
-      context: .
+      context: ./api
     ports:
       - "3000:3000"
     command: bundle exec rails s -p 3000 -b "0.0.0.0"
-    volumes:
-      - .:/app
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - RAILS_ENV=development
@@ -28,7 +26,7 @@ services:
       - "traefik.http.routers.frontend.rule=Host(`frontend.localhost`)"
   db:
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - ./api/tmp/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
   traefik:

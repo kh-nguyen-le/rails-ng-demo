@@ -1,8 +1,7 @@
 FROM ruby:3.2.2
 RUN apt-get update -qq && apt-get install -y build-essential nodejs
 
-RUN mkdir /app
-WORKDIR /app
+WORKDIR /app/api
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install
