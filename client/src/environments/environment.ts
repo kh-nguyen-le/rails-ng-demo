@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://api.localhost',
-  sockUrl: 'ws://api.localhost/cable'
+  apiUrl: 'http://api.rails.localhost',
+  sockUrl: 'ws://rails.localhost/cable'
 };
 
 /*

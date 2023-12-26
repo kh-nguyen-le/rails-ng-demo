@@ -13,7 +13,7 @@ services:
       - RAILS_ENV=development
     labels: 
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`api.localhost`)"
+      - "traefik.http.routers.api.rule=Host(`rails.localhost`, `api.rails.localhost`)"
   frontend:
     build:
       context: ./client
@@ -32,7 +32,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
   traefik:
-    image: traefik:v2.10.1
+    image: traefik:v2.10.7
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=true"

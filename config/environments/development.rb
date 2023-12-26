@@ -2,7 +2,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.hosts << "api"
+  config.hosts << '.rails.localhost'
 
   # Explicitly set actioncable url
   config.action_cable.url = 'ws://localhost:3000/cable'
