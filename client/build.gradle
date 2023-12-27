@@ -13,5 +13,5 @@ node {
 task build(type: NpxTask) {
   dependsOn npmInstall
   command = 'ng'
-  args = ['build', '--output-path=./public/']
+  args = ['build', '--configuration=production', '--output-path=./public/']
 }
