@@ -20,7 +20,7 @@ ADD api/Gemfile* /rails
 
 RUN bundle install
 
-ADD api/ /rails
+ADD api/ /rails/
 
 COPY --from=build /build/public/ ./public/
 
