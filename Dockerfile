@@ -1,26 +1,28 @@
 FROM gradle:latest AS build
 
-WORKDIR /app/
+WORKDIR /build/
 
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /build/node_modules/.bin:$PATH
 
-COPY ./client/ /app/
+COPY ./client/ /build/
 
 RUN gradle build --no-daemon --info --stacktrace
 
 FROM ruby:3.2.2 AS server
 
-COPY ./api/Gemfile .
-
-COPY ./api/Gemfile.lock .
-
-RUN bundle install
+RUN apt-get update -qq && apt-get install -y build-essential nodejs
 
 COPY ./api/entrypoint.sh /usr/bin/
 
-COPY ./api /app
+WORKDIR /rails/
 
-COPY --from=build /app/public/ /app/public/
+ADD api/Gemfile* .
+
+RUN bundle install
+
+ADD api/ /rails
+
+COPY --from=build /build/public/ ./public/
 
 RUN chmod +x /usr/bin/entrypoint.sh
 
