@@ -6,3 +6,4 @@
  */
 
 rootProject.name = 'rails-ng-demo'
+include 'api', 'client' 

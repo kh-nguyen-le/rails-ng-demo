@@ -1,0 +1,13 @@
+plugins {
+  id "com.github.node-gradle.node" version "7.0.1"
+}
+
+repositories {
+  mavenCentral()
+}
+
+task build(type: NpxTask) {
+  dependsOn npmInstall
+  command = 'ng'
+  args = ['build', '--output-path=../api/public/']
+}
