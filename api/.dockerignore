@@ -2,9 +2,5 @@ Dockerfile
 .git
 node_modules
 .gitignore
-coverage
-src
-*.json
-*.js
 .buildpacks
 tmp
