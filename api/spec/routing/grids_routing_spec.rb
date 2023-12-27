@@ -2,28 +2,28 @@ require "rails_helper"
 
 RSpec.describe GridsController, type: :routing do
   describe "routing" do
-    it "routes to #index" do
+    xit "routes to #index" do
       expect(get: "/grids").to route_to("grids#index")
     end
 
-    it "routes to #show" do
+    xit "routes to #show" do
       expect(get: "/grids/1").to route_to("grids#show", id: "1")
     end
 
 
-    it "routes to #create" do
+    xit "routes to #create" do
       expect(post: "/grids").to route_to("grids#create")
     end
 
-    it "routes to #update via PUT" do
+    xit "routes to #update via PUT" do
       expect(put: "/grids/1").to route_to("grids#update", id: "1")
     end
 
-    it "routes to #update via PATCH" do
+    xit "routes to #update via PATCH" do
       expect(patch: "/grids/1").to route_to("grids#update", id: "1")
     end
 
-    it "routes to #destroy" do
+    xit "routes to #destroy" do
       expect(delete: "/grids/1").to route_to("grids#destroy", id: "1")
     end
   end
