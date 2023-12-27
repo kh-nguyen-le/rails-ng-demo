@@ -16,7 +16,7 @@ COPY ./api/entrypoint.sh /usr/bin/
 
 WORKDIR /rails/
 
-ADD api/Gemfile* .
+ADD api/Gemfile* /rails
 
 RUN bundle install
 
