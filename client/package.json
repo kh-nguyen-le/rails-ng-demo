@@ -53,7 +53,7 @@
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.5",
     "@types/jest": "^27.0.3",
-    "@types/rails__actioncable": "^6.1.5",
+    "@types/rails__actioncable": "^6.1.10",
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
     "eslint": "^8.33.0",
