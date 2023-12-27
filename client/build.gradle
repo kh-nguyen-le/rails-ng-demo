@@ -6,8 +6,12 @@ repositories {
   mavenCentral()
 }
 
+node {
+  download = true
+}
+
 task build(type: NpxTask) {
   dependsOn npmInstall
   command = 'ng'
-  args = ['build', '--output-path=../api/public/']
+  args = ['build', '--output-path=./public/']
 }

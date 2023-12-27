@@ -1,0 +1,9 @@
+Dockerfile
+/api/tmp/**/*
+/api/tmp/
+.git
+node_modules
+*.spec.ts
+.gitignore
+.vs
+coverage
